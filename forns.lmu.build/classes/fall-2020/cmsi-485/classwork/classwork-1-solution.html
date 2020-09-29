@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../../assets/images/favicon.ico'>
+    <script src="../../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../../js/lib/expanding.js"></script>
+    <script src="../../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../../classes.html">Classes</a></li>
+              <li><a href="../cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Classwork 1 - Solution</li>
+            </ol>
+            
+            <div id='cw' class='scrollspy-element' scrollspy-title='Classwork 1'></div>
+            <h1>Classwork 1 - Solution</h1>
+            <div>
+              <h3>Problem 1</h3>
+              <hr/>
+              <p>Provide a 1-2 sentence answer to each of the following questions.</p>
+              <ol class='indent-1'>
+                <li><p>One of the most common mistakes with propositional logic inference is to assume that resolution is defined on multiple propositions at a time. 
+                  Prove, using the definition of <strong>propositional logic entailment</strong>, that this is not the case; specifically (for props. \(X,Y,Z\)) show that:
+                  $$(X \lor Y \lor Z) \land (\lnot Y \lor \lnot Z) \not \vDash (X)$$</p>
+                  <div class='alert alert-success'>
+                    <p>Firstly, let's be clear about the formal definition of entailment:
+                      $$\alpha \vDash \beta \Leftrightarrow M(\alpha) \subseteq M(\beta)$$
+                    </p>
+                    <p>Concretely, this means that if there is ever a world in which \(\alpha = True\) but \(\beta = False\), then the above does not hold, and we can claim that
+                      \(\alpha\) does *not* entail \(\beta\).</p>
+                    <p>Now, in our example, let \(\alpha = (X \lor Y \lor Z) \land (\lnot Y \lor \lnot Z)\) and \(\beta = X\). Observe, that the world in which 
+                      \(X = False, Y = True, Z = False\) is a model of \(\alpha\), but not for \(\beta\). Thus, we've proven that \((X \lor Y \lor Z) \land (\lnot Y \lor \lnot Z) \not \vDash (X)\).</p>
+                  </div>
+                  <p class='debug'>NOTE: ALL CAPS WARNING! THIS MEANS RESOLVING (for example) \(X \lor Y\) and \(\lnot X \lor \lnot Y\) IS NOT A CONTRADICTION, BUT RATHER, IS A VACUOUS
+                    CLAUSE EQUAL TO THE BOOLEAN LITERAL True.</p>
+                </li>
+                <li><p>Certain logic systems exploit Knowledge Bases with only Horn Clauses, which are clauses with at *most* one positive (i.e., non-negated) literal / proposition.
+                  For instance, \(\lnot P \lor Q \lor \lnot R\) is a Horn Clause (since \(Q\) is the only positive literal) whereas \(\lnot P \lor Q \lor R\) is not (more than one
+                  positive literal). Why might having Horn Clauses prove useful / beneficial for resolution-based inference engines?</p>
+                  <p class='alert alert-success'>Horn Clauses are <strong>computationally desirable</strong> as a filtering mechanism for which clauses are resolvable against one another. If we
+                    represent any arbitrary clause as a set of propositions, finding one prop that is positive in one clause and also negated in the other is an \(O(n)\) operation 
+                    (for \(n\) props); Horn Clauses, on the other hand, will only be resolvable with other Horn Clauses if (1) one has a positive prop and the other doesn't, and (2) 
+                    if one has a positive prop, it is simply an \(O(1)\) operation to check if it is negated in the other. Other nice properties of Horn Clauses: (1) resolving any two Horn
+                    clauses (that are amenable to resolution) will yield another Horn clause, and (2) the 0/1-positive literal property can be exploting as an indexing schema to make finding
+                    clauses that resolve computationally attractive.</p>
+                </li>
+              </ol>
+              <br/>
+              
+              <h3>Problem 2</h3>
+              <hr/>
+              <p>One of the early applications of propositional logic was an attempt to allow machines to comprehend stories / corpi of text and then
+                answer questions about them (its successor, first-order logic attempted to do the same at a higher level of abstraction).</p>
+              <p>This strategy would ultimately, as with many other similar endeavors, fail to scale, but is interesting to consider in practice.</p>
+              <p>Many smaller-scale systems can still effectively use these strategies, and are sometimes still found in practice, as with simple Q&amp;A
+                systems to automate customer service.</p>
+              <p class='definition'>Consider the following story (written from the perspective of the future, per my upcoming novel)
+                with bracketed propositions \([P]\), and then use its rules and facts to formalize a KB and then answer some 
+                inference queries that follow.</p>
+              <p>
+                Preceding the Great Forneybot Uprising of 2024, the world was in a utopic state of bliss with humankind finally served by throngs of our
+                robotic servants. Forney Industries, sadly, had a number of fatal oversights in their robots' design, any number of whose small,
+                environmental quirks could cause them to violently malfunction. Before the flaws were discovered, it was, of course, too late --
+                however, it has long been a matter of historical discourse for what event actually triggered the first mass malfunction...
+              </p>
+              <p>Rules and facts:</p>
+              <p class='alert alert-success'>Steps 1 and 2 of the requirements that follow are listed below each item.</p>
+              <ol class='indent-1'>
+                <li><p>Forneybots were found to malfunction \([M]\) if and only if they suffer water damage \([D]\) or overheard a logical paradox \([P]\).</p>
+                  <p class='alert alert-success'>
+                    $$\begin{eqnarray}
+                      M \Leftrightarrow (D \lor P) &\equiv& (M \Rightarrow (D \lor P)) \land ((D \lor P) \Rightarrow M) \\
+                                                   &\equiv& (\lnot M \lor D \lor P) \land ((\lnot D \land \lnot P) \lor M) \\
+                                                   &\equiv& (\lnot M \lor D \lor P) \land (\lnot D \lor M) \land (\lnot P \lor M)
+                    \end{eqnarray}$$
+                    Thus, we begin with the following clauses in the KB:
+                    $$\begin{eqnarray}
+                      KB1 &=& \lnot M \lor D \lor P \\
+                      KB2 &=& \lnot D \lor M \\
+                      KB3 &=& \lnot P \lor M \\
+                    \end{eqnarray}$$
+                  </p>
+                </li>
+                <li><p>Forneybots may have been caught in a sudden rainstorm \([R]\), which are known to happen only during Winter \([W]\) or Summer \([S]\),
+                  though not all Winters and Summers had rain.</p>
+                  <p class='alert alert-success'>
+                    $$\begin{eqnarray}
+                      R \Rightarrow (W \lor S) &\equiv& \lnot R \lor W \lor S
+                    \end{eqnarray}$$
+                    $$\begin{eqnarray}
+                      KB4 = \lnot R \lor W \lor S
+                    \end{eqnarray}$$
+                  </p>
+                </li>
+                <li><p>It goes without saying that rainstorms and water damage would have gone hand in hand, since the Forneybots were not aware of 
+                  their weakness.</p>
+                  <p class='alert alert-success'>
+                    $$\begin{eqnarray}
+                      R \Leftrightarrow D &\equiv& (R \Rightarrow D) \land (D \Rightarrow R) \\
+                                          &\equiv& (\lnot R \lor D) \land (\lnot D \lor R)
+                    \end{eqnarray}$$
+                    $$\begin{eqnarray}
+                      KB5 = \lnot R \lor D \\
+                      KB6 = \lnot D \lor R
+                    \end{eqnarray}$$
+                  </p>
+                </li>
+                <li><p>Logical paradoxes, on the other hand, would have <i>only</i> been heard during election season (through TV or radio broadcast),
+                  which are held in the Fall \([F]\) (and so all Fall seasons thus came hand in hand with paradoxes).</p>
+                  <p class='alert alert-success'>
+                    $$\begin{eqnarray}
+                      P \Leftrightarrow F &\equiv& (P \Rightarrow F) \land (F \Rightarrow P) \\
+                                          &\equiv& (\lnot P \lor F) \land (\lnot F \lor P)
+                    \end{eqnarray}$$
+                    $$\begin{eqnarray}
+                      KB7 = \lnot P \lor F \\
+                      KB8 = \lnot F \lor P
+                    \end{eqnarray}$$
+                  </p>
+                </li>
+                <li><p>It also goes without saying that if it is one season, it cannot simultaneously be the others.</p>
+                  <p class='alert alert-success'>
+                    $$\begin{eqnarray}
+                      (F \Rightarrow (\lnot S \land \lnot W)) \land (S \Rightarrow (\lnot F \land \lnot W)) \land (W \Rightarrow (\lnot F \land \lnot S))
+                      &\equiv& (\lnot F \lor (\lnot S \land \lnot W)) \land (\lnot S \lor (\lnot F \land \lnot W)) \land (\lnot W \lor (\lnot F \land \lnot S)) \\
+                      &\equiv& (\lnot F \lor \lnot S) \land (\lnot F \lor \lnot W) \land (\lnot S \lor \lnot W)
+                    \end{eqnarray}$$
+                    $$\begin{eqnarray}
+                      KB9 &=& \lnot F \lor \lnot S \\
+                      KB10 &=& \lnot F \lor \lnot W \\
+                      KB11 &=& \lnot S \lor \lnot W
+                    \end{eqnarray}$$
+                  </p>
+                </li>
+                <li><p>The Great Forneybot Uprising occurred from a mass malfunction on Nov. 16, 2024.</p>
+                  <p class='alert alert-success'>
+                    NB., Nov. 16 is in Fall!
+                    $$\begin{eqnarray}
+                      M \land F
+                    \end{eqnarray}$$
+                    $$\begin{eqnarray}
+                      KB12 &=& M \\
+                      KB13 &=& F
+                    \end{eqnarray}$$
+                  </p>
+                  <p class='debug'>Note: \(M \Leftarrow F\) or \(F \Leftarrow M\) would be mistranslations of the above, because they assert an if-then rule
+                    that is not being stated in the English expression of two observed facts.</p>
+                </li>
+              </ol>
+              <div class='definition'>
+                <p>Your task is as follows:</p>
+                <ol class='indent-1'>
+                  <li><p>Create a KB by converting each of the above English sentences into a propositional logic one.</p></li>
+                  <li><p>Convert the KB into CNF, and enumerate each clause.</p></li>
+                  <li><p>Using the above, we must settle the debate by showing that one of the following queries is true: (1) \(\alpha = \lnot D \land P\)
+                    (i.e., that it was an overheard paradox and NOT water damage that caused the uprising) or (2) \(\beta = \lnot P \land D\) (vice versa).</p></li>
+                </ol>
+              </div>
+              <p class='debug'>For the inference step 3 above, show which clauses contributed to each inferred term on the way to a solution using resolution
+                proof by refutation!</p>
+              <p class='definition'>Note: the below derivation demonstrates but one of a number of resolution paths that could demonstrate a contradiction; if your answer differs
+                from the below, it may not necessarily be wrong, so long as you showed that the \(KB \vDash \alpha\)</p>
+              <p class='alert alert-success'>
+                With 20/20 hindsight as the problem's creator, I'll begin by attempting to show that (1) \(KB \vDash \lnot D \land P\). Note that any of the following <i>inferred</i> clauses are not
+                permanently added to the KB, but are considered as members for the present proof. We begin by "assuming to the contrary" of our query such that:
+                $$KB14 = D \lor \lnot P$$
+                Now, to inference!
+                $$\begin{eqnarray}
+                  [9, 13] \vDash KB15 &=& \lnot S \\
+                  [10, 13] \vDash KB16 &=& \lnot W \\
+                  [4, 15] \vDash KB17 &=& \lnot R \lor W \\
+                  [4, 16] \vDash KB18 &=& \lnot R \\
+                  [6, 18] \vDash KB19 &=& \lnot D \\
+                  [8, 13] \vDash KB20 &=& P \\
+                  [14, 19] \vDash KB21 &=& \lnot P \\
+                  [20, 21] \vDash KB22 &=& \emptyset \\
+                  \rightarrow \leftarrow
+                \end{eqnarray}$$
+                We have reached a contradiction, therefore, \(KB \vDash \lnot D \land P\). Since this is the case, it is trivial to show that our other hypothesis, (2) \(\beta = \lnot P \land D\)
+                is NOT entailed by the KB.
+              </p>
+              <p class='toolkit'>Resolution Heuristic: since a contradiction is only reachable by resolving 2 atomic clauses (i.e., clauses with single propositions), and if one
+                exists, it will be because of the addition of the negation of the query, it's usually best to focus on smaller clauses and those that contain propositions in the
+                query before others.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

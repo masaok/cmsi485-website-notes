@@ -1,0 +1,749 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 1-2</li>
+            </ol>
+            
+            <div id='logic' class='scrollspy-element' scrollspy-title='Logical Agents'></div>
+            <h1>Logical Agents</h1>
+            <div>
+              <blockquote>"Humans, it seems, know things; and what they know helps them do things." -Actual Quote from your Textbook</blockquote>
+              <p>That line has always amused me, but belies some important points about the first type of intelligence that we'll see in this course: logic and reasoning.</p>
+              <p class='question' name='lo-q-0'>What are some of the main traits of human intelligence that likely facilitate our ability to act as rational agents?</p>
+              <div class='answer' name='lo-q-0'>
+                <p>Well, to name a few:</p>
+                <ul class='indent-1'>
+                  <li><p>Our <strong>knowledge</strong> about how the way the world works.</p></li>
+                  <li><p>Our ability to update our beliefs about the environment via <strong>perception and experience.</strong></p></li>
+                  <li><p>Our ability to <strong>deductively reason</strong>: making <strong>inferences</strong> about our environment given our knowledge and perceptions.</p></li>
+                </ul>
+              </div>
+              <p class='definition'><strong>Inference</strong> is the ability to take knowledge about the mechanics of an environment (<strong>rules</strong>),
+                marry those to observations about the environment (<strong>facts</strong>), and then deduce <i>new</i> facts as a result (<strong>inferences</strong>).</p>
+              <div class='example'>
+                <p>In the classic example of inference:</p>
+                <ul class='indent-1'>
+                  <li><p>Rule: All humans are mortal.</p></li>
+                  <li><p>Facts: Socrates is a human.</p></li>
+                  <li><p>Inference: Therefore Socrates is mortal.</p></li>
+                </ul>
+              </div>
+              <p>Humans perform inference with relative ease -- if you're reading along, you likely foresaw the conclusion of the above example before you read it.</p>
+              <p class='question' name='lo-q1'>Why is the capacity for <strong>inference</strong> a desirable trait for our artificial agents?</p>
+              <div class='answer' name='lo-q1'>
+                <p>Two main reasons:</p>
+                <ul class='indent-1'>
+                  <li><p>It allows our agent to combine information and knowledge <i>independent of domain</i> to solve larger classes of interesting problems.</p></li>
+                  <li><p>It allows our agent to combine <i>new experiences</i> with past ones to make a more complete representation of its world.</p></li>
+                </ul>
+              </div>
+              <p>Plainly the capacity for inference is a large step towards generalized intelligence, and will be one of our first goals towards designing logical agents.</p>
+              <p class='question' name='lo-q2'>Looking at the human traits leading to inference, what challenges do you envision for this task; what will we have to formalize?</p>
+              <div class='answer' name='lo-q2'>
+                <p>There will be two major hurdles to overcome in pursuit of enabling <strong>logical agents</strong>:</p>
+                <ul class='indent-1'>
+                  <li><p>How we decide to model the <strong>knowledge</strong> that the agent has.</p></li>
+                  <li><p>How we proceduralize <strong>reasoning</strong> from that knowledge.</p></li>
+                </ul>
+              </div>
+              <p>We'll begin by considering a motivating example, and then cover the classical representation of knowledge and inference reaching all the way back to the days 
+                of Socrates...</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='example' class='scrollspy-element' scrollspy-title='Motivating Example'></div>
+            <h1>Motivating Example</h1>
+            <div>
+              <p>Thus far (CMSI 282 and before) we have been examining <strong>perfect information</strong> search problems wherein our agent plans its moves before acting 
+                from some problem specification.</p>
+              <p>Of course, in more realistic examples, our agent may not possess all relevant decision-making information about the environment at the get-go, and must 
+                instead discover key pieces as it acts.</p>
+              <p class='definition'><strong>Offline agents</strong> are those that may plan with all relevant information before acting; <strong>online agents</strong> are those that must acquire relevant pieces of the plan
+                as they act, generally involving some exploration.</p>
+              <p>We can start to see where we will need the aid of inference in the following, motivating example:</p>
+              <br/>
+              
+              <h3>Watching Our Steps</h3>
+              <hr/>
+              <p>Consider the following variant to the classic Maze Pathfinder (a variant of your textbook's strange and needlessly complicated "Wumpus World" [the hell is a Wumpus?]):</p>
+              <ul class='indent-1'>
+                <li><p><strong>The bad news:</strong></p>
+                  <ul class='indent-1'>
+                    <li><p>Mazes can now feature dangerous bottomless pits \(P\) of <i>doom</i>! If our agent falls into a pit, they will fall for all of eternity, which is 
+                      generally something we'd like to avoid.</p></li>
+                    <li><p>The locations of pits are not known to the agent a priori, and so they must instead deduce the locations of pits as best as possible.</p></li>
+                  </ul>
+                </li>
+                <li><p><strong>The good news:</strong></p>
+                  <ul class='indent-1'>
+                    <li><p>Each Pit (being bottomless and all) generates a current of wind in the cells adjacent to it, which we'll label as <i>Breezes</i>, \(B\). Agents will be
+                      able to use <strong>sensors</strong> to detect this breeze.</p></li>
+                    <li><p>The Initial and Goal states are known and will not contain Pits.</p></li>
+                    <li><p>A cautious and logical agent will thus need to scout to find safe passage to the Goal state.</p></li>
+                  </ul>
+                </li>
+              </ul>
+              <p>Since this is an imperfect information problem, we must be careful to make a distinction:</p>
+              <p class='definition'>An agent's <strong>representation</strong> of the environment is their choice of how to model its key features; this representation, although
+                attempting to be accurate, may differ from the <strong>world</strong> in reality.</p>
+              <p class='example'>The following is an example of our new PitfallMazes with an agent's starting representation.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-4/logical-agents-0.png' />
+              </div>
+              <p class='question' name='lo-q3'>Will a classical search approach like A* alone solves these problems?</p>
+              <p class='answer' name='lo-q3'>No! We need to involve extra information about the logical confines of the problem in order to safely navigate around the pits.</p>
+              <p>Since the agent should act cautiously to reach the goal, it will need to logically deduce a safe path using its <strong>percepts.</strong></p>
+              <p class='question' name='lo-q4'>What kinds of facts would our agent need to track in order to logically navigate these mazes?</p>
+              <p class='answer' name='lo-q4'>(1) Where breezes are felt, (2) how that translates to inferences about pit locations, and (3) which tiles are deduced to be safe.</p>
+              <p class='example'>Trace the logical steps the agent would need to take in order to find the proper route to the goal.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-4/logical-agents-1.png' />
+              </div>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-4/logical-agents-2.png' />
+              </div>
+              <br/>
+              
+              <p>Plainly, formalizing the logic that feeds into these deductive agents needs some strong foundations, which we'll examine next!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='proplog' class='scrollspy-element' scrollspy-title='Propositional Logic'></div>
+            <h1>Propositional Logic</h1>
+            <div>
+              <p>The first steps towards creating logical agents began with roots in philosophical discourse.</p>
+              <p class='question' name='lo-q5'>What are the simplest bits of information that can be reasoned over?</p>
+              <p class='answer' name='lo-q5'>Aha, the answer was staring right at you! Bits! Boolean values that determine if something is either true or false.</p>
+              <p>Let's start by reasoning over systems of simple, Boolean expressions that determine small aspects of truth in the environment, and then see how they can combine
+                to perform inference.</p>
+              <p>This will lead to us designing who can make deductions about their environments.</p>
+              <p class='definition'>A <strong>knowledge-based agent</strong> is an intelligent system whose known information is stored in a <strong>knowledge-base (KB)</strong> that
+                consists of logical <strong>sentences</strong> that represent assertions about the world.</p>
+              <p class='definition'>Each logical sentence is expressed in some <strong>knowledge representation language</strong> that can vary with the complexity and scope of the
+                problem.</p>
+              <div class='definition'>
+                <p>Depending upon the chosen representation, most KBs consist of two primary classes of components:</p>
+                <ul class='indent-1'>
+                  <li><p><strong>Rules</strong> describe how the world works including any background knowledge.</p></li>
+                  <li><p><strong>Facts</strong> describe observations made by the agent about the environment.</p></li>
+                </ul>
+              </div>
+              <p>As it turns out, some representation languages (like the one we will preview) will not distinguish between these two classes, but will still help us think about
+                our agents' knowledge.</p>
+              <p class='definition'>The process of inference is handled by an <strong>inference engine</strong>, which is parameterized by (1) a knowledge-base and (2) a query and
+                produces an answer to that query.</p>
+              <p>Pictorially, this process looks like:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-4/logical-agents-3.png' />
+              </div>
+              <p class='question' name='lo-q6'>Which are the rules and which are the facts in the KB above?</p>
+              <p class='answer' name='lo-q6'>Rules: (1); Facts: (2-4)</p>
+              <br/>
+              <p>In this section, we will look at the most basic, but still powerful, knowledge representation language that is related to Boolean logic.</p>
+              <p class='definition'><strong>Propositional Logic</strong> is a knowledge representation language in which <strong>propositions</strong> (T/F variables) make assertions
+                about aspects of the reasoning environment.</p>
+              <p>Let's look at how it works!</p>
+              <br/>
+              
+              <h3>Propositional Syntax</h3>
+              <hr/>
+              <p class='definition'>The <strong>syntax</strong> of propositional logic defines what constitutes a valid logical sentence.</p>
+              <p class='definition'><strong>Propositional symbols</strong> are "placeholders" (think: variables) for truth values, and include two "constant" symbols: \(True\) or \(T\) to
+                denote the "always true" proposition, and \(False\) or \(F\) to denote the "always false."</p>
+              <p class='definition'><strong>Atomic sentences</strong> are propositional sentences containing only a single propositional symbol.</p>
+              <p class='example'>If we use \(B_{x,y}\) to indicate the proposition that a Breeze is in the given \((x,y)\) coordinate, then an atomic sentence would contain only something
+                like \(B_{1,0}\) to indicate the Breeze "status" of tile \((1,0)\).</p>
+              <p>Note that depending upon the particular maze, \(B_{1,0}\) may be True or False (discussed more in semantics, to follow).</p>
+              <p>Of course, it would be fairly weak if we could only express propositions about atomic elements of the environment.</p>
+              <p>The power of inference comes from our ability to reason over relationships between propositions.</p>
+              <p class='definition'><strong>Complex sentences</strong> are constructed from simpler sentences using logical grouping \(()\) and <strong>connectives</strong>.</p>
+              <div class='toolkit'>
+                <p>There are 5 logical connectives used in propositional logic:</p>
+                <table class='table'>
+                  <thead>
+                    <tr>
+                      <th><p>Symbol</p></th>
+                      <th><p>Name</p></th>
+                      <th><p>Interpretation</p></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><p>\(\lnot \)<br/>(not)</p></td>
+                      <td><p>Negation</p></td>
+                      <td><p>\(\lnot \alpha\) indicates that the truth value of sentence \(\alpha\) is flipped. An atomic sentence or negated atom is called a <strong>literal.</strong></p></td>
+                    </tr>
+                    <tr>
+                      <td><p>\(\land \)<br/>(and)</p></td>
+                      <td><p>Conjunction</p></td>
+                      <td><p>\(\alpha \land \beta\) indicates the logical "and" operator between two sentences \(\alpha, \beta\). A sentence composed of <i>only</i> conjoined literals
+                        is called a <strong>term</strong>.</p></td>
+                    </tr>
+                    <tr>
+                      <td><p>\(\lor \)<br/>(or)</p></td>
+                      <td><p>Disjunction</p></td>
+                      <td><p>\(\alpha \lor \beta\) indicates the logical "or" operator between two sentences \(\alpha, \beta\). A sentence composed of <i>only</i> disjoined literals is
+                        called a <strong>clause</strong>.</p></td>
+                    </tr>
+                    <tr>
+                      <td><p>\(\Rightarrow \)<br/>(implies)</p></td>
+                      <td><p>Implication</p></td>
+                      <td><p>\(\alpha \Rightarrow \beta\) indicates that sentence \(\alpha\) (the <strong>premise</strong>) "implies" sentence \(beta\) (the <strong>conclusion</strong>).
+                        Implications are propositional syntax for <strong>if-then</strong> statements.</p></td>
+                    </tr>
+                    <tr>
+                      <td><p>\(\Leftrightarrow \)<br/>(if and only if)</p></td>
+                      <td><p>Biconditional</p></td>
+                      <td><p>\(\alpha \Leftrightarrow \beta\) indicates that \(\alpha\) and \(\beta\) mutually imply one another.</p></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>Now that we know the basic syntax of propositional logic, let's consider some examples translating English sentences into Propositional ones.</p>
+              <p class='example'>Translate each of the following English sentences into propositional ones, leting \(B_{x,y}\) indicate that a Breeze is in cell \((x,y)\)
+                and letting \(P_{x,y}\) indicate that a Pit is in cell \((x,y)\).</p>
+<pre>
+  #1 "There is no Pit at (0,0)"
+  
+  #2 "There is no Pit at (0,0) nor is there a Pit at (3,3)"
+  
+  #3 "There is a Breeze in (1,0), if and only if there is a
+  pit in an adjacent (legal) cell"
+</pre>
+              <br/>
+              
+              <h3>Propositional Semantics</h3>
+              <hr/>
+              <p>Now that we have a gist for the format of legal propositional sentences, let's consider what, precisely, these logical sentences <i>mean</i>.</p>
+              <p class='definition'>A <strong>world</strong> \(w\) is a possible instantiation of all propositions (i.e., an assignment of \(True, False\) to all props.)</p>
+              <p>For example, in some worlds (hypothetical or reality), there is a Pit at \((1, 1)\) in which case \(P_{1,1} = True\), but in others there may not be.</p>
+              <p class='toolkit'>Worlds are to states of the environment as propositional sentences are to <strong>assertions</strong> about the state of the world.</p>
+              <p class='definition'>Propositional <strong>semantics</strong> define the rules that decide whether a given sentence is \(True\) or \(False\) in some world.</p>
+              <p>So what are these rules? These semantics?</p>
+              <p>It turns out the rules can be defined recursively, since all complex sentences are defined atop combinations of atomic ones.</p>
+              <br/>
+              
+              <h4>Semantics for Atomic Sentences</h4>
+              <ul class='indent-1'>
+                <li><p>\(True\) is true in every world and \(False\) is false.</p></li>
+                <li><p>Every proposition (e.g., \(P_{1,1}\)) is assigned a truth value in the model.</p></li>
+              </ul>
+              <p>For example, one world for three propositions \(A, B, C\) might look like: \(\{A = True, B = False, C = True \}\)</p>
+              <p>The above should come as no surprise, but now let's look at how to put everything together.</p>
+              <br/>
+              
+              <h4>Semantics for Complex Sentences</h4>
+              <p>We'll assign truth interpretations to each of our 5 connectives (below, \(P, Q\) are propositions):</p>
+              <ul class='indent-1'>
+                <li><p>\(\lnot P\) is true only in worlds where \(P = False\)</p></li>
+                <li><p>\(P \land Q\) is true only in worlds where \(P = True\) and \(Q = True\)</p></li>
+                <li><p>\(P \lor Q\) is true only in worlds where either \(P = True\) or \(Q = True\) or both are \(True\).</p></li>
+                <li><p>\(P \Rightarrow Q\) is true unless \(P = True\) and \(Q = False\) (interpretted: "If \(P\) is true, then \(Q\) is true, otherwise I am making no claim.")</p></li>
+                <li><p>\(P \Leftrightarrow Q\) is true if and only if \(P = Q\)</p></li>
+              </ul>
+              <br/>
+              
+              <h4>Truth Tables</h4>
+              <p>The semantic rules defined above allow us to assign a truth value to every sentence given a particular model.</p>
+              <p class='question' name='lo-q7'>Suppose we have 2 propositions, \(P, Q\) -- how many possible models are there? How many for \(n\) propositions?</p>
+              <p class='answer' name='lo-q7'>In general: \(2^n\) possible models</p>
+              <p>So, another way to consider the semantics for each sentence (atomic or complex) is to provide a corresponding mapping from the sentence to a truth value.</p>
+              <p class='definition'><strong>Truth tables</strong> map a sentence and model to a truth value.</p>
+              <p class='example'>Consider the truth table associated with 2 propositions \(P, Q\).</p>
+              <table class='table table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>World</p></th>
+                    <th><p>P</p></th>
+                    <th><p>Q</p></th>
+                    <th><p>\(\lnot P\)</p></th>
+                    <th><p>\(P \land Q\)</p></th>
+                    <th><p>\(P \lor Q\)</p></th>
+                    <th><p>\(P \Rightarrow Q\)</p></th>
+                    <th><p>\(P \Leftrightarrow Q\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(w_1\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_2\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_3\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_4\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              
+              <p class='definition'>Two sentences are <strong>logically equivalent</strong> if they have the same truth-table values for each world.</p>
+              <p>Note a couple of remarks on our implication and biconditional connectives:</p>
+              <ul class='indent-1'>
+                <li><p>\(P \Rightarrow Q\) is <strong>logically equivalent</strong> to \(\lnot P \lor Q\)</p></li>
+                <li><p>\(P \Leftrightarrow Q\) is <strong>logically equivalent</strong> to \((P \Rightarrow Q) \land (Q \Rightarrow P)\)</p></li>
+              </ul>
+              <p>We'll make use of these equivalences in the next lecture...</p>
+              <br/>
+              
+              <p>Equipped with this syntax and semantics, we'll see how inference works and derive a (pretty computationally tough!) algorithm to proceduralize it!</p>
+              <p>Is Socrates actually mortal? Story at 11!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='kbs' class='scrollspy-element' scrollspy-title='Knowledge Base Structures'></div>
+            <h1>Knowledge Base Structures</h1>
+            <div>
+              <p>With the syntax and semantics of propositional logic in hand, we got a glimpse of how these tools can start to form the logical "picture" our agents have of their environments.</p>
+              <p>Recall our motivating problem, which involved our Maze Pathfinder but with the added trouble of needing to navigate bottomless pits in the environment:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-4/logical-agents-0.png' />
+              </div>
+              <br/>
+              
+              <p>So, let's begin by considering: what should be contained in our agent's knowledge base at the onset of its exploration?</p>
+              <p class='question' name='lo-q0'>What <strong>propositions</strong> (i.e., symbols / variables for T/F aspects of the environment) will we need in order to avoid Pits?</p>
+              <p class='answer' name='lo-q0'>\(P_{x,y}\) to indicate that a Pit exists in tile \((x,y)\) and \(B_{x,y}\) to indicate a Breeze exists in tile \((x,y)\).</p>
+              <p class='question' name='lo-q1'>What <strong>rules</strong> (i.e., propositional sentences that describe how the world works) should we include for our problem? How to phrase them?</p>
+              <p class='answer' name='lo-q1'>We must indicate that if a Breeze exists at some tile, then there must be at least 1 Pit in neighboring tiles; formally:
+                $$B_{x,y} \Leftrightarrow P_{x-1,y} \lor P_{x+1,y} \lor P_{x,y-1} \lor P_{x,y+1} ~ \forall ~ x,y$$
+              </p>
+              <p class='debug'>Note: propositional logic demands that these rules exist for <strong>every tile</strong> in the maze!</p>
+              <p>This might seem wasteful (it is) but is a consequence of propositional logic not being a form a <i>higher order</i> reasoning, wherein we could reason over <i>patterns</i> of logical sentences.</p>
+              <p>This approach (which does exist) is called <strong>first order logic</strong>, and is unfortunately out of scope for this class, but is not much different than the algorithms we'll review herein.</p>
+              <p>Now that we have our rule(s) formalized, we just need to include all of our current observations about the environment.</p>
+              <p class='question' name='lo-q2'>What <strong>facts</strong> (i.e., typically atomic sentences that are true in the currently observed environment) should we include for the initial state of our problem?</p>
+              <p class='answer' name='lo-q2'>(1) We know that pits do not exist at either the initial nor goal state: \(\lnot P_{0,0} \land \lnot P_{3,3}\). (2) We know that there is no Breeze in the initial state \(\lnot B_{0,0}\)</p>
+              <p class='question' name='lo-q3'>Since we are claiming that all of these rules and facts are asserted true in our environment, how can we view our KB in terms of propositional connectives?</p>
+              <p class='answer' name='lo-q3'>Our KB is simply a giant complex sentence in which all rules and facts are conjoined, with the format: $$KB = Rule_1 \land Rule_2 \land ... \land Fact_1 \land Fact_2 \land ...$$</p>
+              <p class='question' name='lo-q4'>What happens if our agent discovers a <i>new</i> fact during exploration of the Maze?</p>
+              <p class='answer' name='lo-q4'>We simply conjoin that new fact to the existing KB, e.g., $$Tell(KB, NewFact): KB = KB \land NewFact$$</p>
+              <p class='debug'>Note: this is one such KB format that we will employ in this class (i.e., conjoined rules and facts), though there are other different formats as well.</p>
+              <p>For convenience (for both humans and in programmatic application) KB's in the format of conjoined rules and facts often <strong>enumerate</strong> the conjoined sentences, for example, the knowledge-base in our
+                Pitfall Maze might look like:</p>
+              <p>$$KB = (B_{1,0} \Leftrightarrow P_{0,0} \lor P_{1,1} \lor P_{2,0}) \land ... \land \lnot P_{0,0} \land \lnot P_{3,3} \land \lnot B_{0,0} \land ...$$</p>
+              <p>Is oft represented as:</p>
+              <ol class='indent-1'>
+                <li><p>\(B_{1,0} \Leftrightarrow P_{0,0} \lor P_{1,1} \lor P_{2,0}\)</p></li>
+                <li><p>\(...\)</p></li>
+                <li><p>\(\lnot P_{0,0}\)</p></li>
+                <li><p>\(\lnot P_{3,3}\)</p></li>
+                <li><p>\(\lnot B_{0,0}\)</p></li>
+                <li><p>\(...\)</p></li>
+              </ol>
+              <br/>
+              
+              <p>Of course, now that we have a basic understanding of how the KB looks, we need to formalize some mechanisms that will be important for inference.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='infermc' class='scrollspy-element' scrollspy-title='Inference: Model Checking'></div>
+            <h1>Inference: Model Checking</h1>
+            <div>
+              <p>Recall our picture of the inference engine that we are hoping to design.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-4/logical-agents-3.png' />
+              </div>
+              <br/>
+              <p>Now that we have a picture of what our KB looks like (section above), let's consider a couple of different ways of answering some inference queries, starting with the brute force approach.</p>
+              <p class='definition'><strong>Propositional Inference</strong> is the process of determining the truth of certain sentences that are not stated explicitly in a KB.</p>
+              <p>In other words, inference allows us to make claims by way of propositional sentences that can be inferred from our KB, though may not be given.</p>
+              <p>In other, other words, we take what we know, and use that knowledge to deduce something that we knew, but wasn't obvious.</p>
+              <p>So, we'll consider the simplest interpretation of inference first:</p>
+              <p>We've seen the vocabulary "model" apply to an instantiation of truth values to propositions in the KB: \(\{P_1 = True, P_2 = False, ...\}\)</p>
+              <p class='definition'>For propositional sentence \(\alpha\), we say that <strong>its models</strong> are the set of all worlds \(\{w_1, w_2, ...\}\) in which \(\alpha\) is true, notated: $$M(\alpha) = \{m_1, m_2, ...\}$$</p>
+              <p class='example'>Consider a simple system with two propositions, \(R, P\), and and a sentence \(\alpha = \lnot R\).</p>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>World</p></th>
+                    <th><p>\(R\)</p></th>
+                    <th><p>\(P\)</p></th>
+                    <th><p>\(\alpha = \lnot R\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(w_0\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_1\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_2\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_3\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Trivially, in the above, we can see that the models of our sentence are any world in which it is true, so: \(M(\alpha) = \{w_0, w_1\} \).</p>
+              <p class='question' name='lo-q5'>Consider our KB from the Pitfall example; since the KB is itself a complex sentence, what would be some models of the KB, i.e., what are some models in \(M(KB)\)? What models would NOT
+                be in \(M(KB)\)?</p>
+              <div class='answer' name='lo-q5'>
+                <p><strong>Model in \(M(KB)\)</strong>: \(\{B_{1,0} = True, P_{2,0} = True, P_{0,0} = False, P_{3,3} = False, B_{0,0} = False, ... \}\) where \(...\) can be any instantiation of the other propositions, since we can't rule anything out
+                  in the other tiles before exploring. In other words, the KB will be True in this world.</p>
+                <p><strong>Model NOT in \(M(KB)\)</strong>: \(\{B_{1,0} = False, ...\}\) where \(...\) can be any instantiation of the other propositions, because we have already falsified the KB by virtue of claiming that
+                  \(... \land \lnot B_{1,0} \land ... \). In other words, the KB will be False in this world.</p>
+              </div>
+              <p>Note: this means that our KB <i>excludes</i> certain worlds / models from consideration -- rightly so, since some are not fidelitous representations of reality.</p>
+              <p>So now, we return to our inference engine:</p>
+              <p>Given some query, we want to know if the query <i>follows from</i> the knowledge encoded in the KB or not.</p>
+              <p class='example'>Consider that we wish to query our KB to determine if a Pit exists at (2,0), i.e., we want to know the truth value of \(P_{2,0}\).</p>
+              <p class='question' name='lo-q6'>In terms of our KB and its models, there are 3 possible answers to this query. What are they, and how can we phrase them in terms of \(M(KB)\)?</p>
+              <div class='answer' name='lo-q6'>
+                <p>The three possible answers are:</p>
+                <ol class='indent-1'>
+                  <li><p><strong>There is certainly a pit in (2,0)</strong>, meaning \(P_{2,0} = True ~ \forall ~ m \in M(KB) \)</p></li>
+                  <li><p><strong>There is certainly no pit in (2,0)</strong>, meaning \(\lnot P_{2,0} = True ~ \forall ~ m \in M(KB) \)</p></li>
+                  <li><p><strong>There may or may not be a pit in (2,0)</strong>, meaning \(P_{2,0} = True \) for some models in \(M(KB)\) and others in which \(\lnot P_{2,0} = True \)</p></li>
+                </ol>
+              </div>
+              <p>As it turns out, we can characterize the above using a criteria known as entailment:</p>
+              <p class='definition'>For two propositional sentences \(\alpha, \beta\) we say that \(\alpha\) <strong>entails</strong> \(\beta\) (meaning \(\beta\) follows from \(\alpha\)), written \(\alpha \vDash \beta\) if the
+                models of \(\alpha\) are a subset of the models of \(\beta\), or formally: $$\alpha \vDash \beta \Leftrightarrow M(\alpha) \subseteq M(\beta)$$</p>
+              <p class='toolkit'>Entailment is the same idea as implication, except that implication is typically used as an asserted rule in the *symbolic* KB and entailment is proved by 
+                examining *models.*</p>
+              <p>Pictorially, entailment looks like:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-4/entailment.png' />
+              </div>
+              <br/>
+              <p>So, returning to our example of determining the pit status at \(\alpha = P_{2,0}\), what our KB tells us about the three cases can be depicted as follows:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-4/model-visualization.png' />
+              </div>
+              <p class='remark'><strong>Punchline:</strong> in order to determine the state of entailment for some sentence \(\alpha\) in our KB, you'll need *at most* 2 tests to
+                determine if you have enough information to make a conclusion: testing if (1) \(M(KB) \vDash \alpha\) and (2) \(M(KB) \vDash \lnot \alpha\), the answers of which
+                will match one of the above image's 3 cases.</p>
+              <br/>
+              <p class='example'>As an illustrative example, consider a system with 3 propositions, \(R, P, S\) and a KB consisting of the sentence \(KB = (\lnot P \lor S) \land \lnot R\).
+                We can similarly diagram the models of two additional sentences, \(\lnot R\) and \(\lnot P\).</p>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>World</p></th>
+                    <th><p>\(R\)</p></th>
+                    <th><p>\(P\)</p></th>
+                    <th><p>\(S\)</p></th>
+                    <th><p>\(KB = (\lnot P \lor S) \land \lnot R\)</p></th>
+                    <th><p>\(\lnot R\)</p></th>
+                    <th><p>\(\lnot P\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(w_0\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_1\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_2\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_3\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_4\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_5\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_6\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(w_7\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Now, detailing the models of each sentence:</p>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>Sentences</p></th>
+                    <th><p>Models (set of worlds, enumerated)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(R\)</p></td>
+                    <td><p>\(\{4, 5, 6, 7\}\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(\lnot R\)</p></td>
+                    <td><p>\(\{0, 1, 2, 3\}\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(P\)</p></td>
+                    <td><p>\(\{2, 3, 6, 7\}\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(\lnot P\)</p></td>
+                    <td><p>\(\{0, 1, 4, 5\}\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(KB = (\lnot P \lor S) \land \lnot R\)</p></td>
+                    <td><p>\(\{0, 1, 3\}\)</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Using the above, we can reflect:</p>
+              <p class='question' name='ent-q0'>Does \(KB \vDash R\)?</p>
+              <p class='answer' name='ent-q0'>No, since \(M(KB) = \{0, 1, 3\}\) are not a subset of \(M(R) = \{4, 5, 6, 7\}\). However, we would not immediately conclude that
+                \(KB \vDash \lnot R\) until verifying that \(M(KB) = \{0, 1, 3\} \subseteq M(\lnot R) = \{0, 1, 2, 3\}\), which is indeed the case, and so we conclude \(KB \vDash \lnot R\)</p>
+              <p class='question' name='ent-q1'>Does \(KB \vDash P\)?</p>
+              <p class='answer' name='ent-q1'>No, since \(M(KB) = \{0, 1, 3\}\) are not a subset of \(M(P) = \{2, 3, 6, 7\}\). However, we would not immediately conclude that
+                \(KB \vDash \lnot P\), since \(M(KB) = \{0, 1, 3\} \not \subseteq M(\lnot P) = \{0, 1, 4, 5\}\), so we know that the \(KB\) does not have enough information to
+                make assertions about proposition \(P\).</p>
+              <br/>
+              
+              <p>So... now, back to our Maze Pitfall problem...</p>
+              <p class='question' name='lo-q7'>Using the notion of entailment, how could we determine if our KB can answer whether or not a Pit exists in (0,2)?</p>
+              <p class='answer' name='lo-q7'>Find out if \(KB \vDash P_{2,0} \Leftrightarrow M(KB) \subseteq M(P_{2,0}) \) or \(KB \vDash \lnot P_{2,0} \Leftrightarrow M(KB) \subseteq M(\lnot P_{2,0}) \). If one of those queries
+                returns true, we know that we've reached a definitive answer. If both queries return false, we know that our KB cannot make a determination with the facts available.</p>
+              <!-- TODO: table with how to answer queries based on model checking -->
+              <p>In other words, if we show that, for every model in which our KB is true, our query is true as well, then the KB entails that query (i.e., the query follows).</p>
+              <p class='toolkit'>This brute force procedure is known as <strong>model enumeration</strong>, since to check models of the KB and the query, we would need to consider their truth value in all possible models.</p>
+              <p class='question' name='lo-q8'>What's the problem with this brute force approach?</p>
+              <p class='answer' name='lo-q8'>That's a lot of models to check! Note that for \(n\) propositions, we would have to check \(2^n\) models to construct the sets \(M(KB)\) and \(M(P_{2,0})\)!</p>
+              <p>Plainly then, this method does not scale for large systems... so, perhaps instead, we can get clever with the symbolic representation of propositions in our KB and find a more efficient way to answer our query...</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

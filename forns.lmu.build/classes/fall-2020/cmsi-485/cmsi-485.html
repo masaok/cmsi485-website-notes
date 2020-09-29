@@ -1,0 +1,437 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div class="main-spacer visible-desktop"></div>
+      <div id="main-content" class="container">
+        <div class="row">
+          <div class="jumbotron">
+            <div class="container">
+              <h1>CMSI 485 - Artificial Intelligence</h1>
+              <p>Professor Andrew Forney &#8226; Andrew.Forney[at]lmu.edu &#8226; Fall 2020</p>
+            </div>
+          </div>
+          
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><span class='glyphicon glyphicon-bullhorn'></span> &nbsp;Announcements</a></li>
+            <li role="presentation"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab"><span class='glyphicon glyphicon-file'></span> &nbsp;Notes</a></li>
+            <li role="presentation"><a href="#homework" aria-controls="homework" role="tab" data-toggle="tab"><span class='glyphicon glyphicon-pencil'></span> &nbsp;Homework</a></li>
+            <li role="presentation"><a href="#classwork" aria-controls="classwork" role="tab" data-toggle="tab"><span class='glyphicon glyphicon-inbox'></span> &nbsp;Classwork</a></li>
+            <li role="presentation"><a href="#materials" aria-controls="materials" role="tab" data-toggle="tab"><span class='glyphicon glyphicon-paperclip'></span> &nbsp;Materials</a></li>
+          </ul>
+        
+          <!-- Tab panes -->
+          <div class="tab-content">
+            
+            <!-- Announcements -->
+            <div role="tabpanel" class="tab-pane active" id="home">
+              <br/>
+              <h3>Welcome to CMSI-485 <small>9 / 1 / 20</small></h3>
+              <p>If you're reading this then you've successfully found the course page for CMSI 485! Check this page frequently for announcements that are relevant to the course, including notes, homework
+                assignments, and practice problems.</p>
+              <p>First things first, please read through the course syllabus <a href='./materials/syllabus.html'>located here</a> (or in the Materials tab above).</p>
+            </div>
+            
+            <!-- Notes -->
+            <div role="tabpanel" class="tab-pane" id="notes">
+              <br/>
+              <!-- <p class='alert alert-info text-center'>This course hasn't begun yet, you eager monkey! Check back soon for lecture note and video posts.</p> -->
+              <table class='table table-striped'>
+                <caption>Lecture Notes</caption>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Lecture Subject</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!--
+                  <tr>
+                    <td>Lecture XXX<br/>12 / 3 / 20</td>
+                    <td><a href='lecture-XXX.html'>Two Steps Forward, One Step Back-Propagation<br/>
+                        <small>A brief (lol) treatise on back-propagation: the classic learning mechanism in neural networks.</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture XXX<br/>11 / 12 / 20</td>
+                    <td><a href='lecture-XXX.html'>IDK ID3<br/>
+                        <small>...but you will soon! Entropy in decision-tree learning, and some common concerns like overfitting.</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture XXX<br/>11 / 7 / 20</td>
+                    <td><a href='lecture-XXX.html'>Decisions, Decisions<br/>
+                        <small>Planting the seed of decision-making with the hopes of growing a beautiful tree.</small></a></td>
+                  </tr>
+		              <tr>
+                    <td>Lecture 15-2<br/>12 / 5 / 20</td>
+                    <td><a href='lecture-15-2.html'>Nothing but Nets<br/>
+                        <small>BRISK primer into motivation, development, structure, and semantics of neural networks.</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 15-1<br/>12 / 3 / 20</td>
+                    <td><a href='lecture-15-1.html'>A Few Descent Gradients<br/>
+                        <small>Fixing perceptrons with logistic regression!</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 13-2<br/>11 / 21 / 20</td>
+                    <td><a href='lecture-13-2.html'>Perception Management<br/>
+                        <small>Perceptrons see all.</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 13-1<br/>11 / 20 / 20</td>
+                    <td><a href='lecture-13-1.html'>Smooth Moves<br/>
+                        <small>Learnin', Smoothin', and Tunin'.</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 12-2<br/>11 / 14 / 20</td>
+                    <td><a href='lecture-12-2.html'>Ignorance is Bliss<br/>
+                        <small>Naive Bayes Classifiers and playing the game of Spam v. Ham!</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 12-1<br/>11 / 12 / 20</td>
+                    <td><a href='lecture-12-1.html'>The Imitation Game<br/>
+                        <small>Intro to machine learning and learning from examples!</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 10-1<br/>10 / 29 / 20</td>
+                    <td><a href='lecture-10-1.html'>Crouching Tiger, Hidden Markov<br/>
+                        <small>Hidden Markov Models... Markov you ninja, you!</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 9-2<br/>10 / 24 / 20</td>
+                    <td><a href='lecture-9-2.html'>Making Our Markov<br/>
+                        <small>Introduction to Markov Models and Reasoning Over Time!</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 8-1<br/>10 / 15 / 20</td>
+                    <td><a href='lecture-8-1.html'>The Price of Knowledge<br/>
+                        <small>What *is* the value of information? Let's find out!</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 7-2<br/>10 / 10 / 20</td>
+                    <td><a href='lecture-7-2.html'>Utilitarianism 2.0<br/>
+                        <small>Utility Theory and Decision Networks!</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 7-1<br/>10 / 8 / 20</td>
+                    <td><a href='lecture-7-1.html'>Costco's Favorite Lecture<br/>
+                        <small>Sampling! (Approximate Inference in Bayesian Networks)</small></a></td>
+                  </tr>
+                  -->
+                  <tr>
+                    <td>Lecture 5-1<br/>9 / 29 / 20</td>
+                    <td><a href='lecture-5-1.html'>Feeling Marginalized?<br/>
+                        <small>Intuitions on BN Inference Complexities, and resources for further investigation.</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 4-2<br/>9 / 24 / 20</td>
+                    <td><a href='lecture-4-2.html'>The Probabilities are Endless<br/>
+                        <small>Exact inference in Bayesian Networks! Intuition, basics, and examples.</small></a>
+                        <span class='glyphicon glyphicon-film'></span>&nbsp; <a href='https://vimeo.com/461626654/fa62cc337e' target='_blank'>Lecture Video (L4-2)</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 4-1<br/>9 / 22 / 20</td>
+                    <td><a href='lecture-4-1.html'>Separation Anxiety<br/>
+                        <small>...dispelled with Bayesian Network independence claims laid bare through d-separation!</small></a><br/>
+                        <span class='glyphicon glyphicon-film'></span>&nbsp; <a href='https://vimeo.com/460759282/315ce57ac1' target='_blank'>Lecture Video (L4-1)</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 3-2<br/>9 / 17 / 20</td>
+                    <td><a href='lecture-3-2.html'>Bayeswatch<br/>
+                        <small>Satisfying all of your Bayesal instincts (beginnings of Bayesian Networks).</small></a><br/>
+                        <span class='glyphicon glyphicon-film'></span>&nbsp; <a href='https://vimeo.com/459180975/ab3f63bf41' target='_blank'>Lecture Video (L3-2)</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 3-1<br/>9 / 15 / 20</td>
+                    <td><a href='lecture-3-1.html'>A Second Chance at Inference<br/>
+                        <small>Beginnings of Probability Theory!</small></a><br/>
+                        <span class='glyphicon glyphicon-film'></span>&nbsp; <a href='https://vimeo.com/458339200/6ef0b6d6e8' target='_blank'>Lecture Video (L3-1)</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 2-1<br/>9 / 8 / 20</td>
+                    <td><a href='lecture-2-1.html'>New: Here's Resolution<br/>
+                        <small>Theorem proving and resolution -- inference proceduralized!</small></a><br/>
+                        <span class='glyphicon glyphicon-film'></span>&nbsp; <a href='https://vimeo.com/455981299/2692e13fe7' target='_blank'>Lecture Video (L2-1)</a><br/>
+                        <span class='glyphicon glyphicon-film'></span>&nbsp; <a href='https://vimeo.com/456720040/b2855e5842' target='_blank'>Lecture Video (L2-2)</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 1-2<br/>9 / 3 / 20</td>
+                    <td><a href='lecture-1-2.html'>A Proposition You Can't Refuse<br/>
+                        <small>Propositional logic: syntax and semantics, and beginnings of propositional logic inference.</small></a><br/>
+                        <span class='glyphicon glyphicon-film'></span>&nbsp; <a href='https://vimeo.com/454534726/af952ce16f' target='_blank'>Lecture Video (L1-2)</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Lecture 1-1<br/>9 / 1 / 20</td>
+                    <td><a href='lecture-1-1.html'>Humble Beginnings to World Domination<br/>
+                        <small>Skynet had to start somewhere! Introduction, syllabus review, and course overview.</small></a><br/>
+                        <span class='glyphicon glyphicon-film'></span>&nbsp; <a href='https://vimeo.com/453826795/7881203d62' target='_blank'>Lecture Video (L1-1)</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- Homework -->
+            <div role="tabpanel" class="tab-pane" id="homework">
+              <br/>
+              <!--
+              <br/>
+              <p class='alert alert-info text-center'>Nothing to see here... yet...</p>
+              -->
+              <table class='table table-striped'>
+                <caption>Homework</caption>
+                <thead>
+                  <tr>
+                    <th>Number</th>
+                    <th>Day Assigned</th>
+                    <th>Due Midnight</th>
+                  </tr>
+                </thead>
+                <tbody>
+              <!--
+                  <tr>
+                    <td><a href='./homework/hw4/homework-4.html'>Homework 4 - Spam Happy</a>
+                      <br/><span class='glyphicon glyphicon-check'></span><span class='glyphicon glyphicon-stats'></span> &nbsp;
+                               <a href='./homework/hw2/homework-2-soln.zip'>Solution &amp; Grading Tests</a>
+                    </td>
+                    <td>12 / 11 / 20</td>
+                    <td>12 / 14 / 20</td>
+                  </tr>
+                  <tr>
+                    <td><a href='./homework/hw3/homework-3.html'>Homework 3 - Ghostbusted</a>
+                      <br/><span class='glyphicon glyphicon-check'></span> &nbsp;<a href='./homework/hw3/ad_engine.py'>Solution</a><br/>
+                           <span class='glyphicon glyphicon-stats'></span> &nbsp;<a href='./homework/hw3/hw_3_grading.py'>Grading Tests</a>
+                    </td>
+                    <td>11 / 7 / 20</td>
+                    <td>11 / 22 / 20</td>
+                  </tr>
+                  <tr>
+                    <td><a href='./homework/hw2/homework-2.html'>Homework 2 - Star Spangled Bayeser</a>
+                      <br/><span class='glyphicon glyphicon-check'></span> &nbsp;<a href='./homework/hw3/ad_engine.py'>Solution</a><br/>
+                           <span class='glyphicon glyphicon-stats'></span> &nbsp;<a href='./homework/hw3/hw_3_grading.py'>Grading Tests</a>
+                    </td>
+                    <td>10 / 13 / 20</td>
+                    <td>11 / 7 / 20</td>
+                  </tr>
+                -->
+                  <tr>
+                    <td><a href='./homework/hw1/homework-1.html'>Homework 1: Are You Ever Infer It</a>
+                      <!--<br/><span class='glyphicon glyphicon-stats'></span> &nbsp;<a href='./homework/hw1/solution/grading_tests.py'>Grading Tests</a>-->
+                    </td>
+                    <td>9 / 11 / 20</td>
+                    <td>10 / 8 / 20</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            
+            <!-- Classwork -->
+            <div role="tabpanel" class="tab-pane" id="classwork">
+              <br/>
+              <!--
+              <br/>
+              <p class='alert alert-info text-center'>Nothing to see here... yet...</p>
+              -->
+              <table class='table table-striped'>
+                <caption>Classwork</caption>
+                <thead>
+                  <tr>
+                    <th>Number</th>
+                    <th>Day Assigned</th>
+                    <th>Due Midnight</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <!-- 
+                  <tr>
+                    <td><a href='./classwork/cmsi-485-classwork-5.pdf'>Classwork 5 - No Regret-ions</a><br/>
+                        <small>Yikes, that one was a stretch</small><br/>
+                        <span class='glyphicon glyphicon-check'></span> &nbsp;<a href='./classwork/cmsi-485-classwork-5-solution.pdf'>Solution</a>
+                    </td>
+                    <td>12 / 5 / 20</td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td><a href='./classwork/cmsi-485-classwork-4.pdf'>Classwork 4 - Class[work]ification</a><br/>
+                        <span class='glyphicon glyphicon-check'></span> &nbsp;<a href='./classwork/cmsi-485-classwork-4-solution.pdf'>Solution</a>
+                    </td>
+                    <td>11 / 19 / 20</td>
+                    <td>12 / 5 / 20</td>
+                  </tr>
+                  <tr>
+                    <td><a href='./classwork/cmsi-485-classwork-3.pdf'>Classwork 3 - Gibb and Take</a><br/>
+                        <span class='glyphicon glyphicon-check'></span> &nbsp;<a href='./classwork/cmsi-485-classwork-3-solution.pdf'>Solution</a>
+                    </td>
+                    <td>10 / 22 / 20</td>
+                    <td>10 / 28 / 20</td>
+                  </tr>
+                   -->
+                  <tr>
+                    <td><a href='./classwork/classwork-2.html'>Classwork 2 - Halcyon Bayes</a><br/>
+                        <!--<span class='glyphicon glyphicon-check'></span> &nbsp;<a href='./classwork/cmsi-485-classwork-2-solution.pdf'>Solution</a>-->
+                    </td>
+                    <td>9 / 29 / 20</td>
+                    <td>10 / 6 / 20</td>
+                  </tr>
+                  <tr>
+                    <td><a href='./classwork/classwork-1.html'>Classwork 1 - Mad Props</a><br/>
+                        <span class='glyphicon glyphicon-check'></span> &nbsp;<a href='./classwork/classwork-1-solution.html'>Solution</a>
+                    </td>
+                    <td>9 / 10 / 20</td>
+                    <td>9 / 17 / 20</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+
+            <!-- Materials -->
+            <div role="tabpanel" class="tab-pane" id="materials">
+              <br/>
+              <table class='table table-striped'>
+                <caption>Supplementary Class Materials</caption>
+                <thead>
+                </thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Item</th>
+                  </tr>
+                <tbody>
+                  <!--
+                  <tr>
+                    <td>12 / 3 / 20</td>
+                    <td><a href='./materials/exam-III-info.html'>Exam III Information<br/>
+                        <small>All you need to know about Exam III... well, all you need to know you need to know.</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>10 / 24 / 20</td>
+                    <td><a href='./materials/exam-II-info.html'>Exam II Information<br/>
+                        <small>All you need to know about Exam II... well, all you need to know you need to know.</small></a></td>
+                  </tr>
+                  <tr>
+                    <td>9 / 19 / 20</td>
+                    <td><a href='./materials/exam-I-info.html'>Exam I Information<br/>
+                        <small>All you need to know about Exam I... well, all you need to know you need to know.</small></a></td>
+                  </tr>
+                  -->
+                  <tr>
+                    <td>9 / 1 / 20</td>
+                    <td><a href='./materials/syllabus.html'>Course Syllabus<br/>
+                        <small>Contains vital information about the class, contact information, dates, homework, policies, and grading.</small></a></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+            
+          </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

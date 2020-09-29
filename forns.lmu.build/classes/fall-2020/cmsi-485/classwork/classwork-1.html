@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../../assets/images/favicon.ico'>
+    <script src="../../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../../js/lib/expanding.js"></script>
+    <script src="../../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../../classes.html">Classes</a></li>
+              <li><a href="../cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Classwork 1</li>
+            </ol>
+            
+            <div id='cw' class='scrollspy-element' scrollspy-title='Classwork 1'></div>
+            <h1>Classwork 1</h1>
+            <div>
+              <p>This classwork will give you some practice with the theory behind propositional logic inference, as well as some practice with
+                theorem proving.</p>
+              <br/>
+              
+              <h4>Problem 1</h4>
+              <hr/>
+              <p>Provide a short (at max, a paragraph) answer to each of the following questions.</p>
+              <ol class='indent-1'>
+                <li><p>One of the most common mistakes with propositional logic inference is to assume that resolution is defined on multiple propositions at a time. 
+                  Prove, using the definition of <strong>propositional logic entailment</strong>, that this is not the case; specifically (for props. \(X,Y,Z\)) show that:
+                  $$(X \lor Y \lor Z) \land (\lnot Y \lor \lnot Z) \not \vDash (X)$$</p></li>
+                <li><p>Certain logic systems exploit Knowledge Bases with only Horn Clauses, which are clauses with at *most* one positive (i.e., non-negated) literal / proposition.
+                  For instance, \(\lnot P \lor Q \lor \lnot R\) is a Horn Clause (since \(Q\) is the only positive literal) whereas \(\lnot P \lor Q \lor R\) is not (more than one
+                  positive literal). Why might having Horn Clauses prove useful / beneficial for resolution-based inference engines?</p></li>
+              </ol>
+              <br/>
+              
+              <h4>Problem 2</h4>
+              <hr/>
+              <p>One of the early applications of propositional logic was an attempt to allow machines to comprehend stories / corpi of text and then
+                answer questions about them (its successor, first-order logic attempted to do the same at a higher level of abstraction).</p>
+              <p>This strategy would ultimately, as with many other similar endeavors, fail to scale, but is interesting to consider in practice, especially as a companion
+                to more modern statistical techniques.</p>
+              <p>Many smaller-scale systems can still effectively use these strategies, and are sometimes still found in practice, as with sophisticated Q&amp;A
+                systems to automate customer service.</p>
+              <p class='definition'>Consider the following story (written from the perspective of the future, per my upcoming novel)
+                with bracketed propositions \([P]\), use its rules and facts to formalize a KB in CNF, and then answer some 
+                inference queries that follow.</p>
+              <p>
+                Preceding the Great Forneybot Uprising of 2024, the world was in a utopic state of bliss with humankind finally served by throngs of our
+                robotic servants. Forney Industries, sadly, had a number of fatal oversights in their robots' design, any number of whose small,
+                environmental quirks could cause them to violently malfunction. Before the flaws were discovered, it was, of course, too late (science demands progress!) --
+                however, it has long been a matter of historical discourse for what event actually triggered the first mass malfunction...
+              </p>
+              <p>Rules and facts:</p>
+              <ol class='indent-1'>
+                <li><p>Forneybots were found to malfunction \([M]\) if and only if they suffer water damage \([D]\) or overheard a logical paradox \([P]\).</p></li>
+                <li><p>Forneybots may have been caught in a sudden rainstorm \([R]\), which are known to happen only during Winter \([W]\) or Summer \([S]\),
+                  though not all Winters and Summers had rain.</p></li>
+                <li><p>It also goes without saying that if it is one season, it cannot simultaneously be the others (in this dystopian future, Spring is no longer
+                  a season, so don't worry about it).</p></li>
+                <li><p>Moreover, rainstorms and water damage would have gone hand in hand, since the Forneybots were not aware of 
+                  their weakness (note: "hand-in-hand" is usually... shorthand [puts sunglasses on] for bidirectional implication).</p></li>
+                <li><p>Logical paradoxes, on the other hand, would have <i>only</i> been heard during election season (through TV or radio broadcast),
+                  which are held in the Fall \([F]\) (and thus, all Fall seasons came hand in hand with paradoxes).</p></li>
+                <li><p>The Great Forneybot Uprising occurred from a mass malfunction on Nov. 16, 2024 (note the season).</p></li>
+              </ol>
+              <div class='definition'>
+                <p>Your task is as follows:</p>
+                <ol class='indent-1'>
+                  <li><p>Create a KB by converting each of the above English sentences into a propositional logic one.</p></li>
+                  <li><p>Convert the KB into CNF, and enumerate each clause.</p></li>
+                  <li><p>Using the above, we must settle the debate by showing that one of the following queries is true: (1) \(\alpha = \lnot D \land P\)
+                    (i.e., that it was an overheard paradox and NOT water damage that caused the uprising) or (2) \(\beta = \lnot P \land D\) (vice versa).</p></li>
+                </ol>
+              </div>
+              <p class='debug'>For the inference step 3 above, show which clauses contributed to each inferred term on the way to a solution using resolution
+                proof by refutation!</p>
+              <p class='toolkit'>You should be familiar with the logical equivalence rules of propositional logic as listed below (from your textbook).</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../../assets/images/spring-2018/cmsi-485/week-7/logic-equiv.png' />
+              </div>
+              <br/>
+              
+              
+              <h4>GitHub Classroom</h4>
+              <hr/>
+              <p class='definition'>Normally, you'd find a solution skeleton here, but since you're just using it to get familiar with GitHub if you're not already, simply
+                form groups and push your submission to your Classroom repo at the following link (see submission instructions below).</p>
+              <p class='assignment'><a href='https://classroom.github.com/g/qtHJ8hFx' target='_blank'>Classwork 1 - GitHub Classroom</a></p>
+              <br/>
+            </div>
+            <hr/>
+            <br/>
+            
+            <div id='submission' class='scrollspy-element' scrollspy-title='Submission'></div>
+            <h1>Submission</h1>
+            <div>
+              <p class='definition'>You will be submitting your assignments through GitHub Classroom (if digitally)!</p>
+              <h4>What</h4>
+              <p>Complete the 1 document file that accomplishes the specification above, submitting either a Word, text, or PDF document; scanned and written solutions are also
+                acceptable <strong>*as long as the final product is a single document*</strong> (I don't want to open up 17 different .jpgs to grade your submission).</p>
+              <br/>
+              
+              <h4>How</h4>
+              <p>To <strong>clone</strong> this assignment (if you need a refresher), consult the guide here:</p>
+              <p class='assignment'><a href='../../../tutorials/github-classroom.html' target='_blank'>GitHub Classroom Tutorial</a></p>
+              <p>To <strong>submit</strong> this assignment:</p>
+              <ul class='indent-1'>
+                <li><p>Simply push your final, submission copy to the GitHub Classroom repository associated with you or your group.</p></li>
+                <li><p>If you worked in a group (3 individuals maximum), ensure that your GitHub Classroom group includes all members, and place all group members' names at 
+                  the top of *any* submitted files.</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

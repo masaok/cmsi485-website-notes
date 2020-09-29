@@ -1,0 +1,607 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 4-2</li>
+            </ol>
+            
+            
+            <div id='inference' class='scrollspy-element' scrollspy-title="BN: Exact Inference"></div>
+            <h1>Bayesian Networks: Exact Inference</h1>
+            <div>
+              <p>To motivate exact inference, let's start with some review of what we've learned of Bayesian Networks, and use that to catapult into some inference techniques using
+                them.</p>
+              
+              <h3>Review and Motivation</h3>
+              <hr/>
+              <p>Before we do anything, we should ask:</p>
+              <p class='question' name='bn-q0'>What does <strong>inference</strong> mean in the context of Bayesian Networks?</p>
+              <p class='answer' name='bn-q0'>BN inference seeks to estimate some <i>probabilistic query</i> of the format:
+                $$BN.ask(\alpha, \beta) = P(\alpha | \beta)$$
+              </p>
+              <p class='question' name='bn-q1'>Why might answering probabilistic inference queries be important to an artificial agent?</p>
+              <p class='answer' name='bn-q1'>An agent may possess uncertainty about its environment, but is still required to make the most educated guess about its state as possible;
+                recall, for example, the Solicitorbot that only wants to visit homes in which residents are present (but the bot may not know for certain if someone is home or not).</p>
+              <p>As such, we can see how probabilistic inferences help our agent's reason in spite of uncertainty, so why is this not straightforward?</p>
+              <br/>
+              
+              <h3>Query Difficulty</h3>
+              <hr/>
+              <div class='toolkit'>
+                <p><strong>The inference challenge</strong>:</p>
+                <ol class='indent-1'>
+                  <li><p>All probabilistic inference queries can be answered from the joint distribution over observed variables.</p></li>
+                  <li><p>The joint distribution is too large to maintain, so a Bayesian Network factors it by exploiting independence relationships between variables.</p></li>
+                  <li><p>However, by breaking it apart into factors, arbitrary queries of the format \(P(\alpha | \beta)\) are not always immediately available from the BN.</p></li>
+                </ol>
+              </div>
+              <p class='definition'>As such, we need a means of answering inference queries in terms of the BN's <strong>parameters</strong> (i.e., how its semantics are stored / parameterized)
+                alone.</p>
+              <p>What defines the network's "parameters?"</p>
+              <p>To answer that, let's look at what queries can be answered immediately from a BN and which require some additional computation.</p>
+              <br/>
+              
+              <h4>Immediately Answerable Queries</h4>
+              <p class='question' name='bn-q2'>How does a Bayesian Network factor the joint distribution over the network's variables? What factorization technique does it employ?</p>
+              <p class='answer' name='bn-q2'>The Markovian Factorization of the joint, i.e., the joint factored into individual conditional probabilities of
+                \(P(\text{effect}~|~\text{causes})\):
+                $$P(V_1, V_2, V_3, ...) = \prod_{V_i \in \textbf{V}} P(V_i~|~parents(V_i))$$
+              </p>
+              <p class='question' name='bn-q3'>How are these factors stored in the Bayesian Network? What defines the network's parameters / semantics?</p>
+              <p class='answer' name='bn-q3'>At each node \(N\) in the graph, the factors are stored in <strong>conditional probability tables</strong>, which define:
+                $$P(N~|~\text{parents}(N))$$
+              </p>
+              <p class='question' name='bn-q4'>Putting the above together, what would constitute an inference query that we could answer immediately without any maths?</p>
+              <p class='answer' name='bn-q4'>Any query that could be phrased as one of the known CPT quantities!</p>
+              
+              <p class='toolkit'>We'll consider an "immediately answerable query" one that can be answered directly from one of the network's CPTs / parameters (without needing
+                to perform any computation).</p>
+              <p class='example'>For the following, simple Bayesian Network, determine which of the queries that follow are "immediately answerable" (and if so, answer them) or
+                are computable (i.e., not immediately answerable).</p>
+              <p>Note: for brevity, I (and other representations) will sometimes use (0, 1) in place of (false, true) for Boolean variables, as is done in our Medibot
+                diagnostic robot example below.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-9/bn-smoking.png' />
+              </div>
+              <br/>
+              <p class='question' name='bn-q5'>$$P(B = 0 | A = 1)$$</p>
+              <p class='answer' name='bn-q5'>Immediately answerable from the CPT on \(B\):
+                $$P(B = 0 | A = 1) = 0.1$$
+              </p>
+              <p class='question' name='bn-q6'>$$P(A = 1 | B = 0)$$</p>
+              <p class='answer' name='bn-q6'>Not immediately answerable -- there is no CPT with this quantity and so it must be computed (since \(A \not \indep B\))</p>
+              <p class='question' name='bn-q7'>$$P(C = 1 | A = 1, B = 0)$$</p>
+              <p class='answer' name='bn-q7'>Immediately answerable from CPT on \(C\) because \(P(C = 1 | A = 1, B = 0) = P(C = 1 | B = 0)\) since \(C \indep A~|~B\) (which we know
+                from the network's structure via d-separation!)</p>
+              <p>As such, knowing the network's <strong>independence claims</strong> can reveal immediately answerable queries that may appear to be a required computation.</p>
+              <p>So, reasonably, one might observe that there are other queries that are interesting but not immediately answerable -- how do we <i>compute</i> those?</p>
+              <br/>
+              
+              <h4>Computable Queries</h4>
+              <p class='toolkit'><strong>Computable queries</strong>, by contrast, are those that can be computed from a BN's parameters using the rules of probability theory.
+                <strong>All queries</strong> are computable, but only some (detailed above) can be obtained directly from the network parameters.</p>
+              <p>The trick of computing any arbitrary BN query is to the use the information from the joint distribution over the network's variables without needing to fully
+                reconstruct the joint distribution.</p>
+              <p>In addition to the Markovian Factorization of a Bayesian Network, the tools we'll need to remember to accomplish this are:</p>
+              <div class='well'>
+                <ul class='indent-1'>
+                  <li><p><strong>Conditioning:</strong>
+                    $$P(\alpha~|~\beta) = \frac{P(\alpha, \beta)}{P(\beta)}$$
+                  </p></li>
+                  <li><p><strong>Law of Total Probability:</strong>
+                    $$P(\alpha) = \sum_{b \in \beta} P(\alpha, \beta = b)$$
+                    Note: the syntax: \(\sum_{b \in \beta} P(\alpha, \beta = b)\) says to "sum over all values of beta." In other words, if beta is binary (0, 1), we would have:
+                    $$\sum_{b \in \beta} P(\alpha, \beta = b) = P(\alpha, \beta = 0) + P(\alpha, \beta = 1)$$
+                  </p>
+                  </li>
+                </ul>
+              </div>
+              <p>So how do we put it all together?</p>
+              <br/>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='enuminf' class='scrollspy-element' scrollspy-title="Enumeration Inference"></div>
+            <h1>Enumeration Inference</h1>
+            <div>
+              <p class='definition'><strong>Enumeration Inference</strong> is an inference algorithm that can compute any query via <i>sums-of-products</i> of
+                conditional probabilities from the CPTs.</p>
+              <p class='debug'>Disclaimer: Enumeration Inference, although the easiest to perform by-hand, is a brute-force approach that suffers some performance issues.</p>
+              <p>More sophisticated inference algorithms have addressed some of these computational problems (see a dynamic programming approach called Variable Elimination), but
+                probabilistic inference is not an easy problem.</p>
+              <p>Variable Elimination and other advanced techniques can be covered in full graduate courses on their design, and are, unfortunately, out of scope for this class.</p>
+              <p class='toolkit'>The <code>Enumeration-ASK</code> algorithm in Figure 14.9 of your textbook details a procedure for accomplishing this exact inference approach, but
+                we'll examine the steps for performing it by hand below.</p>
+              <br/>
+              
+              <h4>Motivating Example</h4>
+              <p class='example'>Returning to our Medibot diagnostic system, let's answer a very important query: what is the likelihood of attaining lung cancer given that you smoke?
+                $$P(C~|~A = 1) = ???$$
+              </p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-9/bn-smoking.png' />
+              </div>
+              <br/>
+              
+              <h4>Step 1: Identify Variable Types</h4>
+              <p>Enumeration inference begins by categorizing BN variables as one of three types for a query \(P(Q~|~e)\):</p>
+              <ul class='indent-1'>
+                <li><p><strong>Query Variable \((Q)\),</strong> is a single variable for which we are interested in computing the likelihood (more sophisticated inference algorithms
+                  can compute joints of query variables, but we'll keep it simple to start).</p></li>
+                <li><p><strong>Evidence Variables \((e)\),</strong> are variables that are observed at some value, and are held as evidence (note: lower-case \(e\) because these
+                  variables are fixed to their observed value \(E = e\)).</p></li>
+                <li><p><strong>Hidden Variables \((Y)\),</strong> are any variables in the network that are not part of the query (i.e., are neither query nor evidence variables).</p></li>
+              </ul>
+              <p class='question' name='bn-q7'>In our Medibot example, what are the query, evidence, and hidden variables?</p>
+              <p class='answer' name='bn-q7'>Query = \(\{C\}\), Evidence = \(\{S = 1\}\), Hidden = \(\{B\}\)</p>
+              <p>Intuitively, we want to compute the effect that Smoking (A) has on Lung Tar (B) deposits, and thus, the resulting effect that Lung Tar has on Cancer (C).</p>
+              <p>However, because Lung Tar is not a part of our query, it serves only as an "open valve" of information through which info about C flows from A.</p>
+              <p class='toolkit'>Note: A computable query can sometimes be simplified to an immediately answerable one at this step.</p>
+              <p>For example, the query \(P(C~|~A=0, B=1)\) appears to have two evidence variables \(A, B\) but can be simplified into an immediately answerable query
+                \(P(C~|~B=1)\) using the graph's independence claims.</p>
+              <p>However, that's not the case in the above, so we move on...</p>
+              <p class='remark'><strong>Recap:</strong> we want to compute \(P(Q | e)\) but we only have the Markovian Factorization of the joint: \(P(Q, e, Y)\). So, we need
+                to find a way to express what we *want* in terms of what we *have*.</p>
+              <p class='toolkit'><strong>Roadmap:</strong> To phrase our query \(P(Q | e)\) in terms of our MF, we have:
+                $$\begin{eqnarray}
+                  P(Q~|~e) &=& \frac{P(Q, e)}{P(e)}~ \text{(Conditioning)} \\
+                           &=& \frac{1}{P(e)} * P(Q, e)~ \text{(Algebra)} \\
+                           &=& \frac{1}{P(e)} * \sum_{y \in Y} P(Q, e, y)~ \text{(Law of Total Prob.)} \\
+                \end{eqnarray}$$
+                Observe that \(P(Q, e, y)\) is the joint distribution, which we know how to factor using the Markovian Factorization!
+              </p>
+              <div class='toolkit'>
+                <p>Thus, we can work backwards from the above, and perform the following steps:</p>
+                <ol class='indent-1'>
+                  <li><p>Compute \(P(Q, e) = \sum_{y \in Y} P(Q, e, y)\)</p></li>
+                  <li><p>Use the above to compute \(P(e) = \sum_{q \in Q} P(Q, e)\)</p></li>
+                  <li><p>Use both of the above to compute \(P(Q | e) = \frac{P(Q, e)}{P(e)}\)</p></li>
+                </ol>
+              </div>
+              <p>Since we don't want to compute \(P(e)\) separately, as its own inference query, we'll exploit the fact that we can use the law of total probability on the intermediary
+                computation of \(P(Q, e)\) to get it for free along the way!</p>
+              <br/>
+              
+              <h4>Step 2.1: Compute \(P(Q, e) = \sum_{y \in Y} P(Q, e, y)\)</h4>
+              <p>From our roadmap above, Step 2 is to phrase our query as a summation over the full joint via the network's markovian factorization, and worry about normalizing
+                by \(P(e)\) at the end.</p>
+              <p>In other words, let's focus on finding: \(\sum_{y \in Y} P(Q, e, y)\).</p>
+              <p class='question' name='bn-q8'>For our Medibot example above, how would we write \(\sum_{y \in Y} P(Q, e, y)\) (the "template") for our variables found in Step 1? 
+                How to decompose the joint using the Markovian Factorization?</p>
+              <p class='answer' name='bn-q8'>
+                $$\sum_{y \in Y} P(Q, e, y) = \sum_{b \in B} P(C, A = 1, B = b) = \sum_{b \in B} P(C|B = b) P(B = b|A = 1) P(A = 1)$$
+              </p>
+              <br/>
+              
+              <h4>[Optional] Step 2.2: Optimizing Order</h4>
+              <p>Notice that, above, our summation is somewhat naively constructed.</p>
+              <p class='question' name='bn-q9'>In the summation above (repeated below), knowing that every variable is binary, how many expressions will be summed? How many factors are in each
+                summed expression?
+                $$\sum_{b \in B} P(C|B = b) P(B = b|A = 1) P(A = 1)$$
+              </p>
+              <p class='answer' name='bn-q9'>We have two summed expressions consisting of 3 factors each, for a total of 6 factors that need to be evaluated (for a single value of \(C\)):
+                $$P(C|B = 0) P(B = 0|A = 1) P(A = 1) + P(C|B = 1) P(B = 1|A = 1) P(A = 1)$$
+              </p>
+              <p>Reasonably, we might consider whether every factor need be included in every summed term, or if we can save some computational effort by extracting terms that
+                do *not* rely on the summation.</p>
+              <p class='question' name='bn-q10'>Looking back at the original summation, are there any factors that are unnecessarily repeated in the summation, and can be pulled
+                outside?</p>
+              <p class='answer' name='bn-q10'>Yes, the \(P(A = 1)\) factor can be pulled outside (since it has the same value in each iteration of the summation),
+                thus reducing the number of evaluations required, and improving computational efficiency.</p>
+              <p>This gives us a new, equivalent expression that is more parsimonious!
+                $$\sum_{b \in B} P(C|B = b) P(B = b|A = 1) P(A = 1) = P(A = 1) \sum_{b \in B} P(C|B = b) P(B = b|A = 1)$$
+              </p>
+              <p>Notice that in this new expression, we have only 5 total factors to evaluate:
+                $$P(A = 1) \sum_{b \in B} P(C|B = b) P(B = b|A = 1) = P(A = 1) [P(C|B = 0) P(B = 0|A = 1) + P(C|B = 1) P(B = 1|A = 1)]$$
+              </p>
+              <p class='definition'>This optimization (nontrivial for large networks) is implemented in the Enumeration-ASK algorithm by constructing an expression tree and using DFS,
+                and can take a sum-of-products over \(n\) binary variables from a computational complexity of \(O(n*2^n)\) and reduce it to \(O(2^n)\).</p>
+              <p>Plainly, this is still a non-trivial computational cost, which is improved upon by more modern algorithms like Variable Elimination, which we will not have time to
+                cover in here.</p>
+              <p class='toolkit'><strong>Rule of Thumb:</strong> to accomplish Step 2.2 by hand, it is easiest to arrange Markovian Factors in "topological order" (i.e., parents first
+                and children second), then see if each factor, in sequence, can be moved outside of the summations.</p>
+              <br/>
+                  
+              <h4>Step 2.3: Do the damn thing</h4>
+              <p>At this point, we have an expression that is ready to be computed using the network's parameters, so it's time to execute it!</p>
+              <p>Notice that our factors have been carrying the variable \(C\), indicating that we must compute the expression for each value of \(C\), giving us:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>\(C\)</p></th>
+                    <th><p>\(P(C|A=1) = P(A = 1) \sum_{b \in B} P(C|B = b) P(B = b|A = 1)\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(C = 0\)</p></td>
+                    <td><p>
+                      $$\begin{eqnarray}
+                        P(A &=& 1) \sum_{b \in B} P(C = 0|B = b) P(B = b|A = 1) \\
+                        &=& P(A = 1) [P(C = 0|B = 0) P(B = 0|A = 1) + P(C = 0|B = 1) P(B = 1|A = 1)] \\
+                        &=& 0.6 * [0.5 * 0.1 + 0.7 * 0.9] \\
+                        &=& 0.408
+                      \end{eqnarray}$$
+                    </p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(C = 1\)</p></td>
+                    <td><p>
+                      $$\begin{eqnarray}
+                        P(A &=& 1) \sum_{b \in B} P(C = 1|B = b) P(B = b|A = 1) \\
+                        &=& P(A = 1) [P(C = 1|B = 0) P(B = 0|A = 1) + P(C = 1|B = 1) P(B = 1|A = 1)] \\
+                        &=& 0.6 * [0.5 * 0.1 + 0.3 * 0.9] \\
+                        &=& 0.192
+                      \end{eqnarray}$$
+                    </p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Observant readers will note: "Hey! That doesn't sum to 1!" Well, luckily, we have our final step remaining...</p>
+              <br/>
+              
+              <h4>Step 3: Find \(P(e) = \sum_{q \in Q} P(Q, e)\)</h4>
+              <p>Recall our original roadmap, which was to compute:
+                $$P(C~|~A = 1) = \frac{1}{P(A=1)} \sum_{b \in B} P(C, B = b, A=1)$$
+              </p>
+              <p>What we just did was to compute \(\sum_{b \in B} P(C, B = b, A=1)\) but, this isn't our final answer!</p>
+              <p>The key, missing component, as you see, is our normalizing constant, \(\alpha = \frac{1}{P(A = 1)}\) (divides by the probability of the evidence).</p>
+              <p>Now, it just so happens that we have \(P(A)\) in the CPT of \(A\), but if we didn't happen to have evidence that was an immediately answerable query, what do we do?</p>
+              <p>Well, take another look at what we computed in the previous step, and observe what we actually computed:
+                $$P(A = 1) \sum_{b \in B} P(C|B = b) P(B = b|A = 1) = P(C, A=1)$$
+              </p>
+              <p>So, to find \(P(A = 1)\), all we have to do is sum up the remaining probability mass:
+                $$P(A=1) = \sum_{c \in C} P(C = c, A=1) = P(C = 0, A=1) + P(C = 1, A=1) = 0.408 + 0.192 = 0.600$$
+              </p>
+              <p>We can quickly verify that this is indeed the correct measurement for \(P(A = 1)\) from the CPT on \(A\)!</p>
+              <p>As such, we have that:
+                $$\alpha = \frac{1}{P(A = 1)} = \frac{1}{0.6}$$
+              </p>
+              <br/>
+              
+              <h4>Step 4: Normalize \(P(Q | e) = \frac{P(Q, e)}{P(e)}\)</h4>
+              <p>We'll take our joing marginal from step 2 \(P(Q, e)\), and our normalization factor from step 3 \(P(e)\) we now have our final answer to the query:</p>
+                <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>\(C\)</p></th>
+                    <th><p>\(P(C~|~A = 1)\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(C = 0\)</p></td>
+                    <td><p>
+                      $$\begin{eqnarray}
+                        P(C = 0~|~A = 1) &=& \frac{1}{P(A=1)} \sum_{b \in B} P(C = 0, B = b, A=1) \\
+                                         &=& \frac{1}{0.6} 0.408 \\
+                                         &=& 0.68
+                      \end{eqnarray}$$
+                    </p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(C = 1\)</p></td>
+                    <td><p>
+                      $$\begin{eqnarray}
+                        P(C = 1~|~A = 1) &=& \frac{1}{P(A=1)} \sum_{b \in B} P(C = 1, B = b, A=1) \\
+                                         &=& \frac{1}{0.6} 0.192 \\
+                                         &=& 0.32
+                      \end{eqnarray}$$
+                    </p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              <p>And there you have it! Our final answer: apparently smokers have a \(32\%\) chance of attaining lung cancer according to my fake data!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='practice' class='scrollspy-element' scrollspy-title="Practice"></div>
+            <h1>Practice</h1>
+            <div>
+              <p class='example'>How about a little inference practice with our old friend the Solicitorbot (closure from some of our unanswered queries, and what not).</p>
+              <p>Don't worry yourself over small details like the table design and colors being different between this BN and the one above, variety is the spice of life.</p>
+              <div class="text-center fit-pres">
+                <img src="../../../assets/images/spring-2018/cmsi-485/week-8/solicitor-cpts.png">
+              </div>
+              <br/>
+              <p class='question' name='prac-q0'>Determine the probability that a cacophony is heard in the house if a house's lights are on (click for solution and steps).
+                $$P(C~|~L = 1) = ???$$
+              </p>
+              <div class='answer' name='prac-q0'>
+                <p>We'll follow the steps from above exactly!</p>
+                <ol class='indent-1'>
+                  <li><p><strong>Variables:</strong> Query: \(\{C\}\), Evidence: \(\{L = 1\}\), Hidden: \(\{H\}\)</p></li>
+                  <li><p><strong>Compute \(P(Q, e) = \sum_{y \in Y} P(Q, e, y)\)</strong> \(P(C, L=1) = \sum_{h \in H} P(H = h) P(L = 1~|~H = h) P(C~|~H = h)\) (cannot simplify since \(H\) [the summed-out hidden variable]
+                    appears in every factor)</p>
+                    <table class='table table-bordered'>
+                      <thead>
+                        <tr>
+                          <th><p>\(C\)</p></th>
+                          <th><p>\(\sum_{h \in H} P(H = h) P(L = 1~|~H = h) P(C~|~H = h)\)</p></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><p>\(C = 0\)</p></td>
+                          <td><p>
+                            $$\begin{eqnarray}
+                              &\sum_{h \in H}& P(H = h) P(L = 1~|~H = h) P(C = 0~|~H = h) \\
+                              &=& P(H = 0) P(L = 1~|~H = 0) P(C = 0~|~H = 0) + P(H = 1) P(L = 1~|~H = 1) P(C = 0~|~H = 1) \\
+                              &=& 0.4 * 0.25 * 0.9 + 0.6 * 0.83 * 0.2 \\
+                              &\approx& 0.19
+                            \end{eqnarray}$$
+                          </p></td>
+                        </tr>
+                        <tr>
+                          <td><p>\(C = 1\)</p></td>
+                          <td><p>
+                            $$\begin{eqnarray}
+                              &\sum_{h \in H}& P(H = h) P(L = 1~|~H = h) P(C = 1~|~H = h) \\
+                              &=& P(H = 0) P(L = 1~|~H = 0) P(C = 1~|~H = 0) + P(H = 1) P(L = 1~|~H = 1) P(C = 1~|~H = 1) \\
+                              &=& 0.4 * 0.25 * 0.1 + 0.6 * 0.83 * 0.8 \\
+                              &\approx& 0.41
+                            \end{eqnarray}$$
+                          </p></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </li>
+                  <li><p><strong>Find \(P(e) = \sum_{q \in Q} P(Q, e)\):</strong> here, \(P(e) = P(L=1) = 0.41 + 0.19 = 0.60\)</p></li>
+                  <li><p><strong>Normalize \(P(Q | e) = \frac{P(Q, e)}{P(e)}\)</strong></p>
+                    <table class='table table-bordered'>
+                      <thead>
+                        <tr>
+                          <th><p>\(C\)</p></th>
+                          <th><p>\(P(C~|~L = 1)\)</p></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><p>\(C = 0\)</p></td>
+                          <td><p>
+                            $$\begin{eqnarray}
+                              P(C = 0~|~L = 1) &=& \alpha \sum_{h \in H} P(H = h) P(L = 1~|~H = h) P(C = 0~|~H = h) \\
+                                               &=& \frac{1}{0.60} 0.19 \\
+                                               &\approx& 0.32
+                            \end{eqnarray}$$
+                          </p></td>
+                        </tr>
+                        <tr>
+                          <td><p>\(C = 1\)</p></td>
+                          <td><p>
+                            $$\begin{eqnarray}
+                              P(C = 1~|~L = 1) &=& \alpha \sum_{h \in H} P(H = h) P(L = 1~|~H = h) P(C = 1~|~H = h) \\
+                                               &=& \frac{1}{0.60} 0.41 \\
+                                               &\approx& 0.68
+                            \end{eqnarray}$$
+                          </p></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </li>
+                </ol>
+                <p>Oh errr... those numbers look kinda familiar, but only because my examples have nice clean numbers &gt;_&gt; &lt;_&lt;</p>
+              </div>
+              <p class='question' name='prac-q1'>Determine the probability that someone is home given that a cacophony is heard inside and the lights are on (click for solution and steps).
+                $$P(H~|~L = 1, C = 1) = ???$$
+              </p>
+              <div class='answer' name='prac-q1'>
+                <p>We'll follow the steps from above exactly!</p>
+                <ol class='indent-1'>
+                  <li><p><strong>Variables:</strong> Query: \(\{H\}\), Evidence: \(\{L = 1, C = 1\}\), Hidden: \(\{\}\)</p></li>
+                  <li><p><strong>Sum of Products:</strong> \(P(H) P(L = 1~|~H) P(C = 1~|~H)\) (nothing to simplify since no summation)</p>
+                    <table class='table table-bordered'>
+                      <thead>
+                        <tr>
+                          <th><p>\(H\)</p></th>
+                          <th><p>\(P(H) P(L = 1~|~H) P(C = 1~|~H)\)</p></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><p>\(H = 0\)</p></td>
+                          <td><p>
+                            $$\begin{eqnarray}
+                              P(H = 0) P(L = 1~|~H = 0) P(C = 1~|~H = 0) &=& 0.4 * 0.25 * 0.1 \\
+                                                                         &=& 0.01
+                            \end{eqnarray}$$
+                          </p></td>
+                        </tr>
+                        <tr>
+                          <td><p>\(H = 1\)</p></td>
+                          <td><p>
+                            $$\begin{eqnarray}
+                              P(H = 1) P(L = 1~|~H = 1) P(C = 1~|~H = 1) &=& 0.6 * 0.83 * 0.8 \\
+                                                                         &\approx& 0.40
+                            \end{eqnarray}$$
+                          </p></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </li>
+                  <li><p><strong>Find \(P(e) = \sum_{q \in Q} P(Q, e)\):</strong> here, \(P(e) = P(L=1, C=1) = 0.01 + 0.40 = 0.41\)</p></li>
+                  <li><p><strong>Normalize \(P(Q | e) = \frac{P(Q, e)}{P(e)}\)</strong></p>
+                    <table class='table table-bordered'>
+                      <thead>
+                        <tr>
+                          <th><p>\(H\)</p></th>
+                          <th><p>\(P(H~|~L = 1, C = 1)\)</p></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><p>\(H = 0\)</p></td>
+                          <td><p>
+                            $$\begin{eqnarray}
+                              P(H = 0~|~L = 1, C = 1) &=& \alpha P(H = 0) P(L = 1~|~H = 0) P(C = 1~|~H = 0) \\
+                                                  &=& \frac{1}{0.41} 0.01 \\
+                                                  &\approx& 0.02
+                            \end{eqnarray}$$
+                          </p></td>
+                        </tr>
+                        <tr>
+                          <td><p>\(H = 1\)</p></td>
+                          <td><p>
+                            $$\begin{eqnarray}
+                              P(H = 1~|~L = 1, C = 1) &=& \alpha P(H = 1) P(L = 1~|~H = 1) P(C = 1~|~H = 1) \\
+                                                      &=& \frac{1}{0.41} 0.40 \\
+                                                      &\approx& 0.98
+                            \end{eqnarray}$$
+                          </p></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </li>
+                </ol>
+                <p>We see some matched expectations here: when a sound is heard in the house and its lights are on, someone is home \(98\%\) of the time!</p>
+              </div>
+              <br/>
+              
+              <p>WHEW! That's a lot of maths!</p>
+            </div>
+            <hr/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

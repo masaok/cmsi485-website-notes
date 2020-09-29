@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 4-1</li>
+            </ol>
+            
+            
+            <div id='bngoal' class='scrollspy-element' scrollspy-title="BNs: Goal"></div>
+            <h1>Bayesian Networks: Inference Goals</h1>
+            <div>
+              <p>Last time, we looked at the basic structure and semantics of Bayesian Networks: our window into the world of intuitive probabilistic inference!</p>
+              <p>That said, let's not lose sight of our goals for how we hope to employ them:</p>
+              <p class='definition'><strong>Probabilistic inference</strong> using Bayesian Networks accepts some query over network variables \(\alpha\), any observed evidence \(\beta\)
+                and then returns the conditional distribution \(P(\alpha | \beta)\) (which includes non-conditional queries when \(\beta = \{\}\)). In notation similar to our propositional
+                logic KB queries:
+                $$BN.ask(\alpha, \beta) = P(\alpha | \beta)$$
+              </p>
+              <p>Being able to perform probabilistic queries on the network will then allow us (or our intelligent agent) to make decisions based on the results, just like good old
+                Solicitorbot deciding whether or not to visit a house based on whether or not it believes someone to be home.</p>
+              <p class='debug'>While we have been able to intuitively use BNs for some simple queries to be done by hand, we do not yet have this general inference procedure.</p>
+              <p>Before we formalize it, however, we must make two observations about the extent of what we know:</p>
+              <ol class='indent-1'>
+                <li><p>We do not want inference to consider information in the BN that is irrelevant to the query (i.e., independent of it).</p></li>
+                <li><p>We currently lack an algorithm that will tell us if any two variables are independent (or conditionally independent) given another set.</p></li>
+              </ol>
+              <p>So, let's see if we can remedy item (2) above to facilitate item (1), and then move on to inference!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='dsep' class='scrollspy-element' scrollspy-title="d-Separation"></div>
+            <h1>d-Separation</h1>
+            <div>
+              <p>Last class, the Solicitorbot example had a simple, 3 variable network, but we can imagine much larger networks with more variables and relationships between
+                one another.</p>
+              <p>As such, just as we intuited some independence relationships for that simple 3 variable network, we should have a more general rule to analyze networks of arbitrary
+                size.</p>
+              <p class='toolkit'>You can consider a Bayesian Network as defining the channels through which information can flow between variables (like water).</p>
+              <p>Each node can be viewed as a <strong>faucet</strong> that can either be:</p>
+              <ul class='indent-1'>
+                <li><p><strong>On / Open:</strong> information flows between variables (therefore, variables are dependent).</p>
+                  <div class='text-center fit-pres'>
+                    <img src='../../../assets/images/spring-2018/cmsi-485/week-8/d-sep-open.png' />
+                  </div>
+                </li>
+                <li><p><strong>Off / Closed:</strong> information flow is blocked between variables (therefore, variables are independent).</p>
+                  <div class='text-center fit-pres'>
+                    <img src='../../../assets/images/spring-2018/cmsi-485/week-8/d-sep-closed.png' />
+                  </div>
+                </li>
+              </ul>
+              <p>What we need, therefore, are the rules for determining when a faucet is opened or closed.</p>
+              <p>One of the beautiful things about Bayesian Networks is that we have precisely that formalization simply by looking at the directionality of edges in the graph!</p>
+              <p class='definition'>The rules of <strong>directional-separation (d-separation)</strong> determine a Bayesian Network's independence and conditional independence
+                claims directly from the network's structure.</p>
+              <br/>
+              
+              <h3>d-Separation: Path Analysis</h3>
+              <hr/>
+              <p class='definition'>Two variables \(A, B\) are independent given some other set of variables \(C\) if *all* <strong>undirected paths</strong> (any sequence of 
+                nodes connected by edges, ignoring edge direction) between \(A, B\) are blocked.</p>
+              <p class='toolkit'>The rules of d-separation decide if information can flow through triplets of nodes \(X, Y, Z\) along an undirected path with one node serving 
+                as the "faucet."</p>
+              <p>Since edges can only be directed 1 of 2 ways between 2 variables, we can analyze the independence rules of each configuration of edges between
+                the triplet's variables to compose the foundations of d-separation.</p>
+              <p>There are three such "rules" corresponding to each type of triplet:</p>
+              <br/>
+              
+              <h4>Rule 1: Forks \(X \leftarrow Z \rightarrow Y\)</h4>
+              <p>Let's return to our Solicitorbot!</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2020/cmsi-485/week-4/d-sep-fork.png' />
+              </div>
+              <br/>
+              <p class='question' name='ds-q0'>Should knowing about whether or not the lights are on tell us anything about whether or not there's a cacophony heard in the house?
+                $$L \stackrel{?}{\indep} C$$</p>
+              <p class='answer' name='ds-q0'>$$L \not \indep C$$ ...because whether or not a house's lights are on tells us something about whether or not someone is home, which in turn
+                tells us something about whether or not a noise will be heard inside!</p>
+              <p class='question' name='ds-q1'>Should knowing about whether or not the lights are on tell us anything about whether or not there's a cacophony heard <i>once we
+                know whether or not someone is home</i>?
+                $$L \stackrel{?}{\indep} C~|~H$$
+              </p>
+              <p class='answer' name='ds-q1'>$$L \indep C~|~H$$ ...because knowing whether or not the lights are on tells us nothing more about whether there's a noise heard in the house
+                once we know the cause of both, i.e., that someone is home!</p>
+              <p class='toolkit'>A fork \(X \leftarrow Z \rightarrow Y\) is blocked along a path if \(Z\) is given; i.e., if a <strong>common cause</strong> is given, a fork is
+                blocked.</p>
+              <br/>
+              
+              <h4>Rule 2: Chains \(X \rightarrow Z \rightarrow Y\) OR \(X \leftarrow Z \leftarrow Y\)</h4>
+              <p>Suppose we've pivoted to the medical domain wherein MediBot 7000 must make some diagnoses based on observed symptoms.</p>
+              <p>Suppose also that medicine has determined that the presence of tar in lungs causes lung cancer, which is deposited by smoking, giving us:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/d-sep-chains.png' />
+              </div>
+              <br/>
+              <p class='question' name='ds-q2'>Should knowing about whether or not someone smokes tell us anything about whether or not they have lung cancer?
+                $$S \stackrel{?}{\indep} C$$</p>
+              <p class='answer' name='ds-q2'>$$S \not \indep C$$ ...because whether or someone smokes tells us more about whether or not they have tar in their lungs, which in turn
+                tells us more about their likelihood of having cancer!</p>
+              <p class='question' name='ds-q3'>Should knowing about whether or not someone smokes tell us anything about whether or not they have lung cancer <i>once we
+                know whether or not someone has lung tar</i>?
+                $$S \stackrel{?}{\indep} C~|~T$$
+              </p>
+              <p class='answer' name='ds-q3'>$$S \indep C~|~T$$ ...because knowing whether or not someone smokes tells us nothing more about whether they have lung cancer once we already
+                know the state of the cause of cancer, i.e., that someone has tar in their lungs!</p>
+              <p class='toolkit'>A chain \(X \leftarrow Z \leftarrow Y\) OR \(X \rightarrow Z \rightarrow Y\) is blocked along a path if \(Z\) is given.</p>
+              <br/>
+              
+              <h4>Rule 3: Sinks \(X \rightarrow Z \leftarrow Y\)</h4>
+              <p>Suppose now we have a... well... rather artificial, but intuitive, scenario wherein a bell rings if two fair coin flips have the same outcome.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/d-sep-sinks-a.png' />
+              </div>
+              <p class='question' name='ds-q4'>Should knowing about the outcome of one coin flip tell us anything about the outcome of the other?
+                $$A \stackrel{?}{\indep} C$$</p>
+              <p class='answer' name='ds-q4'>$$A \indep C$$ ...because they're independent coin flips! Knowing about one tells us nothing about the outcome of the other without any
+                additional information.</p>
+              <p class='question' name='ds-q5'>Should knowing about the outcome of one coin flip tell us anything about the outcome of the other <i>once we
+                know whether or not the bell rang</i>?
+                $$A \stackrel{?}{\indep} C~|~B$$
+              </p>
+              <p class='answer' name='ds-q5'>$$A \not \indep C~|~B$$ ...because if we knew that \(A = heads\) and \(B = rang\), then \(C = heads\) by necessity!</p>
+              <p>...but that's not all!</p>
+              <p>Consider that if the bell rings, our other inovation, Butlerbot 6000, brings us a cup of tea.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/d-sep-sinks-b.png' />
+              </div>
+              <br/>
+              <p class='question' name='ds-q6'>Should knowing about the outcome of one coin flip tell us anything about the outcome of the other <i>once we
+                know whether or not Butlerbot has brought us tea</i>?
+                $$A \stackrel{?}{\indep} C~|~T$$
+              </p>
+              <p class='answer' name='ds-q6'>$$A \not \indep C~|~T$$ ...because if we knew that \(A = heads\) and \(T = brought\), then by necessity, \(B = rang\) and therefore
+                \(C = heads\)!</p>
+              <p>As such, we have the now, complete rule for sinks:</p>
+              <p class='toolkit'>A sink \(X \rightarrow Z \leftarrow Y\) is blocked along a path if <i>neither \(Z\) nor its descendants</i> are given.</p>
+              <p class='debug'><strong>Take Note:</strong> the rule for sinks is somewhat "opposite" that of forks and chains -- don't make the novice mistake of thinking they are
+                all the same rule!</p>
+              <br/>
+              <p>So, now that we have the individual components of d-separation down, let's see how to put it all together in an algorithm.</p>
+              <br/>
+              
+              <h3>d-Separation: Algorithm</h3>
+              <hr/>
+<pre filetag='d-separation'>
+  # Returns true if X is independent of Y given Z, else false
+  d_sep(X, Y, {Z}):
+      for each undirected path p between X and Y:
+          openPath = true
+          for each triplet t along p:
+              if t is blocked:
+                  openPath = false
+                  break
+          if openPath:
+              return false
+      return true
+</pre>
+              <p>Let's try out some examples using the Bayesian Network below!</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/d-sep-ex.png' />
+              </div>
+              <br/>
+              <p class='question' name='ds-q7'><strong>Question 1:</strong>
+                $$A \stackrel{?}{\indep} D~|~B, C$$
+              </p>
+              <div class='answer' name='ds-q7'><p>$$A \indep D~|~B, C$$ ...because there are two paths from \(A\) to \(D\), and both are blocked chains:</p>
+                <ul class='indent-1'>
+                  <li><p>\(A \rightarrow B \rightarrow D\) <i>[Blocked]</i> is a chain with \(B\) given</p></li>
+                  <li><p>\(A \rightarrow C \rightarrow D\) <i>[Blocked]</i> is a chain with \(C\) given</p></li>
+                </ul>
+              </div>
+              <p class='question' name='ds-q8'><strong>Question 2:</strong>
+                $$A \stackrel{?}{\indep} D~|~B$$
+              </p>
+              <div class='answer' name='ds-q8'><p>$$A \not \indep D~|~B$$ ...because there are 2 paths from \(A\) to \(D\), but only 1 is blocked, and the other open:</p>
+                <ul class='indent-1'>
+                  <li><p>\(A \rightarrow B \rightarrow D\) <i>[Blocked]</i> is a chain with \(B\) given</p></li>
+                  <li><p>\(A \rightarrow C \rightarrow D\) <i>[Open]</i> is a chain but \(C\) is *not* given</p></li>
+                </ul>
+              </div>
+              <p class='question' name='ds-q9'><strong>Question 3:</strong>
+                $$C \stackrel{?}{\indep} B~|~A$$
+              </p>
+              <div class='answer' name='ds-q9'><p>$$C \indep B~|~A$$ ...because there are 2 paths from \(C\) to \(B\), and both are blocked:</p>
+                <ul class='indent-1'>
+                  <li><p>\(B \leftarrow A \rightarrow C\) <i>[Blocked]</i> is a fork with \(A\) given</p></li>
+                  <li><p>\(B \rightarrow D \leftarrow C\) <i>[Blocked]</i> is a sink with *neither* \(D\), nor its descendants, given</p></li>
+                </ul>
+              </div>
+              <p class='question' name='ds-q10'><strong>Question 4:</strong>
+                $$C \stackrel{?}{\indep} B~|~A, E$$
+              </p>
+              <div class='answer' name='ds-q10'><p>$$C \not \indep B~|~A, E$$ ...because there are 2 paths from \(C\) to \(B\), and only 1 is blocked:</p>
+                <ul class='indent-1'>
+                  <li><p>\(B \leftarrow A \rightarrow C\) <i>[Blocked]</i> is a fork with \(A\) given</p></li>
+                  <li><p>\(B \rightarrow D \leftarrow C\) <i>[Open]</i> is a sink with a descendant of \(D\) given \((E)\)</p></li>
+                </ul>
+              </div>
+              <br/>
+              
+              <p>And there you have it! d-separation d-constructed.</p>
+              <p>Next time: let's talk about probabilistic inference!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

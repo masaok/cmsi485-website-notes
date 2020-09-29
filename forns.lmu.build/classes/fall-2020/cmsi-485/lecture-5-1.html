@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 5-1</li>
+            </ol>
+            
+            
+            <div id='inference-imp' class='scrollspy-element' scrollspy-title="BN: Inference Efficiency"></div>
+            <h1>Bayesian Networks: Inference Efficiency</h1>
+            <div>
+              <p>By now, as computer scientists, the reasonable question to ask is: "How hard is inference?"</p>
+              <p>Well, hopefully easier for computers, than by hand (that last lecture, amirite?), but we should take a moment to discuss the computational difficulty, as well
+                as some heuristics and strategies for improving upon it.</p>
+              <br/>
+              
+              <h4>Efficiency Improvements</h4>
+              <hr/>
+              <p class='example'>As our motivating example, we'll use your textbook's BN relating to some wonky alarm system [A] that goes off when either an Earthquake [E] or
+                Burglary [B] triggers it, which then triggers nosy neighbors John [J] and Mary [M] to call you to let you know your alarm's going off.</p>
+              <p>Yes, this example is in the most used AI textbook to date.</p>
+              <p>In any event, it looks like the following:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-6/alarm-ex.png' />
+              </div>
+              <p>Now, suppose we wanted to compute the following queries (we'll ignore the normalizing constant for now just representing it as \(\alpha\)):</p>
+              <p><strong>Example 1: \(P(B | A = a, E = e)\)</strong> (i.e., find the likelihood of getting BAE)</p>
+              <p>\begin{eqnarray}
+                P(B | A = a, E = e) &=& \alpha~\sum_j \sum_m P(B) P(E = e) P(A = a | B, E = e) P(J = j | A = a) P(M = m | A = a) \\
+                                    &=& \alpha~P(B) P(E = e) P(A = a | B, E = e) \sum_j P(J = j | A = a) \sum_m P(M = m | A = a)
+              \end{eqnarray}</p>
+              <p class='question' name='bn-q1'>What do we notice about an interesting simplifying opportunity in the above equation?</p>
+              <p class='answer' name='bn-q1'>The final two summations, i.e., \(\sum_j P(J = j | A = a)\) and \(\sum_m P(M = m | A = a)\) both sum to 1 by definition!</p>
+              <p>It turns out that this isn't a quirk, and allows for a general rule:</p>
+              <p>As such, we can simplify to:</p>
+              <p>$$P(B | A = a, E = e) = \alpha~P(B) P(E = e) P(A = a | B, E = e)$$</p>
+              <p class='toolkit'><strong>Simplification 1:</strong> Any hidden variable that is not an <strong>ancestor</strong> of a query or evidence variable is irrelevant
+                to the query, and can be removed before evaluation.</p>
+              <p>Convenient, and intuitive! We'll end up summing over all of their values anyways, thus vacuously summing to 1.</p>
+              <p>Let's try another...</p>
+              <br/>
+              
+              <p><strong>Example 2: \(P(B | J = j, M = m)\)</strong></p>
+              <p>Here, we don't get to use our simplification #1 since all of the hidden variables are ancestors of the evidence, and therefore relevant.</p>
+              <p>However, there's a new concern to quell. Let's again write out our query roadmap:</p>
+              <p>\begin{eqnarray}
+                P(B | J = j, M = m) &=& \alpha~P(B)\sum_e P(E=e) \sum_a P(A=a|B, E=e) P(J=j|A=a) P(M=m|A=a)
+              \end{eqnarray}</p>
+              <p class='question' name='bn-q2'>Do we notice any potential inefficiencies that might be present in computing the equation above?</p>
+              <p class='answer' name='bn-q2'>Yes! Note that in the second summation \(\sum_a ... P(J=j|A=a) P(M=m|A=a)\) will be repeated for multiple values of E in the outer sum: \(\sum_e ...\).</p>
+              <p>Note that this repetition can be order-dependent, so the order in which we choose to sum over hidden variables can have a serious impact on the amount
+                of work that could be repeated.</p>
+              <p>So, let's not repeat ourselves!</p>
+              <p class='toolkit'><strong>Simplification 2:</strong> Never recompute a previously computed <strong>product</strong> of CPTs through clever use of memoization and
+                dynamic programming.</p>
+              <br/>
+              
+              <p>The mechanics of doing *all of the above* are a little complex but exist in the context of an algorithm known as <strong>variable elimination.</strong></p>
+              <div class='definition'>
+                <p>The <strong>Variable Elimination</strong> algorithm is a more efficient version of Enumeration Inference in which the:</p>
+                <ul class='indent-1'>
+                  <li><p>Irrelevant hidden variables are ignored.</p></li>
+                  <li><p>Intermediate products of CPTs are memoized in "Factors" (tables that store products that have been previously computed)</p></li>
+                  <li><p>Hidden variables are summed out / marginalized as soon as all expressions depending on that variable are finished (with heuristics for finding an efficient ordering of summing)</p></li>
+                </ul>
+              </div>
+              <p>We won't examine Variable Elimination in this class, but I highly encourage you to read through:</p>
+              <ul class='indent-1'>
+                <li><p>Chapter 14.4.2 in your Textbook</p></li>
+                <li><p>Related: The Jointree Algorithm mentioned in 14.4.4 of your Textbook.</p></li>
+              </ul>
+              <br/>
+              
+              <h4>Qualifying BN Inference Difficulty</h4>
+              <hr/>
+              <p>It turns out that BN inference using Variable Elimination is easier in some cases than in others, and the computational difficulty will correspond 
+                to certain BN features.</p>
+              <p class='question' name='bn-q0'>What parts of a BN might affect inference difficulty, and what qualities of those parts would be computationally desirable?</p>
+              <p class='answer' name='bn-q0'>The <strong>structure</strong> of a BN is closely tied to inference difficulty, with those that are <strong>tree-like</strong> in
+                nature (see what I did there?) being more desirable.</p>
+              <p>It turns out that tree-like structures lend themselves to easier application of the two simplifications mentioned above, and are easily exploited by Variable
+                Elimination such that:</p>
+              <p class='definition'>Networks that have a <strong>polytree / singly connected structure</strong>, i.e., for whom there is at most one undirected path between any node in the network,
+                have complexity that is <strong>linear</strong> in the size of the network (i.e., size of CPTs).</p>
+              <p>Moreover, if there is an upper bound to the number of parents any node may have (common practice is to limit the in-degree at each node), computation will be
+                linear in the number of nodes in the network as well.</p>
+              <p>The reasons for this benefit will be a bit handwavy (better explained by looking at those chapters above), but amounts to Variable Elimination having an easier
+                time marginalizing / summing out variables in tree-like structures.</p>
+              <p class='debug'>However, for <strong>non-polytree or multiply-connected structures,</strong> inference can be <strong>exponential</strong> in time and space and
+                is an <strong>NP-Hard</strong> problem.</p>
+              <p class='example'>Draw some multiply-connected BN structures and consider why they will be more difficult.</p>
+              <br/>
+              
+              <p>For these reasons... maybe we can think about alternative strategies for inference different than <strong>exact</strong> computation...</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

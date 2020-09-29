@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 2-1</li>
+            </ol>
+            
+            
+            <div id='infertp' class='scrollspy-element' scrollspy-title='Inference: Theorem Proving'></div>
+            <h1>Inference: Theorem Proving</h1>
+            <div>
+              <p>Since we can't proceduralize model enumeration for settings with large numbers of propositions, let's consider whether we can perform inference from a strictly
+                symbolic standpoint (i.e., using the KB and contained sentences alone).</p>
+              <p class='definition'><strong>Propositional Theorem Proving</strong> is the process of showing a KB entails a sentence without needing to consult the individual models
+                of the system.</p>
+              <p>In other words, theorem proving allows us to perform inference at the symbolic level, rather than needing to evaluate the symbols for their truth values in every
+                world.</p>
+              <p>Let's start by considering some aspects of our KB that have an intuitive lean toward inference: implications.</p>
+              <p class='example'>Consider two propositions: \(R\) = whether or not it is raining out, \(W\) = whether or not the sidewalk is wet.</p>
+              <p>Suppose in this setting we have the following KB:</p>
+<pre>
+  KB:
+  "If it is raining, then the sidewalk will be wet"
+  1. R => S
+  
+  "It is raining"
+  2. R
+</pre>
+              <p class='question' name='inf-q0'>If we wish to query our KB as to whether or not the sidewalk is wet, how does the KB above provide an answer?</p>
+              <p class='answer' name='inf-q0'>Since we wish to show that \(KB \vDash S \Leftrightarrow M(KB) \subseteq M(S)\), it is sufficient to conclude that, since we have the rule
+                "if R, then S" and the fact "R", we should be able to derive an inferred fact "S". Adding "S" to our KB (a conjunction of sentences) thus shows that \(KB \vDash S\).</p>
+              <p>Indeed, the ability to take a rule and say "we've satisfied the premise for this rule, therefore we may infer the conclusion" has a known formula in philosophical
+                discourse:</p>
+              <p class='definition'><strong>Modus Ponens</strong> (literally, "mood that affirms") is a rule of logic asserting that when an implication's premise (i.e., \(P\) in \(P \Rightarrow Q\))
+                is met, then the conclusion (i.e., \(Q\) in \(P \Rightarrow Q\)) may be inferred (i.e., added as an inferred fact to the KB). Formally:
+                $$\frac{(\alpha \Rightarrow \beta) \land \alpha}{\beta}$$
+              </p>
+              <p class='toolkit'>If our \(KB = ... \land \alpha \land ... \) it is a simple exercise to show that \(KB \vDash \alpha\) as well.</p>
+              <p>This has a nice intuitive binding: if we've satisfied the premise of an implication as true, then its conclusion must be true as well, and so we can add its conclusion
+                to our KB.</p>
+              <p>If the inferred sentence is our query, then we know the KB must have entailed it to begin with -- we just needed to expose it explicitly.</p>
+              <p class='question' name='inf-q1'>If our inference engine only knew about the Modus Ponens inference rule, how do we proceduralize inference? What would the stopping
+                conditions look like?</p>
+              <p class='answer' name='inf-q1'>(1) Repeatedly find rule premises that are satisfied, (2) add satisfied rules' conclusions to KB, (3) stop whenever KB contains query
+                or when no more rules can be satisfied.</p>
+              <p>Plainly this is an exhaustive approach that might meander to the solution without any sort of guiding heuristic -- we can even consider it a type of search wherein
+                the actions are applications of Modus Ponens, and the goal is to find the query sentence.</p>
+              <p>However, this approach suffers some issues in the case of general inference...</p>
+              <p class='question' name='inf-q2'>If our inference engine only knew about the Modus Ponens inference rule, what would be some shortcomings that might compromise the
+                engine's ability to answer inference queries?</p>
+              <div class='answer' name='inf-q2'>
+                <p>There are two primary deficits:</p>
+                <ul class='indent-1'>
+                  <li><p>The approach is somewhat uninformed and might meanderingly derive conclusions that are tangential to the query itself.</p></li>
+                  <li><p>The approach depends upon implications \((\Rightarrow)\) to operate, but certain inferences may not be in this format (consider knowing:
+                    (1) \(\lnot \alpha \lor \beta\)) and (2) \(\alpha\), should we not be able to infer (3) \(\beta\)?</p></li>
+                </ul>
+              </div>
+              <p>As such, it turns out that there is a more general approach to perform inference so long as our KB conforms to a certain format.</p>
+              <p>We'll examine this format next and then see how to apply the more general approach.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <!-- Sentence properties -->
+                <!-- CNF KBs -->
+              <!-- Resolution -->
+              <!-- Proof by refutation -->
+            <div id='kbprops' class='scrollspy-element' scrollspy-title='Knowledge Base Properties'></div>
+            <h1>Knowledge Base Properties</h1>
+            <div>
+              <p>Since we know that a KB is just a large, logical sentence (at some level of abstraction), an alternative title for this section would be "sentence properties."</p>
+              <p>There are certain qualities of how logical sentences are structured that can give us some powerful algorithmic benefits, and address some of the shortcomings
+                from an inference engine equipped only with Modus Ponens.</p>
+              <p>We'll start by motivating these properties:</p>
+              <p class='question' name='inf-q3'>In an earlier lecture, we noticed that an implication \(P \Rightarrow Q\) is logically equivalent to another sentence involving \(P, Q\);
+                what is the logical equivalence?</p>
+              <p class='answer' name='inf-q3'>\((P \Rightarrow Q) \equiv (\lnot P \lor Q)\). (Note: \(\equiv\) and \(\Leftrightarrow\) mean the same thing, but using \(\equiv\) makes it
+                clear that these are logically equivalent and not a new compound sentence containing a biconditional).</p>
+              <p>Why is this signficant?</p>
+              <p class='question' name='inf-q4'>Consider a KB containing: (1) \(P \Rightarrow Q\) and (2) \(\lnot Q\). What inference should we be able to make? Show the steps of your proof.</p>
+              <p class='answer' name='inf-q4'>
+                $$\begin{eqnarray}
+                  P \Rightarrow Q &\equiv& \lnot P \lor Q \\
+                                  &\equiv& Q \lor \lnot P \\
+                                  &\equiv& \lnot Q \Rightarrow \lnot P
+                \end{eqnarray}$$
+                Thus, by Modus Ponens, \( (\lnot Q \Rightarrow \lnot P) \land \lnot Q \), we should infer \(\lnot P\).
+              </p>
+              <p>So, it turns out that there are inferences we can make that aren't as simple as determining whether some rule's condition has been met or not!</p>
+              <p>How do we generalize this finding? Well, the first step is to make sure that our KB is in a particular format:</p>
+              <p class='definition'>A logical sentence is in <strong>conjunctive normal form (CNF)</strong> if it consists solely of a conjunction of clauses with negations on propositions alone. Formally:
+                $$Clause = P_1 \lor P_2 \lor ... \lor P_n \\ KB = Clause_1 \land Clause_2 \land ... \land Clause_k$$</p>
+              <div class='toolkit'>
+                <p>Any logical sentence can be converted into CNF via two steps:</p>
+                <ol class='indent-1'>
+                  <li><p>Rephrase all biconditionals and implications to use only \(\lnot, \land, \lor\) connectives.</p></li>
+                  <li><p>Push all negations "inward" so that negations are <i>only</i> applied to propositions.</p></li>
+                </ol>
+              </div>
+              <p class='toolkit'>In pursuit of converting into CNF, you may make use of the following propositional logic grammar and associated logical equivalence rules (from your
+                textbook):</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/bnf.png' />
+              </div>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/logic-equiv.png' />
+              </div>
+              
+              <br/>
+              <p>Let's look at an example from our Pitfall Maze Pathfinder from last time:</p>
+              <p class='example'>Convert the following sentence into CNF: \(B_{1,0} \Leftrightarrow (P_{2,0} \lor P_{1,1})\).</p>
+              <p>The steps are as follows:</p>
+              <p><strong>Step 1:</strong> convert all biconditionals and implications to use only the primitive connectives:</p>
+              <p>
+                $$\begin{eqnarray}
+                  B_{1,0} \Leftrightarrow (P_{2,0} \lor P_{1,1}) &\equiv& (B_{1,0} \Rightarrow (P_{2,0} \lor P_{1,1})) \land ((P_{2,0} \lor P_{1,1}) \Rightarrow B_{1,0}) \\
+                                                                 &\equiv& (\lnot B_{1,0} \lor (P_{2,0} \lor P_{1,1})) \land (\lnot (P_{2,0} \lor P_{1,1}) \lor B_{1,0})
+                \end{eqnarray}$$
+              </p>
+              <p><strong>Step 2:</strong> push all negations "inward" so that they apply only to propositions:</p>
+              <p>
+                $$\begin{eqnarray}
+                  (\lnot B_{1,0} \lor (P_{2,0} \lor P_{1,1})) \land (\lnot (P_{2,0} \lor P_{1,1}) \lor B_{1,0})
+                      &\equiv& (\lnot B_{1,0} \lor P_{2,0} \lor P_{1,1}) \land ((\lnot P_{2,0} \land \lnot P_{1,1}) \lor B_{1,0}) \\
+                      &\equiv& (\lnot B_{1,0} \lor P_{2,0} \lor P_{1,1}) \land ((\lnot P_{2,0} \lor B_{1,0}) \land (\lnot P_{1,1} \lor B_{1,0})) \\
+                      &\equiv& (\lnot B_{1,0} \lor P_{2,0} \lor P_{1,1}) \land (\lnot P_{2,0} \lor B_{1,0}) \land (\lnot P_{1,1} \lor B_{1,0})
+                \end{eqnarray}$$
+              </p>
+              <p>Observe that this last sentence is in CNF since it consists of 3 conjoined clauses:</p>
+              <p>
+                $$\begin{eqnarray}
+                  (\lnot B_{1,0} \lor P_{2,0} \lor P_{1,1}) \land (\lnot P_{2,0} \lor B_{1,0}) \land (\lnot P_{1,1} \lor B_{1,0}) \equiv Clause_1 \land Clause_2 \land Clause_3
+                \end{eqnarray}$$
+              </p>
+              <p>...where:</p>
+              <p>
+                $$\begin{eqnarray}
+                  Clause_1 &=& \lnot B_{1,0} \lor P_{2,0} \lor P_{1,1} \\
+                  Clause_2 &=& \lnot P_{2,0} \lor B_{1,0} \\
+                  Clause_3 &=& \lnot P_{1,1} \lor B_{1,0}
+                \end{eqnarray}$$
+              </p>
+              <p>So why is a KB in CNF desirable? Well let's see...</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='resolution' class='scrollspy-element' scrollspy-title='Resolution'></div>
+            <h1>Resolution</h1>
+            <div>
+              <p>Let's revisit our earlier rain and sidewalk example, but with a KB that's in CNF:</p>
+<pre>
+  KB:
+  "If it is raining, then the sidewalk will be wet"
+  1. &not;R &or; S
+  
+  "It is raining"
+  2. R
+</pre>
+              <p>We know that we should be able to infer \(S\) above, but what rule dictates this operation?</p>
+              <p class='definition'><strong>Resolution</strong> is a general form of Modus Ponens that operates on two clauses; if the clauses disagree on a literal \(P\) (i.e., one has
+                \(P\) and the other has its negation \(\lnot P\)), then a new clause can be inferred consisting of all literals except the disagreed-upon. Formally:
+                $$\frac{(P_1 \lor P_2 \lor P_i \lor ...) \land (P_3 \lor P_4 \lor \lnot P_i \lor ...)}{P_1 \lor P_2 \lor P_3 \lor P_4 \lor ...}$$
+              </p>
+              <p class='example'>Consider how each of the following clauses will be "resolved" (i.e., what can be inferred from them).</p>
+              <table class='table table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>\(Clause_1\)</p></th>
+                    <th><p>\(Clause_2\)</p></th>
+                    <th><p>Resolution from \(Clause_1 \land Clause_2\)</p></th>
+                    <th><p>Explanation</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(\lnot R \lor S\)</p></td>
+                    <td><p>\(R\)</p></td>
+                    <td><p>\(S\)</p></td>
+                    <td><p>Since \(\lnot R\) and \(R\) disagree, we're able to infer the union of disjoined propositions from both clauses... it turns out that's just \(S\).</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(S \lor \lnot R \lor T\)</p></td>
+                    <td><p>\(Q \lor R\)</p></td>
+                    <td><p>\(S \lor T \lor Q\)</p></td>
+                    <td><p>Since \(\lnot R\) and \(R\) disagree, we're able to infer the union of disjoined propositions from both clauses, which is \(S, T\) from Clause 1 and \(Q\)
+                      from Clause 2.</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(\lnot S\)</p></td>
+                    <td><p>\(S\)</p></td>
+                    <td><p>\(\emptyset\)</p></td>
+                    <td><p>Since \(\lnot S\) and \(S\) disagree, we're able to infer the union of disjoined propositions from both clauses, which is... well, nothing!</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>This last case represents when resolution can detect a logical contradition, since it is not possible to have a KB for which both \(S\) and \(\lnot S\) are mutually
+                true.</p>
+              <p>So how do we harness resolution in pursuit of a general KB query algorithm? Consider our previous approach and what we might do differently...</p>
+              <p class='question' name='inf-q5'>We have been practicing <strong>theorem proving</strong> by seeing if the KB entails a query by the given rules of inference. Since
+                this approach can meander (which KB components are relevant to our query or not?) what tool from your Methods of Proof class (probably your favorite approach)
+                could we use instead?</p>
+              <p class='answer' name='inf-q5'>Proof by contradiction!</p>
+              <br/>
+              
+              <h3>Proof by Contradiction</h3>
+              <hr/>
+              <p>Aha! Let's instead see if we can proceduralize the old proof by contradiction -- every proof student's attempt at simplifying a proof!</p>
+              <p class='question' name='inf-q6'>How does every proof by contradiction start? How can we analogize this start given our propositional logic KB in CNF form and some query
+                sentence \(\alpha\)?</p>
+              <p class='answer' name='inf-q6'>"Assume to the contrary..." as in, make an assertion that is knowingly false. In the context of our inference problem, this simply means
+                adding the negation of our query to the KB! i.e., \(KB = KB \land \lnot \alpha\).</p>
+              <p class='question' name='inf-q7'>How does "proof by contradiction" proceed? What is its goal and how can we translate it to our inference problem?</p>
+              <p class='answer' name='inf-q7'>It attempts to show that by assuming the opposite of what was intended to be proved is true, we reach a <strong>contradiction</strong>. For
+                our inference problem we can show that the addition of the negated query to the KB makes it <strong>inconsistent</strong>.</p>
+              <p>Formally, combining the above, we have a new approach to inference:</p>
+              <div class='toolkit'>
+                <p>Given some CNF KB and query sentence \(\alpha\), <strong>resolution proof by contradiction</strong> proceeds as follows:</p>
+                <ol class='indent-1'>
+                  <li><p>Add the negation of the query to the KB: \(KB = KB \land \lnot \alpha\)</p></li>
+                  <li><p>Apply pairwise resolution to all clauses, including those that are inferred by resolution until:</p>
+                    <ul class='indent-1'>
+                      <li><p>\(KB \land \lnot \alpha \equiv \emptyset\) meaning that resolution reached a contradiction. In this case, \(KB \vDash \alpha\)</p></li>
+                      <li><p>There are no other resolutions to consider, meaning that we've tried everything and not reached a contradiction. In this case, \(KB \not \vDash \alpha\)</p></li>
+                    </ul>
+                  </li>
+                </ol>
+              </div>
+              <p>Let's see how this works in our Pitfall Maze Pathfinding problem!</p>
+              <p class='example'>Consider a CNF KB with the following clauses and determine whether or not it entails the query \(\lnot P_{1,0}\).</p>
+              <p class='debug'>Disclaimer: for illustrative purposes, we'll omit some clauses that would normally be in the KB of this system.</p>
+              <p>KB: (using rule that \(B_{0,0} \Leftrightarrow (P_{0,1} \lor P_{1,0})\) and fact \(\lnot B_{0,0}\) in CNF)</p>
+              <ol class='indent-1'>
+                <li><p>\(\lnot B_{0,0} \lor P_{1,0} \lor P_{0,1}\)</p></li>
+                <li><p>\(\lnot P_{1,0} \lor B_{0,0}\)</p></li>
+                <li><p>\(\lnot P_{0,1} \lor B_{0,0}\)</p></li>
+                <li><p>\(\lnot B_{0,0}\)</p></li>
+              </ol>
+              <br/>
+              <p><strong>Step 1:</strong> "assume to the contrary" that there is a pit in (1, 0), adds the following to the KB:</p>
+              <ol class='indent-1' start='5'>
+                <li><p>\(P_{1,0}\)</p></li>
+              </ol>
+              <br/>
+              
+              <p><strong>Step 2:</strong> iteratively apply resolution until we either reach a contradiction or run out of resolutions to try:</p>
+              <ol class='indent-1' start='6'>
+                <li><p>\(B_{0,0}\) [Clauses 2 and 5]</p></li>
+                <li><p>\(\emptyset\) [Clauses 4 and 6]</p></li>
+              </ol>
+              <p>Aha! We derived the empty clause, therefore \(KB \vDash \alpha\), i.e., \(KB \vDash \lnot P_{1,0}\)</p>
+              <p>Since we inferred that no Pit exists in (1,0), our agent is safe to move there!</p>
+              <p>Plainly, the above is just a simple example of proof by resolution, but we can at least get a gist for its mechanics and power in more complex scenarios.</p>
+              <p>We'll get some more practice with these later!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='practice' class='scrollspy-element' scrollspy-title='Practice'></div>
+            <h1>Practice</h1>
+            <div>
+              <p class='example'>For variables P and Q, show, using both propositional (boolean) algebra and truth tables, that the following sentences are logically equivalent:</p>
+<pre class='prettyprint'>
+  P &rArr; &not;Q
+  Q &rArr; &not;P
+</pre>
+              <br/>
+              <p class='example'>Use propositional algebra to convert the following sentence into CNF:</p>
+<pre class='prettyprint'>
+  ;; #1
+  &not;(X &or; Y) &and; Z
+  
+  ;; #2
+  (X &and; Y) &rArr; Z
+  
+  ;; #3
+  (X &or; Y) &rArr; Z
+</pre>
+              <br/>
+              <p class='example'>Perform resolution and proof by refutation on the following KB to answer the question as to whether KB &#8872; &alpha;</p>
+<pre class='prettyprint'>
+  &alpha; = &not;X &and; Y
+  
+  KB =
+     1. X &or; Z &or; Y
+     2. &not;Z &or; W &or; X
+     3. &not;X &or; W
+     4. &not;W
+</pre>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

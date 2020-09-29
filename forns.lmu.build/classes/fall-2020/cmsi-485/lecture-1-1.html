@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 1-1</li>
+            </ol>
+            
+            <div id='introduction' class='scrollspy-element' scrollspy-title='Introduction'></div>
+            <h1>Introduction</h1>
+            <div>
+              <p>Welcome to CMSI 485: your portal into the awesome world of artificial intelligence!</p>
+              <p>Before we get started, some things to note about these course notes and the site you're currently viewing:</p>
+              <ul class='indent-1'>
+                <li><p>You can add notes inside the website so that you can follow along and type as I say stuff! Just hit SHIFT + N and then click on a paragraph to add an editable note area below. 
+                  NOTE: the notes you add will not persist if you close your browser, so make sure you save it to PDF when you're done taking notes! (see below) Having said that, know that there is a lot of
+                  research that suggests taking hand-written notes to be far more effective at memory retention than typing them.</p></li>
+                <li><p>The site has been optimized for printing, which includes the notes that you add, above. I've added a print button to the bottom of the site, but really it just calls your 
+                  printer functionality, which typically includes an option to export to PDF.</p></li>
+                <li><p>The coursenotes listed herein will have much of the lecture content, but not all of it; you are responsible for knowing the material you missed if you are absent from a lecture.</p></li>
+              </ul>
+              <p class='definition'>Any time you see a blue box with an information symbol (<span class='glyphicon glyphicon-info-sign'></span>), this tidbit is a definition, factoid, or just something I want to draw your attention to;
+                typically these will help you with the conceptual portions of the homework assignments.</p>
+              <p class='toolkit'>Any time you see an orange box with a cog symbol (<span class='glyphicon glyphicon-cog'></span>), this tidbit is a useful tool in your programming arsenal; typically these will
+                help you with the concrete portions of your homework assignments.</p>
+              <p class='debug'>Any time you see a red box with a warning symbol (<span class='glyphicon glyphicon-warning-sign'></span>), this tidbit is a warning for a common pitfall; typically these will
+                help you with debugging or avoiding mistakes in your code.</p>
+              <p class='remark'>Any time you see a teal box with a bullhorn symbol (<span class='glyphicon glyphicon-bullhorn'></span>), this tidbit provides some intuition or analogy
+                that I think provides an easier interpretation of some of the more dense technical material.</p>
+              <p class='question' name='intro'>Any time you see a yellow question box on the site, you can click on it...</p>
+              <p class='answer' name='intro'>...to reveal the answer! Well done!</p>
+              <div class='example'>
+                <p>Here's an example box that usually contains an activity to try on your own; let's try one now!</p>
+                <p><strong>Waterfall:</strong> in Zoom chat, type what you find most interesting about AI or what you most hope to gain from this course!</p>
+              </div>
+              <br/>
+              
+              <p>For those of you viewing from home, at this point we'll review the class syllabus, located here:</p>
+              <p class='text-center'><a class='btn btn-primary big-btn' href='./materials/syllabus.html'><span class='glyphicon glyphicon-file'></span> &nbsp;Syllabus</a></p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='about' class='scrollspy-element' scrollspy-title='What is AI?'></div>
+            <h1>What is Artificial Intelligence?</h1>
+            <div>
+              <p>Before we can answer what <i>artificial</i> intelligence is, let's start with an easy question:</p>
+              <p class='example'>What properties, qualities, or behaviors do you associate with "intelligence?"</p>
+              <p>There are many, many definitions of intelligence, and many of which will vary wildly depending on who you ask... here are a couple of good ones:</p>
+              <ul class='indent-1'>
+                <li><p>Pei Wang says, "The essence of intelligence is the principle of adapting to the environment while working with insufficient knowledge and resources. Accordingly, 
+                  an intelligent system should rely on finite processing capacity, work in real time, open to unexpected tasks, and learn from experience. This working 
+                  definition interprets "intelligence" as a form of "relative rationality."</p></li>
+                <li><p>Legg and Hutter define intelligence as a measure for "an agent's ability to achieve goals in a wide range of environments."</p></li>
+                <li><p>There are too many to list here; <a href='https://arxiv.org/pdf/0712.3329.pdf' target='_blank'>take a look at this paper for great reference.</a></p></li>
+              </ul>
+              <p class='example'>Give some examples of intelligent human behavior, and reflect: why might these be difficult to accomplish algorithmically?</p>
+              <br/>
+              
+              <p>Indeed, one of the hallmarks of intelligence is the ability to be <i>dynamic</i> with one's skillset: to apply an approach or strategy to many different
+                looking situations.</p>
+              <p>So, naturally, this class focuses on how we can formalize and apply this dynamism, which we usually ascribe to human reasoning (the gold standard of general intelligence
+                at the time of this writing) to machines.</p>
+              <p class='definition'><strong>Artificial Intelligence</strong> is the theory and development of computer systems that can perform tasks normally reserved for human-level
+                intellects.</p>
+              <p class='definition'><strong>Artificial General Intelligence (AGI)</strong> is the theoretical pinacle of AI in which a single agent can perform *any* task given to it at
+                human level or beyond.</p>
+              <p class='debug'>There is debate in both the AI and Neuroscientific community as to whether or not "general" intelligence even exists in humans or if it can be
+                replicated through a single model.</p>
+              <p class='definition'>So, in the meantime, we in the AI community work from the ground-up, developing modular, <strong>specific intelligences</strong> that can equal or surpass humans
+                on specific tasks.</p>
+              <p>It turns out that much of these specific intelligences mirror facets of psychological study, so this class will also reference how the two fields share a lot in common.</p>
+              <br/>
+              
+              <h4>Examples</h4>
+              <hr/>
+              <p class='example'>For each of the following links and examples, identify and discuss the human-analogous facets of intelligence that might be required to achieve the
+                agent's specific task.</p>
+              <div class='example'><p>Google's Deep Mind learning to walk:</p><br/>
+                <a href="https://www.youtube.com/watch?v=faDKMMwOS2Q" target="_blank" class="assignment">Deep Mind Learns to Walk</a>
+              </div>
+              <div class='example'><p>Google's Virtual Assistant Makes an Appointment:</p><br/>
+                <a href="https://www.youtube.com/watch?v=JvbHu_bVa_g" target="_blank" class="assignment">Making a Hair Appointment</a>
+              </div>
+              <div class='example'><p>Generative Adversarial Networks (GANs) Paint</p><br/>
+                <a href="https://gandissect.csail.mit.edu/" target="_blank" class="assignment">Painting with GANs</a>
+              </div>
+              <div class='example'><p>[Mild Satire] SeeFood App from Silicon Valley</p><br/>
+                <a href="https://www.youtube.com/watch?v=ACmydtFDTGs" target="_blank" class="assignment">SeeFood App</a>
+              </div>
+              <br/>
+              
+              <p>Getting any of the above to work is much easier said than done, of course!</p>
+              <p>As it turns out, designing artificial intelligences is no walk in the park, and we have yet to skirt anywhere near the cohesive level of intelligence that humans
+                achieve in their lifetimes.</p>
+              <p>Some of the many challenges addressed in arbitrary AI tasks include:</p>
+              <ul class='indent-1'>
+                <li><p>How to represent the knowledge of a reasoning system</p></li>
+                <li><p>How to model its environment or the system in which it's reasoning.</p></li>
+                <li><p>How to establish goals for a reasoning system, and the actions or steps it must take to accomplish those goals.</p></li>
+              </ul>
+              <br/>
+              
+              <p>Plainly, these are high-level abstractions for much of what must be considered in any arbitrary AI application, which will vary wildly in complexity and approach.</p>
+              <p>In fact, intelligence is such a complex confluence of systems that the current field of AI has decomposed into separate sub-disciplines, each devoted to developing
+                the theories and applications relevant to a particular facet of intelligence, like natural language processing and vision.</p>
+              
+              <br/>
+              <h3>Subfields of AI</h3>
+              <hr/>
+              <p>Let's examine some active subfields of AI and the problems they address!</p>
+              <table class='table table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>Subfield</p></th>
+                    <th><p>Description</p></th>
+                    <th><p>Example Problems</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>Reasoning and Knowledge Representation</p></td>
+                    <td><p>How to formalize facts and representations about the environment, and then logically reasoning about them</p></td>
+                    <td><p>Inference; common-sense logic; search; constraint satisfaction</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>Planning</p></td>
+                    <td><p>How to set goals, then find and execute the necessary steps to achieve them</p></td>
+                    <td><p>Robotics; game playing agents</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>Natural Language Processing</p></td>
+                    <td><p>How to autonomously extract meaning from human language</p></td>
+                    <td><p>Sentiment analysis; sentence parsing; digital assistants; speech-to-text</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>Machine Vision</p></td>
+                    <td><p>How to autonomously extract meaning from digital images and video</p></td>
+                    <td><p>Robotic navigation; medical imaging; image classification</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>Data Science</p></td>
+                    <td><p>How to interpret vast quantities of data and extract meaning that would escape the human eye</p></td>
+                    <td><p>Policy formation; experimental design; econometrics and business sense</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>Probabilistic and Causal Reasoning</p></td>
+                    <td><p>How to reason under scenarios with partial beliefs or reasoning over systems of cause and effect</p></td>
+                    <td><p>Stochastic systems; partial visibility; observations vs. interventions vs. counterfactuals</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>Learning</p></td>
+                    <td><p>How to improve performance through experience or observed example</p></td>
+                    <td><p>Reinforcement learning (RL); Deep Learning</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>...plus many others, like creativity and the mother-of-all pursuits, artificial general intelligence (AGI).</p>
+              <p class='definition'>Note: these are major individual areas of focus in AI, but all tend to overlap in at least some points, as we will see in the coming months.</p>
+              <p>So, with all of these exciting topics above, we should take a moment to make a meta-analysis of just what this class is, and what this class is not.</p>
+              <br/>
+              
+              <h4>What This Class <strong>IS</strong></h4>
+              <hr/>
+              <p class='toolkit'><strong>Coverage:</strong> This class will be a survey of almost all of the above disciplines (with the exception of NLP and RL), as well as the theories and algorithms
+                that address many of their common problems.</p>
+              <p>More specialized AI courses will give proper treatments to some of the more specialized areas of research.</p>
+              <p class='toolkit'><strong>History:</strong> The role of this course will be to provide both a historical and practical perspective for many of the different subfields of AI, the problems they
+                address, the theories they entail, and the work they have yet to do.</p>
+              <p>It's important to understand not just where we are in the field, but where we've come. This will give you a deeper understanding of how we've acted as toolmakers, scientists, and explorers,
+                giving you direction to advance the frontier in a similar fashion.</p>
+              <p class='toolkit'><strong>Practice Meets Theory:</strong> This class does not just prepare you as practitioners of AI and ML, but theorists; you will understand the mathematics and motivations
+                behind the tools, craft some of them by hand, but also learn to use popular toolkits that address a wide swath of real world problem.</p>
+              <br/>
+              
+              <h4>What This Class <strong>IS NOT</strong></h4>
+              <p class='debug'><strong>Not Just Machine Learning / Data Science:</strong> Artificial Intelligence has come to be a tag more associated with agents that make decisions,
+                and Machine Learning more about how those agents' policies can be acquired or how humans gain insight from some data.</p>
+              <p>This course looks at BOTH AI as a wholistic discipline and Machine Learning as an important substrata of that.</p>
+              <p>There are other courses at LMU that are devoted only to Machine Learning and Data Science, for which this class will well-equip you.</p>
+              <br/>
+              
+              <p class='debug'><strong>Not Just Deep Learning:</strong> This class is *not* a focus on deep learning and its applications (though LMU does offer courses in this).</p>
+              <p>Deep Learning has made a meteoric rise in both the AI culture and news, but has only warranted a couple weeks in our class; why?</p>
+              <ul class='indent-1'>
+                <li><p>Deep learning is a sledgehammer solution to many interesting problems: just because you *can* apply it, doesn't mean there isn't a simpler, less cumbersome
+                  solution to a task.</p></li>
+                <li><p>Deep learning is laden with additional requirements: most require huge data-sets, large amount of learning or processing, and can involve complex decompositions
+                  of learning environments to operate properly -- many such requirements are not always available.</p></li>
+                <li><p>Deep learning is weak on interpretability: when something goes wrong, it's extremely difficult to say what... and when something goes right, it's sometimes
+                  difficult to say why!</p></li>
+              </ul>
+              <p>As such, although deep learning is a valuable tool in the AI practitioner's arsenal, it is not the sole focus of this class, and may be yet another of the many
+                stepping stones that our discipline takes on the road to truly understanding (and then implementing!) intelligence.</p>
+              <br/>
+              
+              <p class='debug'><strong>Little Philosophy:</strong> This class will *not* prominently feature philosophical perspectives on AI.</p>
+              <p>We may happen to discuss the myriad of fascinating philosophical problems surrounding AI, but only briefly or in passing; this is a technical CS course.</p>
+              <p>This layer of discussion is better accomplished once you've learned some of the history and current tools in AI, and will feature prominently in the follow-on course,
+                Cognitive Systems Design.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='agents' class='scrollspy-element' scrollspy-title='Artificial Agents'></div>
+            <h1>Designing Artificial Agents</h1>
+            <div>
+              <p>For the bulk of this course's beginning, we will investigate the theory and algorithms used in design of artificial agents, so we should take a moment to discuss some definitions.</p>
+              <p class='question' name='ai-q2'>What does it mean to be an agent?</p>
+              <p class='answer' name='ai-q2'>An agent is an entity that is imbued with... well... <i>agency</i>, i.e., the ability to make decisions and act autonomously in their environment.</p>
+              <p class='definition'>An <strong>artificial agent</strong> is therefore one that we, as programmers, imbue with agency, mapping their observed environment (as through
+                <i>sensors</i>) to some behavior.</p>
+              <p>Just how we define the agent's capacities and model its environment will be a major focus throughout the course, and will differ depending upon the problems we're
+                addressing.</p>
+              <br/>
+              
+              <p>So what, precisely, constitutes an agent's reasoning environment?</p>
+              <p class='definition'>An artificial agent's reasoning <strong>environment</strong> consists of all objects, features, actors, and possibly other agents that shall influence
+                the agent's decisions.</p>
+              <p class='example'>Suppose we are designing an artificial agent to play Pacman, as in the traditional game pictured below:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-1/pacman.jpg' width='60%' height='60%' />
+              </div>
+              <br/>
+              
+              <p class='question' name='ai-q3'>What kinds of <strong>features</strong>, i.e., parts of the environment that an agent attends to in its decision-making, do you think would be
+                important in the Pacman environment?</p>
+              <p class='answer' name='ai-q3'>The pellets, power pellets, fruits, ghosts, etc.</p>
+              <p>As such, for each problem we address in this course, we will make assumptions and restrictions about the environment, and then craft an agent that addresses those modeling choices.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='python' class='scrollspy-element' scrollspy-title='Python'></div>
+            <h1>Python</h1>
+            <div>
+              <p class='definition'>In this course, we will be using the Python programming language for our programmatic assignments.</p>
+              <br/>
+              
+              <h4>Why Python?</h4>
+              <hr/>
+              <p>Python has become the outlet of choice for most AI and ML developers. Why?</p>
+              <ul class='indent-1'>
+                <li><p><strong>Easy to learn, easy to share:</strong> Python has one of the best packet management systems of any programming language, and as such, finding and distributing packages
+                  that are relevant for your project can be a breeze. If you're not familiar using <code>pip</code> or <code>Anaconda</code> for package management, you'll soon learn why!</p></li>
+                <li><p><strong>Simple Data Processing:</strong> since many AI / ML applications must parse thousands of data points, often dancing around the dataset, Python boasts a number of
+                  mechanisms that make data handling easy for the programmer.</p></li>
+                <li><p><strong>A Glue Language:</strong> Python is often referred to as a "glue" language, as it is capable of concerting applications written in other languages as well.</p></li>
+              </ul>
+              <p>Some of its downsides are speed / efficiency (being a high-level language farther from the hardware, at which point languages like C++ are preferred), but ease and simplicity are
+                often paramount with the complexity of endeavors in AI.</p>
+              <br/>
+              
+              <h4>Need a Refresher?</h4>
+              <hr/>
+              <p>Because of its ease, and the expectation that you'll be taking this class as of junior or senior standing, you've likely already seen Python, are learning it concurrently, or need
+                a refresher.</p>
+              <p class='toolkit'>Your level of Python expertise should match that covered by the following tutorial; run through this and let me know if you have any questions!</p>
+              <p class='assignment'><a href='https://inst.eecs.berkeley.edu/~cs188/su19/project0/#python-basics' target='_blank'>Python Tutorial</a></p>
+              <br/>
+              
+              <p class='debug'>Warning: Parts of this class may involve Python version 2.7, others 3.X, but each assignment will specify which is required or expected.</p>
+              <p>For your own configuration, you should be comfortable setting up environments that can execute Python scripts in either version seemlessly (see the tutorial above).</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 5R</li>
+            </ol>
+            
+            
+            <div id='quantun' class='scrollspy-element' scrollspy-title='Quantifying Uncertainty'></div>
+            <h1>Quantifying Uncertainty</h1>
+            <div>
+              <p>Someone once made a very astute observation when we were discussing our propositional logic example with rain making the sidewalk wet:</p>
+              <p>They asked, &quot;We have these general rules that the sidewalk will always be wet if it's raining, but what if the sidewalk is covered by a tree during the storm?&quot;</p>
+              <p>Clearly there are exceptions to our general rules, and it's often difficult to represent the infinite number of exceptions that could happen with propositional logic.</p>
+              <p>Let's consider a motivating problem.</p>
+              <br/>
+              
+              <h3>Motivating Problem</h3>
+              <hr/>
+              <p class='example'>Suppose we are designing Forney Industries' <strong>Solicitorbot 5000</strong>, which sells products door-to-door but must decide which houses to
+                visit to maximize its sales.</p>
+              <p>To imbue Solicitorbot with some logic, suppose we implement a simple propositional logic system so that it doesn't visit houses that won't lead to sales:</p>
+<pre>
+  # Let L = whether or not the house's lights are on
+  # Let H = whether or not someone is home
+  KB =
+     # "If the lights are off, no one is home"
+     1. &not;L => &not;H
+     # "A house's lights are off" 
+     2. &not;L
+</pre>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/solicitorbot-1.png' />
+              </div>
+              <p>Plainly, if Solicitorbot sees the lights of a house off, it should skip that house (according to our rule-based system).</p>
+              <p>However, we can start to see that there might be some cracks in this reasoning system...</p>
+              <p class='question' name='qu-q0'>What are some exceptions to the \(\lnot L \Rightarrow \lnot H\) rule above? How would we repair for these exceptions in propositional logic KBs?</p>
+              <div class='answer' name='qu-q0'>
+                <p>Example exceptions might be:</p>
+                <ul class='indent-1'>
+                  <li><p>Whether or not the residents' shades are down (S)</p></li>
+                  <li><p>Whether or not the lights are on a timer (T)</p></li>
+                  <li><p>etc. etc.</p></li>
+                </ul>
+                <p>We would repair for these by adding conditions to the rule's premise, a la:
+                  $$(\lnot L \land \lnot S \land \lnot T \land ...) \Rightarrow \lnot H$$
+                </p>
+              </div>
+              <p>Of course, we want our reasoning system to remain faithful to reality, so considering these exceptions would be necessary for our KB's <i>representation</i> to match
+                the state of the <i>world</i> it is representing.</p>
+              <p class='question' name='qu-q1'>There are <i>many</i> issues with our method of repairing for exceptions above. What are they?</p>
+              <div class='answer' name='qu-q1'>
+                <p>Three primary shortcomings:</p>
+                <ol class='indent-1'>
+                  <li><p>The list of rules describing when the residents are home is <strong>incomplete</strong>; e.g., perhaps whether or not someone's car is in the driveway is a better
+                    indication that they are home than their lights.</p></li>
+                  <li><p>Since propositions are simply implementations of boolean logic, we have no means of representing <strong>chance / uncertainty</strong>; e.g., our agent cannot
+                    determine whether or not the lights are on because a tree is blocking the house from the street.</p></li>
+                  <li><p>The rule for whether or not someone is home <strong>does not easily scale</strong> with exceptions; e.g., we listed only 2 of the many many reasons why someone
+                    may or may not be home based on their house's light status.</p></li>
+                </ol>
+              </div>
+              <p>Pictorially:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/solicitorbot-2.png' />
+              </div>
+              <br/>
+              <p class='example'>Suggest some ways to address the shortcomings of propositional logic.</p>
+              <br/>
+              
+              <p>Whatever your answers to the above, the approach that followed <i>historically</i> from rule-based reasoning systems was born from acknowledging the following:</p>
+              <ol class='indent-1'>
+                <li><p>We cannot model every single exception to every single rule in any sort of realistic fashion.</p></li>
+                <li><p>Instead, however, we can <i>summarize</i> exceptions by what is <i>likely</i> to happen in a given scenario.</p></li>
+                <li><p>At the core of this approach: the more our agents know about their environments, the less <i>uncertainty</i>.</p></li>
+              </ol>
+              <p class='definition'><strong>Uncertainty</strong> about an environment arises in imperfect information problems wherein (for example) the agent has partial sensor
+                information, ignorance of the rules of the environment, or the environment is fundamentally nondeterministic.</p>
+              <p>The problem with uncertainty is that, even though the agent does not have "all the facts," it is still expected to choose as optimally as possible.</p>
+              <p>And thus, the domain of probabilistic reasoning was born.</p>
+              <p class='definition'><strong>Probabilistic reasoning</strong> models uncertainty in the environment in a parsimonious, statistical representation that then allows
+                the agent to act as best as it can with the information it has available.</p>
+              <p>Understanding probabilistic logic requires, unsurprisingly, that we understand something about probability theory, and the symbolic representation of how we model
+                uncertainty.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='introprob' class='scrollspy-element' scrollspy-title='Intro to Probability Theory'></div>
+            <h1>Introduction to Probability Theory</h1>
+            <div>
+              <p>The beginnings of probability theory do not far diverge from our beginnings of propositional logic.</p>
+              <p class='question' name='pt-q0'>In propositional logic, how did we think about the truth of a sentence in all possibilities of our propositions?</p>
+              <p class='answer' name='pt-q0'>We examined that sentence \(\alpha\)'s <strong>models</strong> in a truth table!</p>
+              <p>So returning to our Solicitorbot design, we would decompose all possible instantiations of propositions into "worlds" with certain
+                interpretations:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>World</p></th>
+                    <th><p>L</p></th>
+                    <th><p>H</p></th>
+                    <th><p>Interpretation</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(W_0\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>F</p></td>
+                    <td><p>The lights are off and no one is home</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_1\)</p></td>
+                    <td><p>F</p></td>
+                    <td><p>T</p></td>
+                    <td><p>The lights are off but someone IS home (hiding from Solicitorbot?)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_2\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>F</p></td>
+                    <td><p>The lights are on but no one is home (wasteful!)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_3\)</p></td>
+                    <td><p>T</p></td>
+                    <td><p>T</p></td>
+                    <td><p>The lights are on and someone IS home</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class='question' name='pt-q1'>Are any of the above worlds <i>impossible</i>? Are some more <i>probable</i> than others?</p>
+              <p class='answer' name='pt-q1'>We can likely generate an explanation for any of the above, yet, some are certainly more likely than others (e.g., it is probably rare
+                that the house's lights are off but someone is home).</p>
+              <p>Just as propositional logic allowed us to make claims about the set of possible worlds in an environment using logical sentences, in probabilistic logic, 
+                we will instead reason over the space of <strong>probabilities</strong> that we are in each world.</p>
+              <br/>
+              
+              <h3>Probabilistic Logic Syntax</h3>
+              <hr/>
+              <p>Just as we had the syntax of propositional sentences, so too must we learn how to discuss quantities using probability theory.</p>
+              <p>Let's juxtapose propositional logic with probabilistic logic below:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Propositional Entity</p></th>
+                    <th><p>Probabilistic Analog</p></th>
+                    <th><p>Probabilistic Syntax</p></th>
+                    <th><p>Interpretation</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>Proposition</p></td>
+                    <td><p>Event / Random Variable</p></td>
+                    <td><p><strong>Capitalized</strong> letters, words</p></td>
+                    <td><ul class='indent-1'>
+                      <li><p>Need not be binary, will attain some value in every world.</p></li>
+                      <li><p>Can be discrete (finite values) or continuous</p></li>
+                      <li><p>Examples: L, H; Lights, Residents</p></li>
+                    </ul></td>
+                  </tr>
+                  <tr>
+                    <td><p>Values</p></td>
+                    <td><p>Values</p></td>
+                    <td><p><strong>Lowercase</strong> letters, words.</p></td>
+                    <td><ul class='indent-1'>
+                      <li><p>The value that a random variable attains in some world.</p></li>
+                      <li><p>Examples: Lights = <strong>on</strong>, Residents = <strong>home</strong></p></li>
+                    </ul></td>
+                  </tr>
+                  <tr>
+                    <td><p>Truth Table</p></td>
+                    <td><p>Probability Distribution</p></td>
+                    <td><p><strong>\(P(A \land B \land C \land ...) = P(A, B, C, ...)\)</strong> for distribution \(P\) over <strong>variables</strong> \(A, B, C, ...\).</p></td>
+                    <td><ul class='indent-1'>
+                      <li><p>Provides a <strong>functional mapping</strong> between variables and probability values that determines how likely each world is.</p></li>
+                      <li><p>Example: \(P(L, H)\) defines chances of each value assigned to \(L, H\) in the Solicitorbot example.</p></li>
+                    </ul></td>
+                  </tr>
+                  <tr>
+                    <td><p>Models</p></td>
+                    <td><p>Probability Value</p></td>
+                    <td><p><strong>\(P(A = a, B = b, C = c) = P(a, b, c)\)</strong> for distribution \(P\) over <strong>values</strong> \(a, b, c\).</p></td>
+                    <td><ul class='indent-1'>
+                      <li><p>Provides a single probability value for any instantiation of variables (i.e., evaluates the probability distribution).</p></li>
+                      <li><p>Example: \(P(Lights = off) = 0.25 = 25\%\)</p></li>
+                    </ul></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              
+              <p>Let's look at an example of the above!</p>
+              <p class='definition'>For discrete variables, probability distributions are defined tabularly, since every world (i.e., instantiation of variables) will be assigned
+                some probability. The fully-specified table that provides this mapping for all variables in the model is called the <strong>joint probability table.</strong></p>
+              <p class='definition'>Joint probability tables, specified via \(P(A, B, C, ...)\) define the likelihood of seeing event \(A \land B \land C \land ...\) for all variables
+                and their associated values.</p>
+              <p>These distributions are termed "joint" because they describe the probability of seeing a particular instantiation of variables together.</p>
+              <p>Observe the following joint distribution over our Solicitorbot example's variables: L (whether or not a house's lights are on) and H (whether anyone is home).</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>World</p></th>
+                    <th><p>L</p></th>
+                    <th><p>H</p></th>
+                    <th><p>\(P(L, H) = P(L \land H)\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(W_0\)</p></td>
+                    <td><p>false</p></td>
+                    <td><p>false</p></td>
+                    <td><p>\(P(L = false, H = false) = 0.30\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_1\)</p></td>
+                    <td><p>false</p></td>
+                    <td><p>true</p></td>
+                    <td><p>\(P(L = false, H = true) = 0.10\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_2\)</p></td>
+                    <td><p>true</p></td>
+                    <td><p>false</p></td>
+                    <td><p>\(P(L = true, H = false) = 0.10\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_3\)</p></td>
+                    <td><p>true</p></td>
+                    <td><p>true</p></td>
+                    <td><p>\(P(L = true, H = true) = 0.50\)</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class='toolkit'>Note: Joint Probability Tables describe the probability of seeing the variable instantiations in each world <strong>without any other evidence</strong>.</p>
+              <p>In other words, they describe the raw probability values of every world.</p>
+              <p class='question' name='pt-q2'>Reasonably, you might ask, where do these probability values come from?</p>
+              <p class='answer' name='pt-q2'>Typically, from (1) large datasets that have been gathered experimentally, (2) expert opinions, and (3) an agent's experience (i.e., updated
+                based on the agent's experiential history).</p>
+              <p>Now that we've seen these tables, we should be formal and understand some of their <i>axiomatic</i> properties (the properties that are true by definition).</p>
+              <br/>
+              
+              <h3>Axiomatic Properties of Probability Theory</h3>
+              <hr/>
+              <p>There are only a few axioms that constrain probability theory as amounting from the formalization of a joint distribution:</p>
+              <ul class='indent-1'>
+                <li><p>All probability values assigned to any given world \(w\) must range between 0 (impossible) and 1 (certain), inclusively: $$0 \le P(w) \le 1$$</p></li>
+                <li><p>The sum of all probability values in the <strong>joint distribution</strong> must sum to 1: $$\sum_w P(w) = 1$$</p></li>
+                <li><p>The probability of any variable instantiation (or subset of joint variable instantiations) \(\alpha\) is the sum of every world that satisfies \(\alpha\):
+                  $$P(\alpha) = \sum_{w \in M(\alpha)} P(w)$$
+                </p></li>
+              </ul>
+              <p>We can quickly verify that the first two axioms are met by our Solicitorbot joint probability table above, but consider the following:</p>
+              <p class='question' name='pt-q3'>What is the raw probability (i.e., the <strong>prior</strong>) that someone is home? In other words, what is \(P(H = true)\)?</p>
+              <p class='answer' name='pt-q3'>Using the third axiom above, we see that: $$P(H = true) = \sum_{w \in M(H = true)} = P(W_1) + P(W_3) = 0.60$$</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='prob-sem' class='scrollspy-element' scrollspy-title='Probabilistic Semantics'></div>
+            <h1>Probabilistic Semantics</h1>
+            <div>
+              <p>Just as we can define the language to <i>denote</i> uncertainty (i.e., the syntax), we should think about just what we're saying when we do: let's dive into the semantics.</p>
+              <p>To motivate this exploration, consider why we are reasoning in the domain of probabilities to begin with.</p>
+              <p class='toolkit'>The power of probabilistic reasoning is not simply captured in its ability to assign chance to different "worlds," but rather, represents an agent's beliefs about the likelihood of each world that can be
+                <strong>updated</strong> as information is gathered.</p>
+              <p>We've seen this capacity for an intelligent agent in propositional logic, but now we need to translate it to the domain of probabilistic logic.</p>
+              <p class='definition'><strong>Probabilistic Inference</strong> is the ability to reason over probabilities of likely worlds given evidence that is observed about the environment; this is sometimes called Bayesian Inference.</p>
+              <p>If an agent believes that some worlds are more likely than others, it may modify its behavior accordingly.</p>
+              <br/>
+              
+              <p>Reconsider our Solicitorbot from earlier, in which we assigned probability values to all possible worlds partitioned on \(L\) (whether or not a house's lights are on) and \(H\) (whether or not someone's home).</p>
+              <p>The joint probability distribution encoded the raw chances of seeing a particular instantiation of variables <i>without assuming that our agent knows any other information</i> about the environment.</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>World</p></th>
+                    <th><p>L</p></th>
+                    <th><p>H</p></th>
+                    <th><p>\(P(L, H) = P(L \land H)\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(W_0\)</p></td>
+                    <td><p>false</p></td>
+                    <td><p>false</p></td>
+                    <td><p>\(P(L = false, H = false) = 0.30\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_1\)</p></td>
+                    <td><p>false</p></td>
+                    <td><p>true</p></td>
+                    <td><p>\(P(L = false, H = true) = 0.10\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_2\)</p></td>
+                    <td><p>true</p></td>
+                    <td><p>false</p></td>
+                    <td><p>\(P(L = true, H = false) = 0.10\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W_3\)</p></td>
+                    <td><p>true</p></td>
+                    <td><p>true</p></td>
+                    <td><p>\(P(L = true, H = true) = 0.50\)</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class='toolkit'>Just as in propositional logic, we added knowledge to our KBs whenever observations were gathered via the <code>tell</code> operation. In probabilistic logic, we add knowledge to our system by restricting
+                the set of possible worlds to be consistent with observed evidence.</p>
+              <p>Updating our knowledge about the environment was important for making inferences in the same way that in probabilistic reasoning, we should update our <strong>beliefs</strong> about the chances of worlds in our environment.</p>
+              <p class='question' name='ps-q0'>Looking at the above, suppose our agent <strong>observed that a house's lights are on (i.e., \(L = true\))</strong>. How (if at all) should this observation change the probability that someone
+                is home?</p>
+              <p class='answer' name='ps-q0'>We would expect, looking at worlds \(W_2, W_3\), that observing a house's lights on would increase the agent's belief that someone is home.</p>
+              <p>This intuition is well-founded, but what we now need is a means of formalizing our intuition that is aligned with the syntax of probabilistic reasoning.</p>
+              <p>In other words, we need to establish the rules that govern how we transform knowledge about the <i>joint distribution</i> and put it into the context of <i>observed evidence</i> about the environment.</p>
+            <hr/>
+            <br/>
+            
+            
+            <div id='cond-dist' class='scrollspy-element' scrollspy-title='Conditional Distributions'></div>
+            <h1>Conditional Distributions</h1>
+            <div>
+              <p>Returning to our joint distribution (hey, suddenly it looks like something from a PowerPoint, go figure &gt;_&gt; &lt;_&lt;)</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/solicitor-joint.png' width="50%" height="50%" />
+              </div>
+              <p class='question' name='ps-q1'>Suppose our agent observes that a house's lights are off (i.e., \(L = false\)), which worlds above become impossible, and why?</p>
+              <p class='answer' name='ps-q1'>\(W_2, W_3\) become impossible because they conflict with the observed evidence.</p>
+              <p class='definition'>Formally, <strong>Observations / Evidence</strong> constrain the set of possible worlds in probabilistic reasoning by assigning a probability of 0 to worlds that are inconsistent with the evidence.</p>
+              <p>The observation that \(L = false\) thus "zeros out" rows of the joint distribution table that are inconsistent with the evidence.</p>
+              <p>Thus, we are left with the following restriction imposed on the joint:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/solicitor-cond.png' width="52%" height="52%" />
+              </div>
+              <p class='debug'>Note, however, that we have violated one of our axioms of probability theory: that the sum of all possible worlds (even under some observed evidence) shall always sum to 1!</p>
+              <p class='question' name='ps-q2'>How can we repair this violation of the axiom to be left with a legal probability distribution?</p>
+              <p class='answer' name='ps-q2'><strong>Normalize</strong> the remaining worlds \(w\) that are consistent with the evidence \(e\) by: $$\frac{P(w)}{P(e)}$$</p>
+              <p>Normalizing joint values after accounting for observed evidence leaves us with what is known as a conditional distribution.</p>
+              <p class='definition'>A <strong>conditional probability distribution</strong> specifies the probability of some variables \(\alpha\) <i>given observed evidence</i> \(\beta\), is expressed \(P(\alpha | \beta)\).</p>
+              <p class='definition'>In conditional distributions \(P(\alpha | \beta) = P(\text{vars}~|~\text{evidence})\), the | is known as the "conditioning" bar such that all 
+                variables to the left are <strong>query variables</strong> (what we are assigning liklihoods to), and all variables to the right are the 
+                <strong>observed evidence</strong> (assumed to be witnessed with certainty).</p>
+              <p class='toolkit'><strong>Probabilistic Logic Tool - Conditioning:</strong> for any two sets of variables \(\alpha, \beta\) we thus have: $$P(\alpha | \beta) = \frac{P(\alpha, \beta)}{P(\beta)} = \frac{\text{joint prob of alpha, beta}}{\text{prob. of evidence}}$$</p>
+              <p>Applying this tool to our problem above, we see that we can obtain the conditional distribution \(P(H | L)\) as follows:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/solicitor-cond-norm.png' />
+              </div>
+              <p>Repeating conditioning for the case where \(L = true\) gives us the following <strong>conditional probability table (CPT)</strong>:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/solicitor-cpt.png' width="55%" height="55%" />
+              </div>
+              <p>To visualize conditioning, consider the following diagram in which we constrain the proportion of the original probability mass based on what worlds are still possible:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/cpt-comp.png' />
+              </div>
+              <p class='question' name='ps-q3'>Given the CPT above, and assuming our Solicitorbot wishes to visit only houses where someone is home, should it visit a house whose lights it observes are off? (i.e., \(L = false\))</p>
+              <p class='answer' name='ps-q3'>No! It is more likely that no one is home when it is observed that the lights are off (\(P(H = false | L = false) = 0.75 > P(H = true | L = false) = 0.25\))</p>
+              <p>Note also the flexibility of probabilistic logic in this case: our agent will not be surprised if no one is home when the lights are on, since it is only a higher probability, but not a certainty that lights => being home.</p>
+              <p>As such, conditioning satisfies two of the issues that we experienced with propositional logic: the ability to gracefully deal with exceptions and uncertainty.</p>
+              <p>We'll address the third issue, scalability, in the next section and lecture...</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='indep' class='scrollspy-element' scrollspy-title='Independence'></div>
+            <h1>Independence</h1>
+            <div>
+              <p>Suppose we wanted to improve the accuracy of our Solicitorbot to take more features into consideration that would indicate whether or not someone is home.</p>
+              <p class='example'>Suppose we added a new variable, \(C\), to the system representing whether or not Solicitorbot hears a *cacophony* (flexing our vocab too) within
+                the house (that's a loud, jarring noise).</p>
+              <p class='debug'>Note: in propositional logic, this would be a cumbersome task: we would have to update every rule that would relevantly mention \(C\).</p>
+              <p>In probabilistic logic, however, this addition expands the joint distribution such that we have:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-7/add-to-joint.png' />
+              </div>
+              <p class='question' name='ps-q4'>Given that our random variables need not be binary, how many rows will there be in the joint distribution?</p>
+              <p class='answer' name='ps-q4'>The product of every variable \(V\) cardinality: $$\prod_{i} |V_i|$$</p>
+              <p>It would seem that we have some growing pains again!</p>
+              <p>In the same way that the number of possible worlds grew exponentially in propositional logic truth tables, we can see that the joint distribution will grow very quickly in probabilistic logic as well.</p>
+              <p>So, what can we do to ameliorate this growth?</p>
+              <br/>
+              
+              <h3>Factoring the Joint Distribution</h3>
+              <hr/>
+              <p>Suppose, instead of storing every row of the joint distribution, we were about to <i>factor</i> it into smaller sub-components.</p>
+              <p>To do so, we'll need a means of "chopping it up," and to help us with this task is a nice attribute from probability theory that we'll motivate next.</p>
+              <div class='question' name='ind-q0'>
+                <p>Suppose we roll two, fair, 6-sided die: \(A, B\). Will the outcome of \(A\) tell me anything about the outcome of \(B\)? In other words, does treating \(A\) as evidence update my beliefs about \(B\)?</p>
+                <div class='text-center fit-pres'>
+                  <img src='../../../assets/images/spring-2018/cmsi-485/week-7/die-ind.png' height="60%" width="60%" />
+                </div>
+              </div>
+              <p class='answer' name='ind-q0'>No! Knowing the outcome of \(A\) tells me nothing about the outcome of \(B\) since they are two dice rolls with nothing to do with each other.</p>
+              <p class='question' name='ind-q1'>If the evidence of \(A\) tells us nothing about \(B\), what can be said about \(P(B|A)\)?</p>
+              <p class='answer' name='ind-q1'>If \(A\) is irrelevant to \(B\), then: \(P(B|A) = P(B)\)?</p>
+              <p class='definition'>Two variables \(A, B\) are said to be <strong>independent</strong>, written \(A \indep B\), if and only if the following holds:
+                $$A \indep B \Leftrightarrow P(A | B) = P(A) \Leftrightarrow P(B | A) = P(B)~\forall~a \in A, b \in B$$
+              </p>
+              <p>In other words, independence is a measure of <strong>relevance</strong> between variables.</p>
+              <p>We only want our agent's observed evidence to change its beliefs about those variables for which the evidence is relevant!</p>
+              <p>So, how does this help us factor the joint distribution? Well, let's consider our dice again...</p>
+              <p class='question' name='ind-q2'>What would the joint probability distribution / table look like for two independent, fair, 6-sided dice rolls for dice \(A, B\)? How many rows would it have?</p>
+              <div class='answer' name='ind-q2'>
+                <p>The table would have 36 rows (1 for each combination of values for \(A, B\)) and look like:</p>
+                <div class='text-center fit-pres'>
+                  <img src='../../../assets/images/spring-2018/cmsi-485/week-7/dice-joint.png' height="40%" width="40%" />
+                </div>
+              </div>
+              <p class='question' name='ind-q3'>Now, consider the probability distributions over each dice individually; what would the distribution tables for \(P(A), P(B)\) look like, and how many rows would they have?</p>
+              <div class='answer' name='ind-q3'>
+                <p>They would each have 6 rows a piece (for a total of 12) and look like:</p>
+                <div class='text-center fit-pres'>
+                  <img src='../../../assets/images/spring-2018/cmsi-485/week-7/dice-priors.png' height="50%" width="50%" />
+                </div>
+              </div>
+              <p class='question' name='ind-q4'>How, then, can we relate the joint distribution of two <i>independent</i> variables \(A, B\) to their individual <i>prior</i> probability distributions \(P(A), P(B)\)?</p>
+              <p class='answer' name='ind-q4'>If \(A \indep B\) then: \(P(A, B) = P(A) * P(B)\)</p>
+              <p>And thus we have yet another tool at our disposal:</p>
+              <p class='toolkit'><strong>Probabilistic Logic Tool - Joint Independence Factoring:</strong> for two variables \(A, B\): $$A \indep B \Leftrightarrow P(A, B) = P(A) P(B)$$</p>
+              <p class='question' name='ind-q5'>How does this help us "shrink" our joint distribution? Consider the dice joint with 36 rows.</p>
+              <p class='answer' name='ind-q5'>We can derive any row of the joint by multiplying the priors. As such, we need only store 12 rows rather than 36.</p>
+              <p>Brilliant! So it would seem that identifying independence relationships between variables in our system leads to a more <i>parsimonious</i> storage of the joint distribution, from which we can answer interesting queries
+                of probabilistic inference.</p>
+              <p>However, there's a bit of a wrench to throw in the gears...</p>
+              <br/>
+              
+              <h3>Conditional Dependence</h3>
+              <hr/>
+              <p>Returning to the 2 fair die problem, suppose we add another variable into the system: \(S\), representing the sum of the individual dice rolls, i.e., \(S = A + B\)</p>
+              <div class='question' name='ind-q6'>
+                <p>We know that \(A \indep B\), but suppose I told you the outcome of \(A = 6\) and the sum of the dice rolls \(S = 7\). Does knowing about \(S, A\) change our belief about \(B\)?</p>
+                <div class='text-center fit-pres'>
+                  <img src='../../../assets/images/spring-2018/cmsi-485/week-7/dice-sum.png' height="60%" width="60%" />
+                </div>
+              </div>
+              <p class='answer' name='ind-q6'>Yes! If I told you that \(A = 6\) and \(S = 7\), then you should infer that \(B = 1\).</p>
+              <p>Curiously, above we have a scenario wherein \((A \indep B)\) but \((A \not \indep B | S)\)</p>
+              <p class='toolkit'>Two variables \(A, B\) can be made <strong>conditionally</strong> dependent or independent when given evidence of another set of variables \(C\).</p>
+              <p>This complicates our ability to shrink the joint distribution via factorization!</p>
+              <br/>
+              
+              <h3>Summary</h3>
+              <hr/>
+              <p class='toolkit'>Using the joint distribution, we can compute the answer to any interesting probabilistic inference queries...</p>
+              <p class='debug'>...BUT, the joint distribution grows exponentially every time we add another variable to the system...</p>
+              <p class='toolkit'>...however, we can store the joint distribution more <i>parsimoniously</i> by exploiting independence relationships between variables...</p>
+              <p class='debug'>...BUT, the possibility of independent variables made dependent by conditioning on another set of variables exists!</p>
+              <p class='question' name='ind-q7'>So, what do we do?!</p>
+              <p class='answer' name='ind-q7'>Find out next time!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

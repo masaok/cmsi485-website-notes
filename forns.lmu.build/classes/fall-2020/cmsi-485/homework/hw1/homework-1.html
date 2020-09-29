@@ -1,0 +1,848 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../../../assets/images/favicon.ico'>
+    <script src="../../../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../../../js/lib/expanding.js"></script>
+    <script src="../../../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../../../classes.html">Classes</a></li>
+              <li><a href="../../cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Homework 1</li>
+            </ol>
+            
+            <div id='hw1' class='scrollspy-element' scrollspy-title='Homework 1'></div>
+            <h1>Homework 1 - Are You Ever Infer It</h1>
+            <div>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>Title</p></th>
+                    <th><p>Date Posted</p></th>
+                    <th><p>Date Due</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>Homework 1: Are You Ever Infer It</p></td>
+                    <td><p>9 / 11 / 20</p></td>
+                    <td><p>10 / 8 / 20</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <p class='toolkit'>Use Python 3.X for this assignment. **You may also work in groups of up to 3 people!**</p>
+              <p class='definition'>Your mission: Lead BlindBot, an artificial agent that is equipped with the power of logic, if not sight, through a perilous maze with 
+                bottomless pitfalls!</p>
+              <p>This assignment will have you flex your knowledge of <strong>informed search, propositional logic, planning, and active learning</strong>.</p>
+              <p>In this section, we will state our assumptions about the problem, and then detail what you will need to accomplish your goal in the following Specifications.</p>
+              <br/>
+              
+              <h4>The Environment</h4>
+              <p>Your agent will be operating in a grid maze, as represented by an array of strings (where each string is a row in the maze, and each character in each string
+                a cell at a particular row, col; note that this format is later converted to a list of list of strings where each string represents a single cell's character
+                for ease of your manipulation).</p>
+              <p>However, in the present problem, perilous pits dot the landscape... and worse yet: we forgot to equip our agent (BlindBot) with sight, so it must rely only on the 
+                power of its head-mounted whirly-gig sensor to feel the strength of a breeze that borders a pit.</p>
+              <p>The good news: we've upgraded BlindBot's whirly-gig such that it can detect whether a pit is 1 OR 2 spaces away in any cardinal direction (slightly different from the
+                pitfall example [pits and breezes] from lecture).</p>
+              <p>Our agent may not be able to see the pits of impending doom that it may walk onto, but it *can* feel differences between safe tiles and the breezy ones surrounding pits.</p>
+              <p>A maze can have multiple pits, but only one start location and goal, and for simplicity, we'll assume the only walls that exist in the environment are along the 
+                border.</p>
+              <p>In particular, a maze is specified as a list of strings consisting of the following values:</p>
+              <ul class='indent-1'>
+                <li><p>Starting / Player Position [@]</p></li>
+                <li><p>Goal Tile [G]</p></li>
+                <li><p>Safe Square [.]</p></li>
+                <li><p>Pit [P]</p></li>
+                <li><p>Wall [X]</p></li>
+              </ul>
+<pre>
+  # Example Maze 1:
+  # Columns  Rows
+  # 012345
+  ["XXXXXX", # 0
+   "X...GX", # 1
+   "X..PPX", # 2
+   "X....X", # 3
+   "X..P.X", # 4
+   "X@...X", # 5
+   "XXXXXX"] # 6
+</pre>
+              <p class='debug'>Note: Because Mazes are lists of strings, rows correspond to the y axis and cols with the x, so for a given Maze m, we would have:
+                $$(col, row) = m[row][col]$$
+                (observe how the indexing order of row and column are different in the tuple vs index access)
+              </p>
+              <p>Once a maze "game" is started, (and we'll assume a goal is always reachable without falling into a pit from the initial state) Blindbot must explore, reason, and 
+                then walk the right path from the start to the goal.</p>
+              <p class='debug'>The catch: Blindbot will be penalized 1 "point" for each move that it makes (realistically, the notion that we want it to explore / move as little
+                as necessary with battery reserves, desire to accomplish tasks quickly, etc.), and will lose 20 points if it falls into a pit.</p>
+              <p>To help it navigate these terrains, BlindBot's sensors work as follows:</p>
+              <ul class='indent-1'>
+                <li><p>Standing on a tile that is over 2 spaces away (Cardinal directions) from the nearest pit will make BlindBot's whirly-gig stationary, and be represented symbollically in its
+                  environmental representation as a <code>[.]</code></p></li>
+                <li><p>Standing on a tile that is exactly 2 spaces away (Cardinal directions) from the nearest pit will make BlindBot's whirly-gig spin slightly, and be represented 
+                  symbollically in its environmental representation as a <code>[2]</code></p></li>
+                <li><p>Standing on a tile that is exactly 1 space away (Cardinal directions) from the nearest pit will make BlindBot's whirly-gig spin vigorously, and be represented 
+                  symbollically in its environmental representation as a <code>[1]</code></p></li>
+              </ul>
+              <p class='example'>Depicted below, BlindBot's whirly-gig sensor as it would provide signals around pits in the above maze configuration:</p>
+<pre>
+                    # BlindBot's      # BlindBot's
+  # True Maze:      # Initial:        # Fully Explored:
+  ["XXXXXX",        ["XXXXXX",        ["XXXXXX",
+   "X...GX",         "X???GX",         "X..1GX",
+   "X..PPX",         "X????X",         "X21PPX",
+   "X....X",         "X????X",         "X..11X",
+   "X..P.X",         "X????X",         "X21P1X",
+   "X@...X",         "X@???X",         "X@.1.X",
+   "XXXXXX"]         "XXXXXX"]         "XXXXXX"]
+</pre>
+              <p class='toolkit'>The means of constructing, and then employing, these sensors in helping BlindBot navigate are described (in part) over the following spec -- with some
+                important design decisions left to you (creative thinking, yay)!</p>
+              <br/>
+              
+              <h3>Solution Skeleton</h3>
+              <hr/>
+              <p>Start with the solution skeleton in-hand! Segments left for you to do are indicated by <code>TODO</code>s in comments:</p>
+              <p class='text-center'><a class='assignment' href='https://classroom.github.com/g/hRVPkZX8' target='_blank'>Homework 1 GitHub Classroom</a></p>
+              <p>In Part I, this project will have you construct the inference engine for the Maze Pitfall problem, which will then aid your agent in navigating the Pitfall Mazes
+                introduced in Part II.</p>
+              <ul class='indent-1'>
+                <li><p><strong>Part I Files:</strong> ONLY <code>maze_clause.py</code> and <code>maze_knowledge_base.py</code></p></li>
+                <li><p><strong>Part II Files:</strong> ALL OF THEM (though only some you'll need to modify, read on).</p></li>
+              </ul>
+              <p class='toolkit'>To ensure that you're all ready to start developing, you can verify that the unit tests run in each of Part 1's modules via 
+                <code>python maze_clause.py</code> and <code>python maze_knowledge_base.py</code>. They should all fail at first, but hey, gotta start somewhere!</p>
+              <p class='toolkit'>To validate that Part 2 is ready, you can observe a dumb *and* blind bot randomly moving through their environment by running the empirical test in
+                <code>python environment.py</code>.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='mazekb' class='scrollspy-element' scrollspy-title='Part 1: MazeKnowledgeBase'></div>
+            <h1>Part 1: MazeKnowledgeBase</h1>
+            <div>
+              <p class='problem'>[65 Points]</p>
+              <p class='definition'>Your mission: implement a basic, slightly restricted propositional logic inference engine for use in our Maze Pitfall Problem!</p>
+              <p>To start, MazeClauses will compose your KB, which will then be used to perform inference.</p>
+              <p>The steps you'll take to accomplish this:</p>
+              <ol class='indent-1'>
+                <li><p>Complete the resolution operation between different MazeClauses, which will be the programmatic object used to represent propositional clauses in the Maze Pitfall 
+                  setting.</p></li>
+                <li><p>Complete the storage structure of clauses in a MazeKnowledgeBase.</p></li>
+                <li><p>Complete the proof by contradiction query operation for arbitrary MazeClauses in the MazeKnowledgeBase.</p></li>
+              </ol>
+              <br/>
+              
+              <h4>Problem Specification</h4>
+              <hr/>
+              <div class='definition'>
+                <p>We will be implementing a simplified propositional logic inference engine with the following restrictions:</p>
+                <ul class='indent-1'>
+                  <li><p>We will only support a knowledge base in Conjunctive Normal Form (CNF).</p></li>
+                  <li><p>All queries will be clauses.</p></li>
+                  <li><p>We will implement inference using proof by contradiction + resolution.</p></li>
+                </ul>
+              </div>
+              <p class='debug'>The above is simpler than an arbitrary sentence-structure inference engine, which would have drastically larger parsing requirements than are in scope
+                for a homework assignment.</p>
+              <p>To accomplish the above, we will implement two classes:</p>
+              <ul class='indent-1'>
+                <li><p><strong>MazeClause</strong>: represents a clause in a Maze problem wherein each proposition is local to a particular grid location, \((x, y) = (col, row)\)</p></li>
+                <li><p><strong>MazeKnowledgeBase</strong>: represents a CNF KB in which all entries are MazeClauses. The KB can be <i>told</i> rules and facts, and then <i>asked</i>
+                  queries about them.
+                </p></li>
+              </ul>
+              <p>Once we have the above, the second part of this assignment will allow us to use our implementations in BlindBot's pursuit of safety!</p>
+              <p>This latter portion will benefit from your own creative solutions for how to tractably approach the Maze Pathfinding with Pitfalls problem.</p>
+              <br/>
+              
+              <h4>Inference Strategy</h4>
+              <hr/>
+              <p class='definition'>This assignment will have you implement <strong>resolution inference + proof by contradiction</strong>, a purely symbolic 
+                inference algorithm to be performed on MazeClauses in a MazeKnowledgeBase.</p>
+              <p class='debug'>Note: there are entire fields of study that have explored inference algorithms and different strategies with different pros and cons. We will use a
+                simple variant herein, but you should be aware that there are many.</p>
+              <p>The pseudocode for <strong>Resolution Inference</strong> is given in a following section.</p>
+              <p>There are more efficient approaches in existence, and some optimizations that you might make to the algorithm given (e.g., clever storage of clauses in your
+                knowledge base), but you will receive full credit for implementation of the resolution inference strategy as listed.</p>
+              <br/>
+              
+              <h4>Representing MazePropositions + Clauses</h4>
+              <p class='definition'>Recall that a clause is a disjunction of literals (i.e., positive or negated propositions) such that: $$Clause = P_1 \lor \lnot P_2 \lor P_3 \lor ...$$</p>
+              <p class='toolkit'>Because we are tailoring this inference engine to a Maze problem, each of our <strong>MazePropositions</strong> will have a <i>symbolic name</i> and a
+                <i>grid location</i> associated with it. We will represent this as a 2-tuple: <code>(Symbol, Loc)</code></p>
+              <p class='example'>For example, to represent that there is a Pit in cell (1, 1), we might use the proposition \(P_{1,1}\). Since both the symbol and grid location are
+                part of the proposition's name, we will represent the MazeProposition as a 2-tuple: <code>("P", (1, 1))</code></p>
+              <p>Importantly, a MazeProposition <code>("P", (1, 1))</code> is considered different from the same symbol at a different location, like <code>("P", (2, 2))</code>.</p>
+              <p>In a MazeClause, we will not explicitly list the connective "or" between each proposition (as it is implied by virtue of being a clause), but we will instead represent
+                them as mappings of MazePropositions to whether or not those propositions are negated in the clause.</p>
+              <br/>
+              
+              <h4>Storing Clauses</h4>
+              <p class='toolkit'>Internally to a MazeClause, we will store the individual disjoined propositions as a dictionary with MazeProposition keys, and values determining
+                whether those propositions are negated in the MazeClause (True for positive, False for negative).</p>
+              <p class='example'>For example, the clause: \(P_{1,1} \lor \lnot P_{2,1} \lor P_{0,1}\) would be represented as a dictionary:
+                <code>{("P", (1,1)): True, ("P", (2,1)): False, ("P", (0,1)): True}</code></p>
+              <p>This representation will be convenient for the inference engine due to the ability to quickly lookup what propositions are present in a clause, as the keys will be
+                indexed in the map.</p>
+              <br/>
+              
+              <h4>Vacuous (AKA Valid) Clauses</h4>
+              <p>However, during the course of inference, we may find that some clauses that we derive add nothing to our inferences.</p>
+              <p class='definition'>In propositional logic, a sentence is called <strong>valid</strong> if it is vacuously true in every world.</p>
+              <p class='example'>For example, the clause \(\alpha = S \lor \lnot S\) is valid because \(\alpha\) will be true in all possible worlds.</p>
+              <p class='debug'>BIG RED WARNING: In the following spec, I use the term "valid" by the above, formal definition -- NOT the sense that a clause is valid if it is
+                "well-formed" or... well... any other definition except the above.</p>
+              <p>Valid clauses may be legal inferences, but should be avoided as additions to our KB because they do nothing to constrain the set of possible worlds.</p>
+              <br/>
+              
+              <h4>MazeClause Members</h4>
+              <p>As such, MazeClauses maintain two attributes:</p>
+              <ul class='indent-1'>
+                <li><p><code>props</code> a dictionary mapping MazePropositions to their negated status in the clause.</p></li>
+                <li><p><code>valid</code> a boolean flag indicating whether or not the MazeClause is valid (NOTE: this is the propositional logic definition of valid, as defined above).
+                  A MazeClause is only "valid" if it is true in all possible worlds.</p></li>
+              </ul>
+              <br/>
+              
+              <p>With this description in mind, your MazeClause class will implement the following methods:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Methods</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p><code>__init__(props)</code></p>
+                      <p>Constructor for a MazeClause.</p>
+                      <p>The parameter is a list of tuples describing the propositions in the clause, formatted as: <code>[(MazeProposition, NegationStatus), ...]</code></p>
+                      <p>For example, the clause \(P_{1,1} \lor \lnot P_{2,1} \lor P_{0,1}\) is constructed as:
+                        <code>[(("P", (1, 1)), True), (("P", (2, 1)), False), (("P", (0, 1)), True)]</code>
+                      </p>
+                      <p>If a clause is valid by construction, its valid flag should be set appropriately, and propositions cleared. For example:</p>
+                      <p>\(P_{1,1} \lor \lnot P_{1,1}\) is valid and therefore the constructor should empty <code>self.props</code> and set <code>self.valid = True</code></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>is_valid()</code></p>
+                      <p>Returns True if this MazeClause is valid (i.e., is True in every possible world), False otherwise (i.e., just returns the state of the <code>valid</code> 
+                        property).</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>is_empty()</code></p>
+                      <p>Returns True if this MazeClause represents the <strong>empty clause / contradiction</strong> (i.e., the clause with no propositions, typically reached through detection of
+                        a contradiction), and False otherwise.</p>
+                      <p>Valid MazeClauses are not empty, even if they contain no propositions, since they are still logically equivalent to the literal True.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>get_prop(prop)</code></p>
+                      <p>Determines if the given proposition, a 2-tuple of the format \(Symbol, Loc\) like <code>("P", (1, 1))</code>, exists in this MazeClause. Returns:</p>
+                      <ul class='indent-1'>
+                        <li><p><code>None</code> if the proposition does not exist in the Clause (including when the MazeClause is valid).</p></li>
+                        <li><p><code>False</code> if the proposition is negated in the MazeClause.</p></li>
+                        <li><p><code>True</code> if the proposition is positive in the MazeClause (i.e., not negated).</p></li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>@staticmethod</code><br/><code>resolve (c1, c2)</code></p>
+                      <p>Parameterized by two MazeClauses, <code>c1, c2</code>, and returns a <code>set</code> containing all clauses that could be inferred by resolving <code>c1</code>
+                        with <code>c2</code>.
+                      </p>
+                      <p>Hint: since by assumption our MazeClauses are... well.. clauses, this is as simple as finding the complementary propositions in each and then adding
+                        a new clause with the remaining propositions in each to the resulting set.</p>
+                      <p class='debug'>Note: if resolution produces a valid clause, it should be ignored / not added to the result set (since adding True to the CNF KB does nothing).</p>
+                      <p class='debug'>Note2: although this method returns a *set* of MazeClauses, that set will only ever consist of 0 (the clauses do not resolve or resolve to a valid clause) or 1 MazeClause 
+                        (the clauses resolve to something not vacuously true). The return type being a set is convenient for the MazeKnowledgeBase implementation that follows.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>In addition to these methods, I have given you an equivalence test between MazeClauses (<code>__eq__</code>), and a hash function (<code>__hash__</code>) so that
+                MazeClauses can be stored in sets (useful for the next step).</p>
+              <p>With your MazeClauses specified, let's now use them in a Knowledge Base!</p>
+              <br/>
+              
+              <h3><code>MazeKnowledgeBase</code></h3>
+              <hr/>
+              <p class='definition'>Recall that a CNF KB is a <i>conjunction</i> of <i>clauses</i> such that: $$KB = Clause_1 \land Clause_2 \land Clause_3 \land ...$$</p>
+              <p>Because of this assumed format, we will simply maintain a KB that is a collection of MazeClauses, with the logical-and \((\land)\) implied.</p>
+              <p class='toolkit'>The <code>MazeKnowledgeBase</code> class will contain your implementation of both the CNF Knowledge Base (KB) and resolution inference algorithm.</p>
+              <p>Towards this end, it need only maintain a single attribute:</p>
+              <ul class='indent-1'>
+                <li><p><code>clauses</code> a set of MazeClauses composing the knowledge of the KB.</p></li>
+              </ul>
+              <p>Our MazeKnowledgeBases need only support two basic operations:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Methods</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p><code>tell (clause)</code></p>
+                      <p>Adds the given clause to the KB, which stores the clauses (internally) as a set.</p>
+                      <p>Since it is assumed that our KB is in CNF, we need not explicitly list the conjunction of clauses.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>ask (clause)</code></p>
+                      <p>Returns True if the given clause is entailed by the KB, and False otherwise.</p>
+                      <p>Employs the resolution inference procedure whose pseudocode is listed below.</p>
+                      <p class='debug'>Warning: recall that clauses derived during proof by contradiction should not be considered permanent members of
+                        the KnowledgeBase! The KB should be in the same state post-query as it was pre-query.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class='text-center fit-pres'>
+                <img src='../../../../../assets/images/spring-2018/cmsi-485/week-7/res-alg.png' />
+              </div>
+              <br/>
+              
+              <p>Use of the MazeKnowledgeBase will thus proceed in two, iterated phases for this assignment:</p>
+              <ol class='indent-1'>
+                <li><p><code>tell</code> the KB all of the rules and facts it needs for inference.</p></li>
+                <li><p><code>ask</code> the KB if it entails a given clause.</p></li>
+              </ol>
+              <p>Note that we can repeat these steps as many times as necessary for inference; i.e., we might tell our KB something, ask it something, then tell it something else, ask
+                it something else again, etc. etc.</p>
+              <br/>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='agent' class='scrollspy-element' scrollspy-title='Part 2: MazeAgent'></div>
+            <h1>Part 2: MazeAgent</h1>
+            <div>
+              <p class='problem'>[35 Points]</p>
+              <p>In Part 2, we will now employ your MazeKnowledgeBase in an online agent operating in the Maze Pitfall Environment: good old BlindBot!</p>
+              <br/>
+              
+              <h4>Designing Blindbot</h4>
+              <p>BlindBot starts with 2 key pieces of knowledge:</p>
+              <ol class='indent-1'>
+                <li><p>[Given] The dimensions of the maze, its starting location, and the location of the goal. It does *not* know the position of any pits in advance.</p></li>
+                <li><p>[For you to encode] "The way the world works," including rules / facts that:</p>
+                  <ul class='indent-1'>
+                    <li><p>BlindBot's sensors will warn it if the nearest pit is either 1 or 2 tiles away in the cardinal directions, though will not specify in which direction 
+                      that pit is (respecting the bounds of the maze)</p></li>
+                    <li><p>Every goal tile and the initial state are safe (i.e., are not pits)</p></li>
+                    <li><p>Every goal tile has *at least* one adjacent safe tile.</p></li>
+                  </ul>
+                </li>
+              </ol>
+              <p class='definition'>Your task: imbue BlindBot with logic, the ability to intelligently explore, and learn from its mistakes such that it makes it from the initial 
+                state to the goal with as few pitfalls and moves as possible.</p>
+              <p>With these details in place, let's look at the specifics of what you've been given and what you have to do.</p>
+              <br/>
+              
+              <h4><code>constants.py</code></h4>
+              <hr/>
+              <p>For starters, the following <strong>class constants</strong> and static methods are available to you and can be accessed via the <code>Constants</code> class:</p>
+<pre class='prettyprint'>
+  # The following are staticmethods to prevent tampering,
+  # I've got my eye on you, even if through this comment
+  @staticmethod
+  def get_min_score ():
+      """
+      Returns the minimum score that, if reached, will end the game,
+      and bring great shame to your agent
+      """
+      return -100
+  
+  @staticmethod
+  def get_pit_penalty ():
+      """
+      Returns the cost of stepping into a Pit... you're not dead just...
+      like... really inconvenienced
+      """
+      return 20
+  
+  @staticmethod
+  def get_mov_penalty ():
+      """
+      Returns the cost of a movement onto any safe tile
+      """
+      return 1
+
+  # Movement constants + location modifiers
+  MOVES = ["U", "D", "L", "R"]
+  MOVE_DIRS = {"U": (0, -1), "D": (0, 1), "L": (-1, 0), "R": (1, 0)}
+  
+  # Maze content constants
+  WALL_BLOCK  = "X"
+  GOAL_BLOCK  = "G"
+  PIT_BLOCK   = "P"
+  SAFE_BLOCK  = "."
+  PLR_BLOCK   = "@"
+  WRN_BLOCK_1 = "1"
+  WRN_BLOCK_2 = "2"
+  UNK_BLOCK   = "?"
+</pre>
+              <br/>
+              
+              <h4><code>environment.py</code></h4>
+              <hr/>
+              <p class='definition'>The Environment class contains the necessary attributes and methods for configuring the maze, displaying the environment, and for 
+                both initializing and interacting with your agent.</p>
+              <p class='debug'>You shall not modify anything but the main method in environment.py, nor do you need to, though there are some components of which you should be aware.</p>
+              <p>While you may find it useful to reference these "constants," you must not modify them at any point, or you will be cast down one of the maze's pits.</p>
+              <br/>
+              
+              <p class='toolkit'>The following <strong>public methods</strong> are also available for your use:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Methods</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p><code>__init__(maze, tick_length = 1, verbose = True)</code></p>
+                      <p>Constructs a new Maze Pitfall environment from the given maze (the list of strings specified above).</p>
+                      <p>Optionally, may specify the length, in seconds, between "ticks" in which the agent moves. By default, they occur 1 second apart, which can be useful in
+                        seeing how your agent is moving around step-by-step. For unit testing, can set <code>tick_length = 0</code> for continuous decisions.</p>
+                      <p>May also decide whether or not the agent's steps are printed to the console by setting the parameter <code>verbose = False</code></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>get_player_loc()</code></p>
+                      <p>Returns the current location of the agent in the maze as a tuple: <code>(col, row) = (x, y)</code></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>get_goal_loc()</code></p>
+                      <p>Returns the location of the goal in the maze as a tuple: <code>(col, row) = (x, y)</code> (done for you in your agent's constructor).</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>get_agent_maze()</code></p>
+                      <p>Returns the "dumb" version of the maze in which all unexplored tiles have been replaced by "?" for example:</p>
+<pre>
+  # True    # Agent's
+  XXXXXX    XXXXXX
+  X...GX    X???GX
+  X..PPX    X????X
+  X....X    X????X
+  X..P.X    X????X
+  X@...X    X@???X
+  XXXXXX    XXXXXX
+</pre>
+                      <p class='toolkit'>As the agent moves around the maze, the agent's representation will be updated by the Environment based on its observations, replacing
+                        each step with BlindBot's perception there.</p>
+                      <p class='toolkit'>Although <strong>experienced</strong> evidence is added to the agent maze for you by the environment, any <strong>deduced</strong>
+                        evidence or other symbols of your choosing can be manually added to the agent maze by manipulating the agent's <code>maze</code> attribute.
+                      </p>
+                      <p class='debug'>To make life easier on you to manipulate cells of the agent maze as they're deduced (should you want to assign other symbols to cells within),
+                        <code>get_agent_maze</code> converts the maze that's input as a list of strings into a list of list of strings, with each string equal to a single character
+                        in that cell.</p>
+                      <p>You can see what this means by printing out the agent's maze once during the agent's construction.</p>
+                      <p>While running a game in verbose mode, the agent's maze representation is printed on the right for debugging and clarity.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>start_mission()</code></p>
+                      <p>The main environment workhorse that performs the following, primary steps:</p>
+                      <ol class='indent-1'>
+                        <li><p>Requests the next desired action from the agent by dequeueing the next action from its plan.</p></li>
+                        <li><p>Returns a perception to the agent based on the taken action and allows the agent to <code>think(perception)</code> to devise or update its plan.</p></li>
+                        <li><p>Assesses any penalties associated with the action taken (e.g., -1 for moving anywhere, -20 for falling in a pit)!</p></li>
+                      </ol>
+                      <p class='definition'>The mission will end if either the agent reaches the goal, or the minimum score threshold is hit, at which point the score is returned.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>The Environment also manages the game state, but you do not need to care about most of its internals.</p>
+              <p class='toolkit'>Note: in Python, attributes and methods beginning with an underscore are "private" and should not be accessed outside of the class.</p>
+              <p class='toolkit'>To run your agent through a maze, simply make any maze selections in the Environment's main method, and call <code>python environment.py</code>.</p>
+              <br/>
+              
+              <h3><code>maze_agent.py</code></h3>
+              <hr/>
+              <p>The MazeAgent class specifies the BlindBot's logic system and all attributes related to its state, including:</p>
+              <ul class='indent-1'>
+                <li><p><code>loc</code> a tuple indicating its starting current position in the maze in the format <code>(col, row)</code>.</p>
+                </li>
+                <li><p><code>goal</code> a tuple indicating the position of the goal in the format <code>(col, row)</code>.</p></li>
+                <li><p><code>maze</code> the "blind" version of the maze specified in Environment such that the player's starting position and goal locations are given, 
+                  but the locations of Pits are hidden. You may manipulate this structure at will, and it will be displayed by the environment at each tick.</p></li>
+                <li><p><code>plan</code> a queue containing actions that are executed in sequence at each of the environment's ticks. Acceptable actions are strings indicating movement 
+                  directions "U", "D", "L", "R" (as indicated in the <code>constants.py</code> module)</p></li>
+              </ul>
+              <p class='toolkit'>You may add any attributes that you deem necessary for your agent's task (you know... like... knowledge?).</p>
+              <p>Your agent's lifespan will be spent doing the following tasks, in sequence:</p>
+              <ol class='indent-1'>
+                <li><p><strong>Perceiving</strong> the type of tile that it is currently standing on (updating knowledge when necessary)</p></li>
+                <li><p><strong>Thinking / Planning</strong> about where it should go next</p></li>
+                <li><p><strong>Acting</strong> in accordance with its plan, which may include adapting to / deducing unforeseen pitfalls.</p></li>
+              </ol>
+              <p>The solution in maze_agent.py structures these tasks for you, giving you the task of filling in the substantial components of the <strong>thinking / planning</strong> process.</p>
+              <p>With this description in mind, your MazeAgent shall implement the following methods:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Methods</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p><code>__init__(env)</code></p>
+                      <p>Constructor for a MazeAgent, which is partially given to you.</p>
+                      <p>The parameter is a reference to the Environment object in which the MazeAgent is operating.</p>
+                      <p class='toolkit'>Along with initializing any attributes relevant to your MazeAgent, the constructor should initialize the agent's beliefs about the 
+                        environment, as implemented in some Knowledge Base (hey, good thing we made one of those in Part 1 -- include your KB modules in this part as well)!</p>
+                      <p>You needn't necessarily initialize *all* rules about the environment at the start, but some will be helpful to do now, and others can be added as BlindBot
+                        explores its environment.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>think(perception)</code></p>
+                      <p>Where most of your work will happen!</p>
+                      <p>The <code>think</code> method is parameterized by the latest perception from the agent in the form of a dictionary:
+<pre>{"loc": (x, y), "tile": tile_type}</pre>
+                        </p>
+                      <p>For example, the perception that BlindBot is currently standing on a safe spot at tile (1, 2) would look like: <code>{"loc": (1, 2), "tile": "."}</code>.</p>
+                      <p>You'll find the Constants class constants useful for comparing the perceived tile to its semantics.</p>
+                      <p>This method is responsible for devising a plan to (as safely as possible) navigate through the maze, avoiding pits whenever possible.</p>
+                      <p>Thinking shall add actions to the <code>plan</code> attribute in order to execute some plan of action that marries exploration to gain information, 
+                        and attempting to find a path to the goal.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>In addition to the above, you may choose to add any attributes or helper methods that you find useful to BlindBot's thinking process.</p>
+              <br/>
+              
+              <h3>Pathfinding</h3>
+              <hr/>
+              <p class='toolkit'>To simplify your life with the <code>think</code> method, I've also furnished a Python implementation of the A* search algorithm that will take Mazes as inputs
+                and return a plan from the given start to the given destination.</p>
+              <p>If you're unfamiliar with the topics of search, I'd suggest a quick read through my notes on the topic, as they will be useful herein:</p>
+              <div class='text-center'>
+                <a class='assignment' href='http://forns.lmu.build/classes/spring-2020/cmsi-282/lecture-1-1.html#probSolv' target='_blank'>Search Fundamentals</a>
+                <br/>
+                <a class='assignment' href='http://forns.lmu.build/classes/spring-2020/cmsi-282/lecture-2-1.html' target='_blank'>Informed Search</a>
+                <br/>
+              </div>
+              <p>In particular, three additional files have been provided to you, but you need only worry about a couple:</p>
+              <ul class='indent-1'>
+                <li><p><code>maze_problem.py</code> Creates a new MazeProblem from a given maze (the list of strings or list of list of strings like your agent's 
+                  <code>maze</code> attribute), which can be fed as input into the Pathfinder.</p>
+                  <p>Although you need not modify <code>maze_problem.py</code> at all, you might find it useful to tweak its COST_MAP to give your agent a preference to avoid
+                    unexplored tiles at a certain priority.</p>  
+                </li>
+                <li><p><code>pathfinder.py</code> Responsible for performing A* search to find a path between two points in a maze. You shouldn't need to modify anything in this
+                  file unless you want to change the employed heuristic (Manhattan distance).</p></li>
+                <li><p><code>search_tree_node.py</code> Data Structure used by Pathfinder to create the search tree. Definitely don't need to modify this.</p></li>
+              </ul>
+              <p>So, to use the Pathfinding toolkit:</p>
+              <ol class='indent-1'>
+                <li><p>Create / form the maze (a list of strings or a list of list of strings)</p></li>
+                <li><p>Construct a MazeProblem <code>maze_problem</code> from that maze</p></li>
+                <li><p>Call <code>pathfind(maze_problem, start, finish)</code> to receive an output in the form of <code>(cost, path)</code> where cost is the relative cost of that path, and path is a sequence
+                  of actions ("U", "D", "L", "R") leading from the start to the finish.</p></li>
+              </ol>
+              <p>For example:</p>
+<pre class='prettyprint'>
+  maze = ["XXXXXX",
+          "X...GX",
+          "X..PPX",
+          "X....X",
+          "X..P.X",
+          "X@...X",
+          "XXXXXX"]
+          
+  mp = MazeProblem(maze)
+  # pathfind(maze_problem_instance, start, destination)
+  # => (cost, path)
+  path = pathfind(mp, (1,1), (3,3))
+  # path = (4, ["D", "D", "R", "R"])
+</pre>
+              <p>Use the pathfinder to easily plot routes between tiles!</p>
+              <p>The pathfinder will also avoid any walls entirely, so you could, in theory, overlay "X"s on any tile in the input maze that you want to treat as impassable.</p>
+              <p>To see how the algorithms in these files work (for the curious), review my 282 notes on Search as linked above.</p>
+              <br/>
+              
+              <h3>Friendly Competition</h3>
+              <hr/>
+              <div class='definition'>
+                <p>To make things interesting: the groups whose agents achieve the highest score on a wide swath of mazes will receive some bonus points!</p>
+                <ol class='indent-1'>
+                  <li><p>1st Place: +10 HW Points (and bragging rights)</p></li>
+                  <li><p>2nd Place: +5 HW Points</p></li>
+                  <li><p>3rd Place: +3 HW Points</p></li>
+                </ol>
+              </div>
+              <p>On what mazes will you compete, you ask? Well, you'll not only be scored on all of the grading Mazes, but also... *devious laughter*...</p>
+              <p class='toolkit'>Your group shall contribute 1 Maze to the competion on which all agents will operate and be scored (including yours)!</p>
+              <p>The maze you submit for the competition must:</p>
+              <ul class='indent-1'>
+                <li><p>Be solvable without going over the -100 penalty threshold. This does not necessarily mean that a maze should be perfectly deducable (i.e., requiring no
+                  guesses at all), but that with any guess that must be made necessarily, there will be a path to the goal in under 100 penalty points, even if stepping on a pit
+                  or two from bad guesses.</p></li>
+                <li><p>Must be no larger than a 10 x 10 grid.</p></li>
+                <li><p>Must abide by the valid maze formatting rules specified above (i.e., at least one tile around the goal is not a pit and there are no walls apart from those
+                  at the border).</p></li>
+              </ul>
+              <p>Email, Slack, or Discord your maze to Dr. Forney -- it should be in the same input format like those in Environment's main method.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='restrictions' class='scrollspy-element' scrollspy-title='Restrictions'></div>
+            <h1>Solution Restrictions</h1>
+            <div>
+              <p class='definition'>Recall: Since this is a large Homework assignment, you may work in groups of 3 and make a single submission, but no more than 3! These groups need
+                not be the same as your classwork ones, and you can work solo if you'd prefer.</p>
+              <h4>Problem 1</h4>
+              <hr/>
+              <p>Simplifications:</p>
+              <ul class='indent-1'>
+                <li><p>Assume that the KB begins inference consistent (i.e., we will never tell our KB inconsistent information like \(tell(S)\) and \(tell(\lnot S)\)).</p></li>
+              </ul>
+              <br/>
+              
+              <p>Restrictions:</p>
+              <ul class='indent-1'>
+                <li><p>While you must design your reasoning system from first principles, you may use whatever Python collections you see fit to help you accomplish
+                  this assignment.</p></li>
+              </ul>
+              <br/>
+              
+              <h4>Problem 2</h4>
+              <hr/>
+              <p>Simplifications:</p>
+              <ul class='indent-1'>
+                <li><p>All grading mazes will have a solution that can be met below the requisite score threshold, though some may require BlindBot to make educated guesses when
+                  it cannot deduce a safe path!</p></li>
+                <li><p>Assume that no walls are found inside the maze except for along the borders.</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='hints' class='scrollspy-element' scrollspy-title='Hints'></div>
+            <h1>Hints</h1>
+            <div>
+              <h4>Problem 1</h4>
+              <hr/>
+              <ul class='indent-1'>
+                <li><p>Not sure where to start? Read through the prop. log. course notes and Ch. 7 of your textbook -- you'll get a good feel for the task at hand!</p></li>
+                <li><p>I've given you some basic unit tests for both MazeClauses and MazeKnowledgeBases, but make sure to test your own submission more thoroughly!</p></li>
+                <li><p>Start early and ask questions! I'm here to help! Although this is not a particularly <i>long</i> part of the assignment (not a whole lot of code to write), it does
+                  require you to invest some early brain power to plan the best approach.</p></li>
+                <li><p>Having trouble with some of the combinatorics in resolution inference? Check out the <code>itertools</code> module and <code>set</code> operations.</p></li>
+                <li><p>Having trouble debugging? Add some diagnostic toString methods to your classes (i.e., define <code>__str__</code>)</p></li>
+              </ul>
+              <br/>
+              
+              <h4>Problem 2</h4>
+              <hr/>
+              <ul class='indent-1'>
+                <li><p>Implementing your <code>think</code> method may benefit from adding other data structures to your MazeAgent that tracks the tiles that it has yet to explore,
+                  or that are safe to explore, or that it is "curious" about, and should query for safety with new information. 
+                  Moreover, tiles that are possible exploration candidates may be better explored by some heuristic, e.g., that prioritizes tiles to explore that are closer 
+                  to a goal.</p></li>
+                <li><p>Since you can modify the <code>maze_problem</code> module, you might find it useful to modify the "costs" associated with "unknown" tiles. The search
+                  will not be optimal under imperfect information, but you can try to find a tradeoff between risk and directness.</p></li>
+                <li><p>KB not performing as you expected? It might be because your input rules are lacking certain expressiveness, or are not properly templated, or you're not
+                  asking the right queries.</p></li>
+                <li><p>During development, it may be helpful to output many print statements to indicate what your agent knows or has learned with each movement.</p></li>
+                <li><p>Not sure where to start? Read through the search and prop. log. course notes (Algorithm 7.20 in your text has a decent outline, albeit with some complications that you don't need to worry about)
+                  -- you'll get a good feel for the task at hand!</p></li>
+                <li><p>Ready to test a solution but aren't sure if it's good enough for the grading suite? I'm fairly generous, but a good rule of thumb is to take the number of moves
+                  an optimal agent would take to safely navigate and then double it.</p></li>
+                <li><p>Start early and ask questions! I'm here to help! This is a <strong>challenging</strong> assignment that will require you to involve much of this class' 
+                  tools (+ those of CMSI 281 + 282) to solve.</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='submission' class='scrollspy-element' scrollspy-title='Submission'></div>
+            <h1>Submission</h1>
+            <div>
+              <p class='definition'>You will be submitting your assignments through GitHub Classroom!</p>
+              <h4>What</h4>
+              <p>Complete all classes that accomplishes the specification above, in the project structure given in the skeleton above.</p>
+              <br/>
+              
+              <h4>How</h4>
+              <p>To <strong>clone</strong> this assignment (if you need a refresher), consult the guide here:</p>
+              <p class='assignment'><a href='../../../tutorials/github-classroom.html' target='_blank'>GitHub Classroom Tutorial</a></p>
+              <p>To <strong>submit</strong> this assignment:</p>
+              <ul class='indent-1'>
+                <li><p>Simply push your final, submission copy to the GitHub Classroom repository associated with you or your group.</p></li>
+                <li><p>If you worked in a group (3 individuals maximum), ensure that your GitHub Classroom group includes all members, and place all group members' names at the top of *all* submitted files (in appropriate
+                  commenting fashion).</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <script>
+              $(".problem").each(function (index) {
+                $(this)
+                  .wrapInner("<span class='pull-right'></span>")
+                  .prepend("Problem " + (index + 1))
+                  .addClass("definition")
+                  .wrapInner("<strong></strong>");
+              });
+            </script>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

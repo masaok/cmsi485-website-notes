@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 3-2</li>
+            </ol>
+            
+            
+            <div id='structind' class='scrollspy-element' scrollspy-title="Structuring Independence"></div>
+            <h1>Structuring Independence</h1>
+            <div>
+              <p>Last time, we saw that the Joint Probability Distribution provides all of the interesting information that we need to answer probabilistic queries about our environment.</p>
+              <p>When our agent does not have any observations about the system, we can consult the joint distribution itself, but when the agent <i>does</i> have observations, it can update its beliefs by consulting <i>conditional
+                probability distributions</i> that (as we have )</p>
+              <p>The problem, however, was that the joint distribution grows exponentially with every variable that is considered, and so for any realistic reasoning system, we need a means to use the information of the joint without
+                having to construct it or consult it explicitly.</p>
+              <p>This led us to consider independence relationships as ways to <i>factor</i> the joint distribution into pieces that we could more easily store and reason with.</p>
+              <p>So, reasonably, we must ask <i>how</i> we should structure or discover independence relationships such that we can then <i>parsimoniously</i> store the joint distribution.</p>
+              <br/>
+              
+              <h3>Intuition of Structured Independence</h3>
+              <hr/>
+              <p>To motivate the technique we'll use to structure independence relationships, we should develop some intuition behind what sort of data we have and why certain variables might be independent from one another.</p>
+              <p class='definition'>Probability distributions (as we've been discussing) summarize <strong>associational / observational data</strong> such that a distribution denotes the witnessed <strong>correlations</strong> between
+                variables in the system.</p>
+              <p>This is true of both joint and conditional distributions that we've seen thus far: when Solicitorbot sees that a house's lights are on, it is able to conclude that light status is <i>positively correlated</i> with someone
+                being home, but no conclusion of <strong>causality</strong> is made.</p>
+              <p>Understanding that we are modeling correlations in our distributions gives us two pieces of intuition moving forward:</p>
+              <p class='toolkit'><strong>Independence Intuition 1:</strong> correlation does not <i>imply</i> causation.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/ie-murders.png' width="70%" height="70%" />
+              </div>
+              <br/>
+              <p class='question' name='si-q0'>What are some <i>causal</i> explanations that might be attached to the graph above (Internet Explorer Use vs. Murder Rates)?</p>
+              <div class='answer' name='si-q0'>
+                <ol class='indent-1'>
+                  <li><p>Using internet explorer does indeed cause murderous inclinations (IE cauases Murder).</p></li>
+                  <li><p>Murderers are the chief users of internet explorer (Murder causes IE).</p></li>
+                  <li><p>There is a complex system of cultural trends, improvements to the justice system, and competitors entering the internet browser domain that caused both (Murder and IE caused by other factors).</p></li>
+                </ol>
+              </div>
+              <p class='debug'>The fact that any one of these explanations could "fit" the data means that we cannot claim a causal relationship between IE and Murder rates.</p>
+              <p>From this warning, we receive the second intuition about our relationships between variables:</p>
+              <p class='toolkit'><strong>Independence Intuition 2: [Common Cause Assumption]</strong> if two variables are correlated, then either one causes the other, or there is a third set of variables that causes both.</p>
+              <p>In other words, if two variables happen to "change with each other" (i.e., covary) it might be that one causes the other, or we might lack information on the variables that were actually to blame for their relationship (i.e.,
+                we did not collect data on the other variables).</p>
+              <p>So, we can start to see why we might want to think about relationships of cause and effect that we <i>can</i> model in our system in the effort of helping us think about independence (seen shortly).</p>
+              <p class='toolkit'><strong>Independence Intuition 3:</strong> encoding <strong>causal assumptions</strong> about which variables affect which others in our system can help us deduce independence and conditional independence
+                relationships between them.</p>
+              <br/>
+              
+              <h3>Structuring Causal Assumptions</h3>
+              <hr/>
+              <p>In this part of the course, we will discuss how we (the programmer) and our agent view their environment as seen through the lens of a <i>model</i> of the environment.</p>
+              <p class='definition'>In probabilistic reasoning, <strong>Model-based Methods</strong> attempt to structure relationships between variables to provide a simplified perspective of the environment that an agent can reason with.</p>
+              <p class='question' name='si-q1'>Given our interest in discovering independence relationships between variables in our system through assumptions about causes and effects, can we consider a data-structure choice that may well
+                <strong>model</strong> relationships of cause and effect?</p>
+              <p class='answer' name='si-q1'>A graph! In particular, a directed, acyclic graph [DAG] (since causes cannot, intuitively, lead to their own causes!)</p>
+              <p>This is precisely the modeling technique that we'll begin with in what are known as Bayesian Networks.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='bnstruct' class='scrollspy-element' scrollspy-title="Bayesian Networks - Structure"></div>
+            <h1>Bayesian Networks - Structure</h1>
+            <div>
+              <p>Yes that's right, it's time we were put on...</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/bayeswatch.png' />
+              </div>
+              <br/>
+              <p>That, of course, is a picture of Father Thomas Bayes, the one responsible for the probability theory that governs Bayesian Networks, photoshopped onto David Hasselhoff's body from the hit drama series Baywatch (1989).</p>
+              <p>Why are Bayesian Networks so deserving of this fanfare? Well, let's start by defining them:</p>
+              <div class='definition'>
+                <p>A <strong>Bayesian Network</strong> is a data structure used in probabilistic reasoning to encode independence relationships between variables in the reasoning system, and are composed of:</p>
+                <ul class='indent-1'>
+                  <li><p><strong>Structure:</strong> a Directed Acyclic Graph (DAG) in which nodes are Variables and edges point from causes (parents) to their direct effects (children): $$[Cause] \rightarrow [Effect]$$</p></li>
+                  <li><p><strong>Probabilistic Semantics:</strong> conditional probability distributions (CPTs) associated with each node.</p></li>
+                </ul>
+              </div>
+              <p>Just how we attain the <i>structure</i> and <i>semantics</i> of a Bayesian network will be the topic of today's discussion.</p>
+              <br/>
+              
+              <h3>Bayesian Network Structure</h3>
+              <hr/>
+              <p class='toolkit'>The <strong>structure</strong> of a Bayesian Network focuses on how we include and direct edges between nodes in the graph, and decides the
+                independence and conditional independence relationships expected in the data.</p>
+              <p>Let's return to our motivating example to see how we might intuitively structure a Bayesian Network's nodes and edges.</p>
+              <br/>
+              
+              <h4>Modeling Solicitorbot</h4>
+              <div class='example'>
+                <p>Consider our Solicitorbot example once more in which we have variables:</p>
+                <ul class='indent-1'>
+                  <li><p>\(H\) whether or not someone is home</p></li>
+                  <li><p>\(L\) whether or not the house's lights are on</p></li>
+                  <li><p>\(C\) whether or not there is a cacophony detected in the house.</p></li>
+                </ul>
+              </div>
+              <p>We'll start by intuiting how the relationships of cause and effect should be oriented in our model.</p>
+              <div class='question' name='si-q1'>
+                <p>Using a DAG, how should we model the relationships of <strong>direct causes and effects</strong> between these three variables in our graph?</p>
+                <p>In other words, for each arrow below, should the arrow exist at all (indicating a direct causal influence) and if so, what should it's direction be?</p>
+                <div class='text-center fit-pres'>
+                  <img src='../../../assets/images/fall-2020/cmsi-485/week-3/solicitor-bn-1.png' width="40%" height="40%" />
+                </div>
+              </div>
+              <div class='answer' name='si-q1'>
+                <p>Intuitively, it is whether or not an individual is home that will be the *reason for* or *causal influence on* whether the lights or on or a car is in the driveway.</p>
+                <div class='text-center fit-pres'>
+                  <img src='../../../assets/images/fall-2020/cmsi-485/week-3/solicitor-bn-2.png' width="40%" height="40%" />
+                </div>
+              </div>
+              <p>With this intuitively structured model of our Solicitorbot system in hand, let's consider what the model tells us about the independence relationships we should expect
+                to find in our probability distributions.</p>
+              <p class='question' name='si-q2'>Supposing \(L \leftarrow H \rightarrow C\), would we expect causes to be independent of their effects, i.e., should:
+                $$H \indep L? \\ H \indep C?$$
+              </p>
+              <p class='answer' name='si-q2'><strong>No!</strong> We would expect that being home tells us something about the likelihood that the lights are on, and the likelihood that
+                a car is in the driveway. So, \(H \not \indep L\) and \(H \not \indep C\)</p>
+              <p class='question' name='si-q3'>Supposing \(L \leftarrow H \rightarrow C\), would we expect effects of a cause to be independent, i.e., should:
+                $$L \indep C?$$
+              </p>
+              <p class='answer' name='si-q3'><strong>No!</strong> If a house's lights are on, then it's more likely that someone is home, which means that it's more likely that a car
+                is in the driveway! As such, \(L \not \indep C\) since information about \(L\) gives us information about \(C\).</p>
+              <p>So we see that, without any other information, \(L, C\) are dependent -- they provide information about each other... but what if we know whether or not someone's home?</p>
+              <p>Does the information that they provide about each other add anything to the story?</p>
+              <p class='question' name='si-q4'>Supposing \(L \leftarrow H \rightarrow C\), would we expect effects of a cause to be independent once we know the state of the cause,
+                i.e., should:
+                $$L \indep C~|~H?$$
+              </p>
+              <p class='answer' name='si-q4'><strong>Yes!</strong> If we know whether or not someone's home, then knowing whether or not the lights are on no longer tells us *anything
+                more* about whether or not the car is in the driveway that we didn't already know from \(H\). As such \(L \indep C~|~H\)</p>
+              <p>In summary, the model structure that we currated entails the following independence relationships:</p>
+              <p>\(H \not \indep L\), \(H \not \indep C\), \(L \not \indep C\), \(L \indep C~|~H\)</p>
+              <p>If our model is correct, then we should witness these independence relationships hold from the data / joint distribution as well!</p>
+              <p>A reasonable next question is: in practice, where do Bayesian Networks come from? ("Where are Baye-s made?" typically a question for your parents [ok that one was a
+                stretch]).</p>
+              <br/>
+              
+              <h4>Model Sources</h4>
+              <p>There are two main approaches for creating and then using Bayesian networks:</p>
+              <p class='toolkit'><strong>Top-down [Model -> Data]:</strong> start with a programmer-curated model and then interpret witnessed data through the model.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/top-down-bn.png' />
+              </div>
+              <p>This is the approach that we used above!</p>
+              <p>We used our knowledge about the way the world works to intuit the relationships between variables, and could then use this model as a lens through which to interpret
+                any data.</p>
+              <p class='toolkit'><strong>Bottom-up [Data -> Model]:</strong> start with data and attempt to learn the model (i.e., structure relationships between variables) based on witnessed independence relationships.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/bottom-up-bn.png' />
+              </div>
+              <p>In the reverse, if we didn't want to start with a model, we could attempt to learn one by examining the independence relationships from the data.</p>
+              <p>Although we'll examine this method later, be warned that there are some practitioners who believe this to be a poor methodology for inferring causal relations 
+                because of the caveats of modeling associational data that we examined in the "Intuition" section above.</p>
+              <p class='remark'>If we don't care whether or not the edge directions carry causal information, and just want to factor the joint distribution, this is still a good
+                technique!</p>
+              <p class='definition'>A network structure that implies the same independence relationships as are witnessed in the data are said to be <strong>faithful,</strong>
+                which is a good property to aim for.
+              </p>
+              <p class='debug'><strong>Disclaimer:</strong> the probabilistic inferences we gain from our models are only as good as the models are faithful to reality. Bad model in =
+                bad inference out!</p>
+              <p>As such, the modeler must be able to defend their modeling choices on sound scientific principle or risk creating a faulty reasoning system.</p>
+              <br/>
+              
+              <p>Now that we've seen the structure of a Bayesian Network, and how to configure nodes and edges in the graph, let's take a look at their semantics.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='bnsem' class='scrollspy-element' scrollspy-title="Bayesian Networks - Semantics"></div>
+            <h1>Bayesian Networks - Semantics</h1>
+            <div>
+              <p class='definition'>The <strong>semantics of a Bayesian Network</strong> define the rules by which probabilistic queries can be made from the network.</p>
+              <p>Recall our original goal: to somehow "factor" the joint distribution using independence relationships.</p>
+              <p>Let's see how those independence relationships might aid us in this task.</p>
+              <p class='example'>Consider the joint distribution for the Solicitorbot example: \(P(H, L, C)\). We wish to use the independence relationship \(L \indep C~|~H\) to factor
+                the joint distribution.</p>
+              <p>To accomplish this task, we'll need a couple of reminders:</p>
+              <p class='toolkit'>Recall that the <strong>conditioning</strong> rule was that:
+                $$P(\alpha | \beta) = \frac{P(\alpha, \beta)}{P(\beta)}$$
+                ...multiplying each side by \(P(\beta)\) we can solve for the joint in terms of the conditional distribution:
+                $$P(\alpha, \beta) = P(\alpha | \beta)P(\beta)$$
+              </p>
+              <p>This simple algebraic manipulation of the conditioning rule also bears an intuitive interpretation:
+                $$\begin{eqnarray}
+                  P(\alpha, \beta) &=& P(\alpha | \beta)P(\beta) \\
+                  \{\text{chance of alpha and beta}\} &=& \{\text{chance of alpha in worlds where beta is true}\} \{\text{chance of a world where beta true}\}
+                \end{eqnarray}$$
+              </p>
+              <p>Secondly, let's extend our understanding of independence.</p>
+              <p class='question' name='sem-q0'><strong>Review:</strong> if \(\alpha \indep \beta\), then to what is \(P(\alpha~|~\beta)\) equivalent?</p>
+              <p class='answer' name='sem-q0'>\(\alpha \indep \beta \Leftrightarrow P(\alpha~|~\beta) = P(\alpha)\)</p>
+              <p>Let us now consider conditional independence!</p>
+              <p class='question' name='sem-q1'><strong>Extend:</strong> if \(\alpha \indep \beta~|~\gamma\), then to what is \(P(\alpha~|~\beta, \gamma)\) equivalent?</p>
+              <p class='answer' name='sem-q1'>\(\alpha \indep \beta~|~\gamma \Leftrightarrow P(\alpha~|~\beta, \gamma) = P(\alpha~|~\gamma)\)</p>
+              <p>This gives us another tool in our independence arsenal!</p>
+              <p class='definition'><strong>Conditional Independence:</strong> two variables \(\alpha, \beta\) are said to be conditionally independent given some third set of variables
+                \(\gamma\) (written \(\alpha \indep \beta~|~\gamma\)) if and only if the following holds:
+                $$\alpha \indep \beta~|~\gamma \Leftrightarrow P(\alpha~|~\beta, \gamma) = P(\alpha~|~\gamma)$$
+              </p>
+              <p>We can again intuit this rule: \(P(\alpha~|~\beta, \gamma) = P(\alpha~|~\gamma) \Leftrightarrow\) "Knowing about beta tells me nothing about alpha that gamma didn't
+                already tell me"</p>
+              <p>So now, let's put it all together:</p>
+              <br/>
+              
+              <h3>Markovian Factorization</h3>
+              <hr/>
+              <p>Recall our Solicitorbot Bayesian Network structure in which \(L \indep C~|~H\):</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2020/cmsi-485/week-3/solicitor-bn-2.png' width="40%" height="40%" />
+              </div>
+              <p>Alrighty -- let's take all of our probabilistic reasoning tools and put them together:</p>
+              <p class='well'>
+                Firstly, we'll use our rearranging of the conditioning rule to re-write the joint:
+                $$P(L, C, H) = P(L~|~C, H) P(C, H)$$
+                Why stop there?! We can factor again using the same rule, but this time on the \(P(C, H)\) term.
+                $$P(L, C, H) = P(L~|~C, H) P(C~|~H) P(H)$$
+                Almost done: let's zero in on the \(P(L~|~C, H)\) term; can we reduce this by knowing that \(L \indep C~|~H\)? You betcha!
+                $$P(L, C, H) = P(L~|~H) P(C~|~H) P(H)$$
+              </p>
+              <p class='question' name='sem-q2'>In terms of the BN structure, what is particular about the factorization: \(P(L~|~H) P(C~|~H) P(H)\)</p>
+              <p class='answer' name='sem-q2'>It consists of factors that are of the format: \(P(\text{child}~|~\text{parents}) = P(\text{effects}~|~\text{causes})\)</p>
+              <p>This is the intuition behind the semantics of a Bayesian Network! We can factor the joint as a product of effects given their causes.</p>
+              <br/>
+              <p class='definition'>Bayesian Networks exhibit the <strong>Markovian Assumption</strong> (named after Russian mathematician Andrey Markov) stating that 
+                "All variables are independent of their non-descendants when given their parents."</p>
+              <p>In other words, once we know a variable's causes, information from non-descendant variables is irrelevant, since they tell us nothing more than knowing what the
+                direct causes already tell us.</p>
+              <p class='toolkit'>Consequently, the <strong>Markovian Factorization</strong> of the joint distribution is:
+                $$P(V_1, V_2, V_3, ...) = \prod_{V_i \in \textbf{V}} P(V_i~|~parents(V_i))$$
+              </p>
+              <p>With the Markovian Factorization, this gives us a clear definition for the semantics of a Bayesian Network:</p>
+              <p class='definition'>Bayesian Networks parsimoniously represent the joint distribution by maintaining a <strong>conditional probability table</strong> for each
+                "family" of variables, such that for any variable \(V_i\) we know: \(P(V_i~|~parents(V_i))\)</p>
+              <p>In our example, this would look like the following:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/solicitor-cpts.png' />
+              </div>
+              <br/>
+              <p>"But hark!" you remark. The joint distribution had 8 rows to remember, but here we have 10 -- what gives? Wasn't the whole point to reduce the amount of probabilities
+                we needed to store?</p>
+              <p>Observe the following highlights in the conditional probability tables and consider how we might be able to reduce the number of rows in our CPTs that we must remember:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/solicitor-cpts-highlight.png' />
+              </div>
+              <br/>
+              <p>They all need to sum to 1! As such, we need only store 1/2 of these rows since their complements can be inferred via: \(P(\lnot \alpha) = 1 - P(\alpha)\)</p>
+              <p>As such, we now have:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-8/solicitor-bn-reduced.png' />
+              </div>
+              <br/>
+              <p class='toolkit'>Note: we now have parsimoniously represented the joint (8 rows) with factored CPTs (5 rows).</p>
+              <p>This might seem like a trivial savings, but we have a very small network with 3 variables that we have already been able to significantly shrink -- think of the
+                savings at scale!</p>
+              <p class='toolkit'>From the CPTs alone, we can make some simple inference queries, though more complex inference queries require inference algorithms that we will
+                discuss next lecture.</p>
+              <p>Here are some inference queries we can compute from the above:</p>
+              <p class='question' name='inf-q0'>What is \(P(H = false)\)?</p>
+              <p class='answer' name='inf-q0'>Using the CPT on \(H\), we see that \(P(H = false) = 1 - P(H = true) = 0.4\)</p>
+              <p>Indeed, if we want, we can simply reconstruct any row of the joint distribution by using the Markovian factorization and then multiplying consistent rows of CPTs:</p>
+              <p class='question' name='inf-q1'>What is \(P(H = false, L = true, C = false)\)?</p>
+              <p class='answer' name='inf-q1'>Using all of the CPTs, we simply multiply the row consistent with the query in each:
+                $$\begin{eqnarray}
+                  P(H = false, L = true, C = false) &=& P(L = true~|~H = false) P(C = false~|~H = false) P(H = false)\\
+                                                   &=& 0.25 * 0.9 * 0.4\\
+                                                   &=& 0.09
+                \end{eqnarray}$$
+              </p>
+              <br/>
+              
+              <p>And that's Bayesian Networks in a (well... pretty big) nutshell!</p>
+              <p>Next week, tune in for more complex inferences!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>
