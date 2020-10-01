@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+        \(\DeclareMathOperator*{\argmax}{argmax}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 5-2</li>
+            </ol>
+            
+            
+            <div id='utility' class='scrollspy-element' scrollspy-title="Utility Theory"></div>
+            <h1>Utility Theory</h1>
+            <div>
+              <p>So we've seen some probability theory, we've seen some Bayesian stuff, we've more or less hinted at how probabilistic queries can be useful for intelligent agents,
+                but now we should formalize it!</p>
+              <p>In today's lecture, we'll see how autonomous systems can use probabilistic reasoning in pursuit of improved decision-making.</p>
+              <br/>
+              
+              <h4>Motivation</h4>
+              <hr/>
+              <p class='question' name='ut-q0'>Consider some way for an agent to decide how <strong>desirable</strong> a given state is (Hint: some inspiration may be gleaned from
+                adversarial search from 282).</p>
+              <p class='answer' name='ut-q0'>Some <strong>Utility Function / Score</strong> that assigned a numerical value to how good a state is -- the higher the better, baby!</p>
+              <p>We can use this formalization to guide an agent's actions even under uncertain conditions; as a reminder:</p>
+              <p class='definition'>A <strong>Utility Function</strong>, \(U(s) = u\), maps some state \(s\) to some numerical score \(u\) encoding its desirability.</p>
+              <p class='example'>Give some examples of some utility scores for a variety of life events.</p>
+              <p>Some examples might include:</p>
+              <ul class='indent-1'>
+                <li><p>\(U(s) = 10,000,000\) for \(s =\) winning a $10,000,001 lottery ($1 ticket).</p></li>
+                <li><p>\(U(s) = -1\) for \(s =\) buying a $1 ticket for, but losing, the lottery.</p></li>
+                <li><p>...</p></li>
+              </ul>
+              <p class='toolkit'>Utility scores can be either hand-coded in a top-down fashion, or learned in a bottom-up.</p>
+              <p>However, unlike in adversarial search wherein our agent's actions transformed the state in a certain fashion, sometimes we need to make the best decision we can
+                under circumstances that are not completely under our control.</p>
+              <p>Winning the lotter is great! ...but it's extremely rare.</p>
+              <div class='example'>
+                <p><strong>Decision-making under uncertainty</strong> crops up in a myriad of AI applications:</p>
+                <ul class='indent-1'>
+                  <li><p>In Blackjack, sometimes the best move is to hit even when we have a 15, even though sometimes we will bust.</p></li>
+                  <li><p>In Hearthstone, sometimes the best move is to play a card that relies on some random number generator, even though sometimes it will backfire.</p></li>
+                  <li><p>In Online Advertising, we must choose the ad that most likely fits a user's profile, even though clickthroughs are somewhat rare.</p></li>
+                </ul>
+              </div>
+              <p>As such, we need a formalization that marries the likelihood of some events happening with the desirability of those events.</p>
+              <br/>
+              
+              <h4>Utility Theory</h4>
+              <hr/>
+              <p>Utility theory comes in handy when our agent must still attempt to act optimally even when its actions may have uncertain outcomes.</p>
+              <p>We should be wary to weight the really good outcomes proportional to their likelihood of happening, and perhaps instead settle for a lesser good that is more likely
+                to happen.</p>
+              <p class='question' name='ref-q0'>Given the development of some Utility Function, and the notion of each state having some *chance* of occurring, can we devise some
+                means of combining the two for informing a deciding agent?</p>
+              <p class='answer' name='ref-q0'>We should be able to come up with a <strong>weighted</strong> utility score where the utility of each state is weighted by its likelihood
+                of occurring!</p>
+              <p>These considerations are filed under the heading of *expected* utility:</p>
+              <div class='definition'>
+                <p>The <strong>Expected Utility (EU)</strong> of some action \(a\) given any evidence \(e\) is the average utility value of the possible outcome states \(s \in S\)
+                  weighted by the probability that each outcome occurs, or formally:
+                  $$EU(a | e) = \sum_{s \in S} P(s | a, e) * U(s)$$
+                </p>
+              </div>
+              <p class='question' name='ut-q1'>Plainly, then, if we're considering between some number of actions \(a \in A\) with uncertain outcomes, which action should we choose?</p>
+              <p class='answer' name='ut-q1'>The one that maximizes the expected utility, of course!</p>
+              <p>Wasn't it The Rolling Stones who said, "You can't always get what you want, but if you try sometimes you might find... maximizing your expected utility 
+                to be sufficient?"</p>
+              <p class='definition'>The <strong>Maximum Expected Utility (MEU)</strong> criterion stipulates that an agent faced with \(a \in A\) actions with uncertain outcomes
+                (and any observed evidence \(e\) shall choose the action \(a^*\) that maximizes the Expected Utility, or formally:
+                $$MEU(e) = max_{a \in A} EU(a | e)$$
+                $$a^* = \argmax_{a \in A} EU(a | e)$$
+              </p>
+              <p>Let's do an example, shall we?</p>
+              <br/>
+              
+              <h4>Example</h4>
+              <hr/>
+              <p class='example'>Forney Industries is creating its traffic advising app, CurseYou405, a competitor to Waze, and is testing its approach out between 2 routes, \(A, B\)
+                to a given destination. The problem is the fickleness of traffic on each of the routes causes them to behave differently in the amount of time each takes. Suppose
+                also the following is true:
+                $$P(T=1) = 0.6~\text{(The likelihood of heavy traffic -- a little light for CA amirite?)}$$ $$R \indep T$$
+              </p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Route (R)</p></th>
+                    <th><p>Traffic (T)</p></th>
+                    <th><p>Commute Duration</p></th>
+                    <th><p>\(U({R, T})\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>A</p></td>
+                    <td><p>0 - light</p></td>
+                    <td><p>20 mins</p></td>
+                    <td><p>-20</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>A</p></td>
+                    <td><p>1 - heavy</p></td>
+                    <td><p>30 mins</p></td>
+                    <td><p>-30</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>B</p></td>
+                    <td><p>0 - light</p></td>
+                    <td><p>10 mins</p></td>
+                    <td><p>-10</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>B</p></td>
+                    <td><p>1 - heavy</p></td>
+                    <td><p>40 mins</p></td>
+                    <td><p>-40</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class='question' name='ut-q2'>Click for solution!</p>
+              <p class='answer' name='ut-q2'>
+                We compute the EU for each action, then simply maximize!
+                \begin{eqnarray}
+                  EU(R = A) &=& P(T = 0 | R = A) * U(T = 0, R = A) + P(T = 1 | R = A) * U(T = 1, R = A)\\
+                            &=& P(T = 0) * U(T = 0, R = A) + P(T = 1) * U(T = 1, R = A)\\
+                            &=& 0.4 * (-20) + 0.6 * (-30)\\
+                            &=& -26 
+                \end{eqnarray}
+                And again for the other route:
+                \begin{eqnarray}
+                  EU(R = B) &=& P(T = 0 | R = B) * U(T = 0, R = B) + P(T = 1 | R = B) * U(T = 1, R = B)\\
+                            &=& P(T = 0) * U(T = 0, R = B) + P(T = 1) * U(T = 1, R = B)\\
+                            &=& 0.4 * (-10) + 0.6 * (-40)\\
+                            &=& -28
+                \end{eqnarray}
+                So, by the MEU criteria, looks like we choose Route A!
+              </p>
+              <p class='example'>Repeat the above if we know, from user reports, that traffic is currently light \(T = 0\).</p>
+              <p class='remark'>Note that, above, we were able to simplify the likelihoods of the action's effect on the context given that \(R \indep T\), but
+                this might not always be the case! We'll need a model to help us determine the more complex relations.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='decision-nets' class='scrollspy-element' scrollspy-title="Decision Networks"></div>
+            <h1>Decision Networks</h1>
+            <div>
+              <p>The simple example in the previous section gives us a taste for the value of utility theory, but plainly, whenever we see some expressions of probability in the mix,
+                we know that's just the tip of what could be a very large iceberg.</p>
+              <p>Indeed, when utilities are based on nontrivial relationships of cause and effect between variables in the system (sometimes through relationships that our agent
+                cannot control), our agent should have a means of modeling these relationships to best inform its decision-making.</p>
+              <p>Naturally, then, pairing Bayesian Networks with Utility Theory seems like a nice way to enable autonomous, probabilistic reasoning.</p>
+              <br/>
+              
+              <h4>Basics</h4>
+              <hr/>
+              <div class='definition'>
+                <p>A <strong>decision network</strong> unifies the stochastic modelling capacities of a Bayesian network with action-choice and utility theory 
+                  by adding two additional nodes to the Bayesian network model. In particular, decision networks specify:</p>
+                <ul class='indent-1'>
+                  <li><p><strong>Chance Nodes (Circles)</strong> are traditional Bayesian Network variable nodes encoding chance in CPTs.</p></li>
+                  <li><p><strong>Decision Nodes (Rectangles)</strong> represent choices that the agent has to make, and can be used to model influences on the system. In certain contexts,
+                    decision nodes are referred to as <strong>interventions</strong>.</p></li>
+                  <li><p><strong>Utility Nodes (Diamonds)</strong> encode utility functions, wherein parents \(pa\) of utility nodes are the arguments to the utility function, \(U(pa)\).
+                  </p></li>
+                </ul>
+              </div>
+              <p>Decision networks are useful for modeling complex probabilistic relationships between variables in the system while still attempting to maximize the utility of some
+                decision that need be made.</p>
+              <p>Note that the CPTs of chance nodes will treat decision nodes as parents like any other cause-effect relationship in a Bayesian Network, even though decision nodes
+                have no attached CPT since they are intentional actions being chosen with some certainty by the agent.</p>
+              <p>Hows about an example?</p>
+              <br/>
+              
+              <h4>Example</h4>
+              <hr/>
+              <p class='example'>You are a UX designer for a new hot app and wish to provide users with different skins (i.e., visual appearances) for your front-end. You notice from
+                your beta data (heh that rhymed) that users seem to complain \(Y = 1\) or not \(Y = 0\) in different rates depending on the background art you decide to display, i.e.,
+                based on your agent's decision \(D = \{A1, A2\}\). Still, though complaints are generally to be avoided (a utility score of 3), there is still feedback and information
+                in each complaint (a utility score of 1). Moreover, the propensity to complain appears to be a consequence of both your chosen art on the interface, and the age of the
+                user (discretized for simplicity as \(X = \{\text{young}, \text{old}\} = \{0, 1\} \). Based on this data, you model a Decision Network as follows:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/spring-2014/cs-161/week-9/decision-9.PNG' />
+              </div>
+              <p class='question' name='ut-q3'>Using the MEU criteria, and the Decision Network specified above, which art display decision \(D = \{A1, A2\}\) should our app make <strong>when
+                the user has withheld their age?</strong></p>
+              <div class='answer' name='ut-q3'>
+                <p>We'll have to compute the EU of each decision, of course! Let's start out with A1, which thus configures our network into the world where \(D = A1\):</p>
+                <div class='fit-pres text-center'>
+                  <img src='../../../assets/images/spring-2014/cs-161/week-9/decision-10.PNG' />
+                </div>
+                <p>
+                  \begin{eqnarray}
+                    EU(A1) &=& \sum_{y \in Y} P(Y = y | D = A1) * U(Y = y)\\
+                           &=& \sum_{y} \sum_{x} P(Y = y | X = x, D = A1) * P(X = x) * U(Y = y)\\
+                           &=& P(Y = 0 | X = 0, D = A1) * P(X = 0) * U(Y = 0)\\
+                           &+& P(Y = 1 | X = 0, D = A1) * P(X = 0) * U(Y = 1)\\
+                           &+& P(Y = 0 | X = 1, D = A1) * P(X = 1) * U(Y = 0)\\
+                           &+& P(Y = 1 | X = 1, D = A1) * P(X = 1) * U(Y = 1)\\
+                               \\
+                           &=& 0.2 * 0.4 * 3\\
+                           &+& 0.8 * 0.4 * 1\\
+                           &+& 0.7 * 0.6 * 3\\
+                           &+& 0.3 * 0.6 * 1\\
+                               \\
+                           &=& 2
+                  \end{eqnarray}
+                </p>
+                <p>Then again for A2:</p>
+                <p>
+                  \begin{eqnarray}
+                    EU(A2) &=& P(Y = 0 | X = 0, D = A2) * P(X = 0) * U(Y = 0)\\
+                           &+& P(Y = 1 | X = 0, D = A2) * P(X = 0) * U(Y = 1)\\
+                           &+& P(Y = 0 | X = 1, D = A2) * P(X = 1) * U(Y = 0)\\
+                           &+& P(Y = 1 | X = 1, D = A2) * P(X = 1) * U(Y = 1)\\
+                               \\
+                           &=& 0.5 * 0.4 * 3\\
+                           &+& 0.5 * 0.4 * 1\\
+                           &+& 0.4 * 0.6 * 3\\
+                           &+& 0.6 * 0.6 * 1\\
+                               \\
+                           &=& 1.88
+                  \end{eqnarray}
+                </p>
+                <p>Looks like <strong>\(D = A1\)</strong> is the way to go here!</p>
+              </div>
+              <p class='example'>Repeat the above under the assumption that we *know* the age of the user: \(X = 0\).</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>
