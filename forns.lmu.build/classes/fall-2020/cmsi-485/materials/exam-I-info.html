@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../../assets/images/favicon.ico'>
+    <script src="../../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../../js/lib/expanding.js"></script>
+    <script src="../../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="../cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Exam I Info</li>
+            </ol>
+            
+            <div id='logistics' class='scrollspy-element' scrollspy-title='Logistics'></div>
+            <h1>Logistics</h1>
+            <div>
+              <p class='definition'>It's time for a COVID Era Online Exam wooo! View this not as an intimidating obstacle to be overcome, but a chance at reflection to see
+                how much you've learned and where your gaps of knowledge may be.</p>
+              <p>Here's how this is going to go:</p>
+              <ul class='indent-1'>
+                <li><p>The "exam" will be *written* or using *text / equation editors* to assess your conceptual understanding of the material, and will be administered through GitHub
+                  Classroom like any other assignment.</p></li>
+                <li><p>The exam will take the place, time, and duration of the usual lecture (see the course syllabus). You will be able
+                  to clone the Exam repo at the start of class and work until 10 minutes after, at which point *you must have pushed your work to your repo's master branch.* Late
+                  submissions will be subject to severe penalty.</p></li>
+              </ul>
+              <p class='debug'>[Preferred] Please use the Word versions of the exam, and use the equation editor to show your work when requested. Otherwise, have *some* means
+                of adding legible equations to the exam PDF, or print it and then scan your answers. Let me know if none of these solutions work for you.</p>
+              <p class='debug'>The exam is OPEN note and OPEN computer but CLOSED COLLABORATION! You may not solicit, receive, or share your solutions with any coursemates, and some
+                questions on your exam may be specialized to you.</p>
+              <p>The exam may feel long, but that's OK! Take your time, a deep breath or two, and don't worry if you don't finish everything -- it will be likely that your classmates do not either,
+                which will likely be by design.</p>
+              <p>The exam does not have a forced curve (i.e., that only some set number of people can receive A's, B's, etc.), but it WILL have a difficulty adjustment (upward bonus)
+                if it was too hard.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+              
+            <div id='topics' class='scrollspy-element' scrollspy-title='Topics'></div>
+            <h1>Topics</h1>
+            <div>
+              <p>Exam I will cover the <strong>conceptual topics</strong> in the first half of the class. These include:</p>
+              <ul class='indent-1'>
+                <li><p><strong>Propositional Logic</strong>: syntax and semantics, definition of models, modus ponens, resolution, theorem proving (both theoretical underpinnings, 
+                  and proof by contradiction, similar to Classwork 1).</p></li>
+                <li><p><strong>Probabilistic Logic:</strong> syntax, semantics, probability distributions, axioms of probability theory, law of total probability, 
+                  joint distributions, conditional / posterior distributions, conditioning, independence, conditional independence, Bayes' Theorem.</p></li>
+                <li><p><strong>Bayesian Networks:</strong> motivation, structure, semantics, conditional probability tables, Markovian Factorization of the joint distribution,
+                  independence claims made by structure, d-separation algorithm, immediately-answerable vs. computable inference queries, enumeration inference algorithm (and
+                  being able to show the steps by hand), as well as simplifications that save on computational efficiency.</p></li>
+                <li><p><strong>Utility and Decision Theory:</strong> utility functions, expected utility, maximium expected utility (MEU), decision networks (structure and 
+                  semantics), value of perfect information (VPI, + computing by hand).</p></li>
+              </ul>
+              <br/>
+              
+              <p>What will <strong>NOT</strong> be on the exam:</p>
+              <ul class='indent-1'>
+                <li><p>Python-specific coding problems</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='question' class='scrollspy-element' scrollspy-title='Question Types'></div>
+            <h1>Question Types</h1>
+            <div>
+              <p>The examination format may include:</p>
+              <ul class='indent-1'>
+                <li><p>Definitions and short answer questions</p></li>
+                <li><p>Multiple choice</p></li>
+                <li><p>Problems similar to the past classworks</p></li>
+                <li><p>Analyzing Bayesian / Decision Networks and computing some probabilities</p></li>
+              </ul>
+              <br/>
+              
+              <p>Be prepared to answer some questions similar to those on the assignments and in-class exercises.</p>
+              <p>Furthermore, although I won't ask you anything about mechanics we haven't covered in class, you might be expected to apply the mechanics we've learned about in a way that we didn't
+                see in class. If you thoroughly understand the material, there should be no surprises, but still challenges.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='prep' class='scrollspy-element' scrollspy-title='Preparation'></div>
+            <h1>Preparation</h1>
+            <div>
+              <p>Here is my <i>general</i> suggestion for preparation order:</p>
+              <ol class='indent-1'>
+                <li><p>Re-read my course notes, re-doing the exercises if you aren't clear on any of them. <strong>Importantly: try to answer each "question" box yourself before revealing its answer.</strong></p></li>
+                <li><p>Read the relevant textbook chapters outlined in the Syllabus.</p></li>
+                <li><p>Study any available classwork and homework solutions.</p></li>
+              </ol>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

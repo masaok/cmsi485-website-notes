@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+        \(\DeclareMathOperator*{\argmax}{argmax}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 6-1</li>
+            </ol>
+            
+            
+            <div id='vpi' class='scrollspy-element' scrollspy-title="Value of Perfect Information"></div>
+            <h1>Value of Perfect Information</h1>
+            <div>
+              <p>Today we look at a topic very closely related to Decision Networks and Utility Theory, and one that might feel vaguely related to a dilemma faced by an agent
+                in a previous assignment...</p>
+              <p class='toolkit'>In your BlindBot assignment, you may have taken moves that were not directly aimed at the goal, but instead at more safely navigating the environment
+                and attempting to pinpoint previously ambiguous pit locations.</p>
+              <p class='remark'>In taking these extra, exploratory moves, BlindBot still incurred some minor cost (that battery was draining quickly!), but that cost could be 
+                offset if the investment helped navigate around a pit!</p>
+              <p>This is true of many decision-making tasks: we're often willing to go a little bit out of our way to gather extra information if it means making a better decision
+                overall.</p>
+              <p>In other words, we might say that extra information has some *value* in terms of our utility function that our agent is still attempting to maximize.</p>
+              <p>While some information may be worthwhile to take a detour to acquire, other info might not be, and we should equip our agent to answer the very important
+                question:</p>
+              <p><blockquote>"Is the juice worth the squeeze?"</blockquote></p>
+              <p class='definition'>The <strong>Value of Perfect Information (VPI)</strong> computes the expected increase in utility from acquiring new evidence.</p>
+              <p>We'll see why it's termed "Perfect" information in a moment, but for now, let's consider a motivating example (warning, I took a traditional example and
+                spiced it up a little with some maximal cringe).</p>
+              <br/>
+              
+              <p class='example'><strong>Music Festival Tickets</strong></p>
+              <ul class='indent-1'>
+                <li><p>You are debating whether or not to buy tickets to the upcoming Fyre Music Festival, but tickets 
+                  are expensive and you'll only really enjoy it if the line-up is lit (lyt?). Still, you get fear of missing out (FOMO) quite easily, and there would be near
+                  irreparable social cost if you didn't attend (until the next music festival, at least).</p></li>
+                <li><p>The problem: tickets are on presale and are going to sell out before the entire line-up is listed, but your favorite band has neither confirmed nor denied
+                  their spot on the bill.</p></li>
+                <li><p>Your friend's friend, Mike (who always just seems to be around social gatherings, but was never particularly invited), claims that he knows a member of your
+                  favorite band, and will tell you whether or not they'll be there (thus making the line-up lyt)... if you give him $5 (the scumbag). You're not sold on Mike's
+                  reputation and think there's a decent chance he's just bumming $5 for some White Claw.</p></li>
+              </ul>
+              <p><strong>Your Task:</strong> determine if it's worth it to give $5 to Mike.</p>
+              <p class='question' name='vpi-q0'>Knowing what you know now, how might you go about answer this?</p>
+              <div class='answer' name='vpi-q0'>
+                <p>We'd need to define 3 things:</p>
+                <ul class='indent-1'>
+                  <li><p>The likelihood that Mike will give us an honest, accurate answer as to our favorite band's attendance.</p></li>
+                  <li><p>How much we value attending / not attending the festival in all possible outcomes, i.e., our favorite band attending / not attending.</p></li>
+                </ul>
+                <p>Oh hey, let's use a decision-network to do those things.</p>
+              </div>
+              <p class='toolkit'>Because computing VPI requires uniting probabilistic distributions and utility scores, it can be computed directly from a specified
+                decision-network.</p>
+              <p>For our example, suppose we come up with the following:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-8/music-fest-dn.png' />
+              </div>
+              <p>Just *how* we came up with those likelihoods and utility values is a matter of debate (but if you were taking this example seriously, you're already doing it
+                wrong).</p>
+              <p>Still, let's suppose those utility values are mappable to monetary amounts, and we can compare whether or not Mike's info is worth the cost.</p>
+              <p class='example'>Reflect: How do we go about that computing the value of Mike's information from the assumptions in our decision-network?</p>
+              <br/>
+              
+              <h4>Defining VPI</h4>
+              <hr/>
+              <p>The proceduralization of computing VPI stems from a couple of intuitive insights:</p>
+              <p class='remark'><strong>Insight 1:</strong> We will act optimally (i.e., according to the Maximum Expected Utility (MEU) criteria) with whatever information we 
+                have available to us, \((E = e)\).</p>
+              <p class='remark'><strong>Insight 2:</strong> We may act differently as soon as we acquire new information (about some other var \(E'\)).</p>
+              <p class='question' name='vpi-q1'>How do we then combine these two insights to define VPI?</p>
+              <p class='answer' name='vpi-q1'>VPI = difference in maximum expected utility between having and not having the new information!</p>
+              <p>Formally, we can express that as:</p>
+              <p class='definition'>Computing the VPI of observing some variable \(E'\) for any *already* observed evidence \(E = e\) is defined as the difference in maximum
+                expected utility between knowing and not knowing the state of \(E'\), written:
+                $$VPI(E' | E = e) = MEU(E = e, E') - MEU(E = e)$$
+              </p>
+              <div class='remark'>
+                <p>In words, interpreting the above:</p>
+                <ul class='indent-1'>
+                  <li><p>\(VPI(E' | E = e)\) = The value of learning about the state of \(E'\) if I already know \(E = e\).</p></li>
+                  <li><p>\(MEU(E = e, E')\) = The expected utility of me acting optimally knowing what I do now \(E=e\), AND about the state of \(E'\).</p></li>
+                  <li><p>\(MEU(E = e)\) = The expected utility of me acting optimally knowing what I do now \(E=e\).</p></li>
+                </ul>
+              </div>
+              <p>This computation would be relatively straightforward were it not for a couple of snags:</p>
+              <ul class='indent-1'>
+                <li><p>We have to assess how each value of the evaluated variable \(E'\) affects our decisions and the resulting utility (we might change our mind given
+                  some new evidence).</p></li>
+                <li><p>Since \(E'\) is still a random variable, we need to weight our final assessment according to the likelihood of seeing each value of \(E'=e'\) given our
+                  already observed evidence \(E = e\).</p></li>
+              </ul>
+              <p>Let's step back from words and definitions and depict what's going on.</p>
+              <p>We'll start by comparing the MEU of the case wherein we don't know anything about \(E'\) and the case where we know it to be observed at some value.</p>
+              <p>Depicted below: a tree diagramming the MEU computation wherein triangles represent max-nodes (take the max value of their children), circles summation, and
+                diamonds the utility map.</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-8/meu-depiction.png' />
+              </div>
+              <p class='example'>For our Music Festival example, the left represents our MEU if we didn't know anything going into it \(E = \emptyset\) whereas the right would
+                be our MEU if Mike gave us any one answer to whether or not our favorite band was going to play, \(E' = e'\).</p>
+              <p>Note: the only difference is a change in the likelihood of being in each state.</p>
+              <p class='debug'>However, this right tree is not the whole story, because as noted, when considering the VPI of \(E'\), we have to think about its usefulness *contingent on the answer
+                we get* for each of its states -- we don't know what answer we'll get in advance!</p>
+              <p>Each of these possible states \(e' \in E'\) has some likelihood associated with it that must be updated by our observed evidence \(E = e\), meaning we must
+                assess:</p>
+              <p class='toolkit'>The Maximum Expected Utility associated with the reveal of some variable \(E'\) given some other evidence \(E = e\) is the weighted sum over all
+                values \(e' \in E'\) of the likelihood of seeing \(e'\) with the MEU of how we would act seeing \(e'\), or formally:
+                $$MEU(E = e, E') = \sum_{e' \in E'} P(E' = e' | E = e) MEU(E = e, E' = e')$$
+              </p>
+              <p>Again, depicting this scenario, we see we have our right-most tree above but replicated and weighted by the likelihood of seeing each value \(e' \in E'\):</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-8/meu-madness.png' />
+              </div>
+              <p>Whew! What a tree. That tree makes you smile, sit back in your chair, smile ponderously, put your chin on your hand and think, "Damn... I'm educated."</p>
+              <p>Let's see how to actually do one of these examples by hand, hmm?</p>
+              <br/>
+              
+              <h4>Proceduralizing VPI</h4>
+              <hr/>
+              <p>Returning to our Music Festival Example, let's go step by step trying the reason over the above.</p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step One:</strong> Find \(MEU(E = e)\), i.e., MEU without knowing anything about \(E'\).</p>
+              <p>In our example, this isn't too bad since \(E = \emptyset\)</p>
+              <p class='well'>\begin{eqnarray}
+                MEU(\emptyset) &=& max_a \sum_s P(s|a, e) U(s, a) \\
+                               &=& max_t \sum_b P(B = b | T = t) U(B = b, T = t) \\
+                               &=& max_t \sum_b P(B = b) U(B = b, T = t) \\
+                         T = 0 &\Rightarrow& P(B = 0) U(B = 0, T = 0) + P(B = 1) U(B = 1, T = 0) \\
+                               &=& 0.4 * 35 + 0.6 * 15 = 23 \\
+                         T = 1 &\Rightarrow& P(B = 0) U(B = 0, T = 1) + P(B = 1) U(B = 1, T = 1) \\
+                               &=& 0.4 * 20 + 0.6 * 40 = 32
+              \end{eqnarray}</p>
+              <p>Therefore, our \(MEU(\emptyset) = 32\), and it seems that buying a ticket for the show is the clear win.</p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step Two:</strong> Find \(MEU(E = e, E' = e')~\forall~e' \in E'\), i.e., the MEU of how we would act knowing each possible outcome of the
+                variable being evaluated: \(E'\).</p>
+              <p class='question' name='vpi-q2'>In our Music Festival example, what is \(E'\), and what values do we have to assess?</p>
+              <p class='answer' name='vpi-q2'>Our \(E'\) is Mike's Tip \(M\), and we must assess the MEU in each world where: (1) Mike tells us the band isn't playing, and
+                (2) Mike tells us they are.</p>
+              <p>This is slightly easier because we have no additional information going into the problem, i.e., no \(E = e\), but since Mike's Tip only tells us something
+                about the utility through what it tells us about \(B\), we'd need to compute \(P(B | M)\) through standard inference. I've done that for us, to save some time:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-8/updated-cpt.png' />
+              </div>
+              <p>With that knowledge in tow:</p>
+              <p class='well'>\begin{eqnarray}
+                MEU(M = 0) &=& max_t \sum_b P(B = b | M = 0) U(B = b, T = t) \\
+                     T = 0 &\Rightarrow& P(B = 0 | M = 0) U(B = 0, T = 0) + P(B = 1 | M = 0) U(B = 1, T = 0) \\
+                           &=& 0.64 * 35 + 0.36 * 15 \approx 28 \\
+                     T = 1 &\Rightarrow& P(B = 0 | M = 0) U(B = 0, T = 1) + P(B = 1 | M = 0) U(B = 1, T = 1) \\
+                           &=& 0.64 * 20 + 0.36 * 40 \approx 27 \\
+                           &\therefore& MEU(M = 0) = 28
+              \end{eqnarray}</p>
+              <p class='debug'>Note: above we have a case where our decision would change to not buying the ticket!</p>
+              <p class='well'>\begin{eqnarray}
+                MEU(M = 1) &=& max_t \sum_b P(B = b | M = 1) U(B = b, T = t) \\
+                     T = 0 &\Rightarrow& P(B = 0 | M = 1) U(B = 0, T = 0) + P(B = 1 | M = 1) U(B = 1, T = 0) = 13.2 \\
+                           &=& 0.16 * 35 + 0.84 * 15 \approx 18 \\
+                     T = 1 &\Rightarrow& P(B = 0 | M = 1) U(B = 0, T = 1) + P(B = 1 | M = 1) U(B = 1, T = 1) = 45.2 \\
+                           &=& 0.16 * 20 + 0.84 * 40 \approx 39 \\
+                           &\therefore& MEU(M = 1) = 39
+              \end{eqnarray}</p>
+              <p>Whew! Alright, almost done...</p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 3:</strong> Find \(MEU(E = e, E')\), the weighted sum of each individual \(MEU(E = e, E' = e')\):</p>
+              <p>Again, this is easy because we have no observed \(E = e\), but in general, would need to find \(P(E' = e' | E = e)\).</p>
+              <p>I've done the easy job of simply finding \(P(M)\), which, as it turns out, is \(P(M = 0) = P(M = 1) = 0.5\) (totally planned, Mike that fickle f***).</p>
+              <p class='well'>\begin{eqnarray}
+                MEU(E = e, E') &=& \sum_{e'} P(E' = e' | E = e) MEU(E = e, E' = e) \\
+                MEU(M) &=& \sum_{m} P(M = m) MEU(M = m) \\
+                       &=& P(M = 0) MEU(M = 0) + P(M = 1) MEU(M = 1) \\
+                       &=& 0.5 * 28 + 0.5 * 39 = 33.5
+              \end{eqnarray}</p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 4:</strong> Find \(VPI(E' | E = e)\) by pluggin and chuggin.</p>
+              <p class='well'>\begin{eqnarray}
+                VPI(E' | E = e) &=& MEU(E = e, E') - MEU(E = e) \\
+                                &=& 33.5 - 32 = 1.5
+              \end{eqnarray}</p>
+              <br/>
+              
+              <p><strong>Conclusions:</strong></p>
+              <ul class='indent-1'>
+                <li><p>This is why we have computers.</p></li>
+                <li><p>Mike's dumb tip is only worth an expected utility increase of about 1.5; if we treat this as equivalent to dollar amounts, we would have to haggle him
+                  down to about a $1.50 to make his semi-trustworthy information useful.</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='vpi-props' class='scrollspy-element' scrollspy-title="VPI Properties"></div>
+            <h1>VPI Properties</h1>
+            <div>
+              <p>Now for the exciting part that everyone eagerly awaits: some properties of VPI!</p>
+              <p>First, motivated by a question that has also plagued philosophers for ages...</p>
+              <p class='question' name='props-q0'>Is it ever possible for additional knowledge to be *harmful* to expected utility? i.e., could we have:
+                $$MEU(E = e, E') \stackrel{?}{\lt} MEU(E = e)$$
+              </p>
+              <p class='answer' name='props-q0'>Yes! Learning the value of some variable might make all of our decisions (under either of its values)
+                look more grim than had we not known about it to begin with.</p>
+              <p class='question' name='props-q0.1'>This would, however, make \(VPI(E' | E = e) \lt 0\) -- why does this not make sense?</p>
+              <p class='answer' name='props-q0.1'>Information is only ever helpful (in that it helps to narrow down the possible state we're in), or useless, but 
+                never harmful, by definition, because we could always just ignore that information and be as well off as we were before seeing it.</p>
+              <p class='toolkit'><strong>Property 1:</strong> VPI is <strong>nonnegative</strong> such that:
+                $$VPI(E' | E = e) \ge 0~\forall~E', e$$
+              </p>
+              <p class='toolkit'>Functionally, this means that any VPI computation whose difference between \(MEU(E=e, E')\) and \(MEU(E=e)\) is negative
+                is simply capped at 0.</p>
+              <p>Knowledge is power!</p>
+              <br/>
+              
+              <p>This raises an interesting question, since we said it can be greater than *or equal to* 0.</p>
+              <p class='question' name='props-q1'>Under what circumstances might \(VPI(E' | E = e) = 0\)?</p>
+              <p class='answer' name='props-q1'>When the evidence is irrelevant to the utility!</p>
+              <p>Generally, since a decision network still obeys the rules of d-separation, we can simply determine whether or not the variable being assessed tells us anything
+                new about the utility node.</p>
+              <div class='toolkit'><p><strong>Property 2:</strong> The VPI of variables that are independent / conditionally independent from the utility node(s) will be 0, viz.:
+                  $$(E' \indep U | E = e) \Rightarrow VPI(E' | E = e) = 0$$
+                </p>
+                <p>(where \((E' \indep U | E = e)\) is used to indicate that \(dsep(E', U | E = e)\))</p>
+              </div>
+              <p class='example'>Suppose we added another variable related to Mike's Tip in our Music Festival Example, some variable \(A\):</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-8/revised-music-ex.png' />
+              </div>
+              <div class='question' name='props-q2'>
+                <p>Are each of the following VPI queries zero or nonzero?</p>
+                <ol class='indent-1'>
+                  <li><p>\(VPI(A)\)</p></li>
+                  <li><p>\(VPI(A | M)\)</p></li>
+                  <li><p>\(VPI(A | M, B)\)</p></li>
+                </ol>
+              </div>
+              <div class='answer' name='props-q2'>
+                <p>Answers:</p>
+                <ol class='indent-1'>
+                  <li><p>\(VPI(A)\) = 0 since \(A \indep U\)</p></li>
+                  <li><p>\(VPI(A | M)\) = nonzero since \(A \not \indep U | M\)</p></li>
+                  <li><p>\(VPI(A | M, B)\) = 0 since \(A \indep U | M, B\)</p></li>
+                </ol>
+              </div>
+              <br/>
+              
+              <p>Lastly, consider the fact that we might be interested in / offered the values of *two or more* variables like:</p>
+              <p>$$VPI(E'_i, E'_j | E = e)$$</p>
+              <p>This is indeed allowed, but we should be careful with how we compute the value of having multiple new pieces of evidence. To see where this danger comes from:</p>
+              <p class='question' name='props-q3'>Is \(VPI\) additive such that, for any arbitrary \(E'_j, E'_k\):
+                $$VPI(E'_j, E'_k | E = e) \stackrel{?}{=} VPI(E'_j | E = e) + VPI(E'_k | E = e)$$
+              </p>
+              <p class='answer' name='props-q3'>No! This might give us overlapping value.</p>
+              <p>Consider having \(VPI(M, B)\) in our previous example, in which \(M\) provides no new value that \(B\) doesn't already, but alone, each does have a positive VPI.</p>
+              <p class='toolkit'><strong>Property 3:</strong> VPI is <strong>non-additive</strong> such that:
+                $$VPI(E'_j, E'_k | E = e) \ne VPI(E'_j | E = e) + VPI(E'_k | E = e)$$
+              </p>
+              <p>(Note: although not true in general, this *might* be the case for some circumstances... can you think of what they are?)</p>
+              <br/>
+              
+              <p>However, not all hope is lost, since we can still compute the VPI on multiple query variables so long as we isolate the *portion* of utility that each query
+                can provide information about.</p>
+              <p>Intuitively, this can be done by holding one of the two variables constant (i.e., as observed evidence) while computing the VPI of the other.</p>
+              <p class='toolkit'><strong>Property 4:</strong> VPI is <strong>order independent</strong> for computing the value of multiple queries so long as the others are held
+                constant after their contribution to the utility has been evaluated (and the order doesn't matter):
+                \begin{eqnarray}
+                  VPI(E'_j, E'_k | E = e) &=& VPI(E'_j | E = e) + VPI(E'_k | E'_j, E = e) \\
+                                          &=& VPI(E'_k | E = e) + VPI(E'_j | E'_k, E = e) \\  
+                \end{eqnarray}
+              </p>
+              <p class='remark'>Think of this relationship as the "Conditioning" rule of VPI (it even looks a lot like it).</p>
+              <br/>
+              
+              <p>Whew! At this point you might be questioning the value of information in general -- too much can be enriching or crushing!</p>
+              <p>We'll chase this lecture with some practice next time around... see y'all at the Fyre Festival, I've heard good things from Mike.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

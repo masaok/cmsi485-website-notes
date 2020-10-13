@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../../../assets/images/favicon.ico'>
+    <script src="../../../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../../../js/lib/expanding.js"></script>
+    <script src="../../../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../../../classes.html">Classes</a></li>
+              <li><a href="../../cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Homework 2</li>
+            </ol>
+            
+            <div id='hw2' class='scrollspy-element' scrollspy-title='Homework 2'></div>
+            <h1>Homework 2 - Star Spangled Bayeser</h1>
+            <div>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>Title</p></th>
+                    <th><p>Date Posted</p></th>
+                    <th><p>Date Due</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>Homework 2 - Star Spangled Bayeser <small>(alright, not one of my finest)</small></p></td>
+                    <td><p>10 / 10 / 20</p></td>
+                    <td><p>11 / 3 / 20</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <p class='definition'>This is a *group* assignment! Feel free to work in groups of up to 3 individuals.</p>
+              <p>Having done such good work on Solicitorbot, you have been promoted to an advertising data scientist at Forney Industries, which is just about to launch
+                its newest Home Automation / Defense line of robotics.</p>
+              <p>The beta phase of <span style="text-decoration: line-through;">Killbot 3000</span> Defendotron 3001 is complete, and initial sales have been made to a variety of
+                customers around the US.</p>
+              <p>After each of these initial sales pitches (that ended in purchases or otherwise), Forney Industries collected demographic data on each participant, and quizzed them on
+                a variety of metrics that were believed to be in some way related to the outcome of the sale.</p>
+              <p>The launch of the Defendotron line is now upon us, and two customizable models are available for public consumption:</p>
+              <ul class='indent-1'>
+                <li><p><strong>Defendotron Basic [$500]:</strong> comes with a siren and tazer to alert you and protect your home from intruders.</p></li>
+                <li><p><strong>Defendotron 'Murica [$1,776]:</strong> comes with a full arsenal, including SAM missile array to protect from drone attack. Plays the Star Spangled 
+                  Banner in place of siren when an intruder is detected.</p></li>
+              </ul>
+              <br/>
+              
+              <h3>The Data</h3>
+              <hr/>
+              <p>Pending the launch of the Defendotron line, you are now analyzing the data collected by the in-person sales team in which a variety of traits and features must
+                be integrated into an online advertising agent meant to select an ad that is most likely to be converted into a sale.</p>
+              <p>In particular, before giving their pitch, the members of the sales team showed participants ads with two key variables:</p>
+              <ul class='indent-1'>
+                <li><p><strong>Ad Video Choice [Ad1]:</strong> the video shows either a scare tactic of a home robbery (Ad1 = 0) or a patriotic montage with lots of guns and flags
+                  waving (Ad1 = 1).</p></li>
+                <li><p><strong>Ad Music Choice [Ad2]:</strong> the video either has a narrator's voice-over explaining the product (Ad2 = 0) or some tasteful classic rock
+                  that mentions freedom a bunch (Ad2 = 1).</p></li>
+              </ul>
+              <p>The sales team showed each of these ad combinations at random, then collected data on several important, binary features (described below) as well as 
+                the *ternary* (3 values) outcome of the sales call:</p>
+              <ul class='indent-1'>
+                <li><p><strong>Political Leaning [P]:</strong> the political leaning of the interviewee (0 = conservative, 1 = liberal)</p></li>
+                <li><p><strong>Age Group [A]:</strong> generational age group of interviewee (0 = millennial, 1 = baby boomer+)</p></li>
+                <li><p><strong>Position on Gun Control [G]:</strong> whether or not the interviewee is in support of stricter gun control legislation (0 = no, 1 = yes)</p></li>
+                <li><p><strong>Possession of Home/Renter's Insurance [I]:</strong> whether or not the interviewee possesses home or renter's insurance (0 = no, 
+                  1 = yes)</p></li>
+                <li><p><strong>Perceived Threat of Crime [T]:</strong> whether or not the interviewee believes they live in a crime-filled neighborhood (0 = no, 1 = yes)</p></li>
+                <li><p><strong>Perceived Threat of Foreign Invasion [F]:</strong> whether or not the interviewee believes in a foreign threat to the homeland (0 = no, 1 = yes)</p></li>
+                <li><p><strong>Home Ownership [H]:</strong> whether or not the interviewee owns their home (0 = doesn't own, 1 = owns).</p></li>
+                <li><p><strong>Sold Defendotron [S]:</strong> outcome of the sales pitch (0 = didn't buy anything, 1 = bought Defendotron 'Murica, 2 = bought Defendotron basic)</p></li>
+              </ul>
+              <p>You can find the dataset they collected from thousands of participants in the project skeleton.</p>
+              <br/>
+              
+              <h3>Your Task</h3>
+              <hr/>
+              <p class='definition'>Your task: create a decision-network-based Ad Agent that will maximize Forney Industries' sales of Defendotrons online based on any of the
+                user's collected demographic data on the metrics above. The agent must select the combination of Ad characteristics [Ad1, Ad2] that maximizes the expected
+                utility of a sale.</p>
+              <p>The problem: for each online sale, only some of these features may be known / observed, and so we need a means of deciding which ad combination to show
+                them to maximize our expected sales.</p>
+              <p>Specifically, you are tasked with the following:</p>
+              <ul class='indent-1'>
+                <li><p>Gain an understanding of the relationship between the variables collected by the sales team.</p></li>
+                <li><p>Use this understanding to create an autonomous advertising agent.</p></li>
+              </ul>
+              <br/>
+              
+              <h3>Solution Skeleton</h3>
+              <hr/>
+              <p>Start with the solution skeleton for this part in-hand! Segments left for you to do are indicated in comments:</p>
+              <p class='text-center'><a class='assignment' href='https://classroom.github.com/g/UEXOm8BA' target='_blank'>GitHub Classroom</a></p>
+              <br/>
+              
+              <p>To address the goals above, we will familiarize ourselves with several popular probabilistic reasoning machine learning toolkits.</p>
+              <p class='definition'>Throughout this process, you will be using some programmatic tools and some non-programmatic tools; when asked to record certain parts of the
+                process, make additions to a Report file that you will submit as some sort of text / pdf document within a <code>doc</code> folder of your Github Classroom Repository.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='modeling' class='scrollspy-element' scrollspy-title='Bayesian Network Modeling'></div>
+            <h1>Bayesian Network Modeling</h1>
+            <div>
+              <p>Since we are starting this endeavor with only the dataset, our first task is to examine the putative <i>structure</i> of the BN using a bottom-up approach.</p>
+              <p>This is not difficult to automate for some models, but in general, may require some companion human intervention. At the very least, it gives us and our greater
+                marketing team some insights into what our customer-base looks like.</p>
+              <p>However, when it comes to using Bayesian Networks to model <strong>causal</strong> relationships, the story is a bit trickier for a familiar reason:</p>
+              <p class='definition'><strong>Observational equivalence:</strong> we may have independence relationships between variables that can be explained by
+                different structures (e.g., \(X \rightarrow Z \rightarrow Y\) and \(X \leftarrow Z \rightarrow Y\) make the same independence claim that \(X \indep Y~|~Z\), but
+                which is the "correct" causal story requires a human's assumptions since this is not a determination that can be made from the data alone).</p>
+              <p>As such, we'll use a <i>structure learning</i> tool that can help us determine what parts of the BN structure can be learned from data and which require humans
+                to set into place.</p>
+              <br/>
+              
+              <p>There are several popular tools for BN structure learning, but one of the most developed and used in academic settings is Tetrad, which you can find and 
+                download below (just get the most recent version and download the associated *-launch.jar):</p>
+              <p><a class='assignment' href='https://cloud.ccd.pitt.edu/nexus/content/repositories/releases/edu/cmu/tetrad-gui/6.7.1/' target='_blank'>Download Tetrad</a></p>
+              <p>Tetrad is developed at CMU/Pitt and is useful in both probabilistic and causal structure discovery -- it does not provide tools for inference, which we will find
+                elsewhere once we have determined the BN structure.</p>
+              <p>What follows is a walkthrough for using Tetrad to determine the BN structure modeling the dataset given above.</p>
+              <br/>
+              
+              <p class='problem'></p>
+              <ol class='indent-1'>
+                <li><p>Download the latest version of Tetrad (instructions above)</p></li>
+                <li><p>Launch Tetrad (can just double click on the .jar file though Unix systems might need the terminal), after which you will be greeted with a new project window. Tetrad is modular, allowing you to make an analysis project that is comprised of
+                  various linkable stages.</p></li>
+                <li><p>Since we are interested in learning a network structure from data, go to the menu at the top and select <code>Pipelines -&gt; Search then Estimate</code>.
+                  What appears is a pipeline that will find as much of the network structure as possible, have us decide on the final model, and then will estimate the network
+                  parameters (CPTs). To do this, double click on each module in the following order, and perform the given steps:</p>
+                  <ol class='indent-1'>
+                    <li><p><strong>Data:</strong> load the dataset into Tetrad via <code>File -&gt; Load Data</code>, making sure to select "Discrete" data in the dialogue that pops up.
+                      You should see all of the data in the table after this step.</p></li>
+                    <li><p><strong>Search:</strong> we'll now search for the network structure. In this module, you'll see that there are *many* structure learning algorithms
+                      for a variety of scenarios.</p>
+                      <ul class='indent-1'>
+                        <li><p>In our case, we'll use the <code>PC Variants</code> method, which you shall select, then click "Set parameters" and finally
+                          "Run and Generate Graph." (there's also a small snippet on the right with what it does -- neat!)</p></li>
+                        <li><p>You'll notice that the structure is *almost* completely directed, except for some edges that are not. These are the edges that are not discernable
+                          from the data alone and comprise the models in the observational equivalence class of the data.</p></li>
+                      </ul>
+                    </li>
+                    <li><p><strong>Graph:</strong> it's time for us to provide the direction of the edges that had an unknown orientation from the structure learning.</p>
+                      <ul class='indent-1'>
+                        <li><p>Select "Choose Dag in Pattern;" the edges that need to have an orientation chosen will be highlighted in yellow,
+                          but you are given a "default" orientation that you (may) need to change.</p></li>
+                        <li><p>From here, choose an edge direction for these ambiguous edges based on logical relationships of cause and effect. It should be
+                          fairly obvious which direction the edges should point given the interpretations of the variables involved (though in general, you would need some sound,
+                          scientific rationale for orienting an ambiguous edge in a particular direction).</p></li>
+                        <li><p>The above step will require you use the edge tool (\(X \rightarrow Y\) in the menu) which you select and drag from cause to effect. You will also have
+                          to select (by clicking on the edge [obnoxiously, the line, not the arrowhead]) and then delete (hitting the delete key) any suggested edges that you 
+                          wanted to change.</p></li>
+                        <li><p>Once you are satisfied (and have a proper DAG structure) hit the Done button.</p></li>
+                      </ul>
+                    </li>
+                    <li><p><strong>PM (Parameterized Model):</strong> just double click on this to verify the network structure, variable values, and expected CPTs.</p></li>
+                    <li><p><strong>Estimator:</strong> this module will list the network CPTs and parameters from the structure you learned / provided, plus the data from the
+                      first step.</p>
+                    </li>
+                  </ol>
+                </li>
+              </ol>
+              <div class='definition'>
+                <p>[Report] Include the following your report:</p>
+                <ol class='indent-1'>
+                  <li><p>Take a screenshot of a <strong>topologically sorted</strong> arrangement of the nodes in the resulting network structure for your report (seeing nodes in
+                    their parent-child topologies is useful from a causal perspective).</p></li>
+                  <li><p>Without having to look up the PC Structure Learning algorithm, examine and then explain why the system was able to orient the direction of some edges, 
+                    but not others.</p></li>
+                  <li><p><strong>Repeat Step 3 (in the same Tetrad Session / Document, but using a new Pipeline) above using only the first 10,000 samples in the dataset</strong>, 
+                    then answer the following: Is your model the same or not? Explain why it is the same or different.</p></li>
+                  <li><p>When you are finished, save the Tetrad Session to a <code>tet</code> folder at the top level of your git directory. Name the 
+                    session <code>bn_analysis</code></p></li>
+                </ol>
+              </div>
+            </div>
+            <hr/>
+            <br/>
+              
+              
+            <div id='programming' class='scrollspy-element' scrollspy-title='Probabilistic Programming'></div>
+            <h1>Probabilistic Programming</h1>
+            <div>
+              <p>Now that we have examined the network structure from the step above, it's time to head back to the programmatic side.</p>
+              <div class='toolkit'>
+                <p>For this warmup section, we'll use a few great libraries that are popularly employed in this domain:</p>
+                <ul class='indent-1'>
+                  <li><p><code>Pomegranate</code>, a library for Bayesian Inference, which can be installed via the instructions listed on its GitHub page 
+                    (as simpe as <code>pip install pomegranate</code>):</p>
+                    <p><a class='assignment' href='https://pomegranate.readthedocs.io/en/latest/install.html' target='_blank'>Get Pomegranate</a></p>
+                  </li>
+                  <li><p><code>Pandas</code> Data Frames, a library for structuring, reading, and manipulating tabular data like in a .csv file. Getting pandas is as simple
+                    as <code>pip install pandas</code>. You can find a tutorial for using its (intuitive) interface here:</p>
+                    <p><a class='assignment' href='https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html' target='_blank'>Pandas Tutorial</a></p>
+                    <p>For a brisk introduction, focus on the tutorial sections of: Object Creation, Viewing Data, Selection, Operations, Merging, Grouping.</p>
+                  </li>
+                </ul>
+              </div>
+              <br/>
+              
+              <h3>Important Documentation</h3>
+              <hr/>
+              <p>Once installed, head over to the Pomegranate tutorial on constructing a Bayesian Network, which should be fairly straightforward:</p>
+              <p><a class='assignment' href='https://pomegranate.readthedocs.io/en/latest/BayesianNetwork.html' target='_blank'>Pomegranate BN Documentation</a></p>
+              <p>For our purposes, you'll want to inspect several features of the interface:</p>
+              <ul class='indent-1'>
+                <li><p><code>BayesianNetwork.from_samples</code> to learn a network from a set of samples that we will provide. While we *could* fit the data to the structure
+                  you found using Tetrad, we'll just let Pomegranate pick one model from the set of the observationally equivalent ones, which will deliver the same inferences
+                  albeit have less intuitive causal structure.
+                  You'll want to specify the following parameters:</p>
+                  <ul class='indent-1'>
+                    <li><p><code>X</code> the data to fit the structure to, which has to be read from the dataset you downloaded above. To read a dataset from a CSV,
+                      you'll want to look into the <code>pandas</code> library's <code>read_csv</code> method. Providing this dataset populates the network parameters 
+                      (learns the CPT values from the data).</p></li>
+                    <li><p><code>state_names</code> a list of strings indicating the node names (the order of the columns in the data file, which can be read from it using
+                      some handy pandas methods).</p></li>
+                    <li><p><code>algorithm='exact'</code> set this named parameter in the BN constructor to give it maximal accuracy. It'll take a bit longer to construct, but will
+                      make your work / debugging easier to check.</p></li>
+                  </ul>
+                </li>
+                <li><p><code>predict_proba</code> parameterized by some evidence, returns a list of each node's CPTs updated by the given evidence. Consult the parameters
+                  property of each CPT for the probability values. (Hint: it's easiest just to print out what this method returns and see how to use its components).</p>
+                  <p class='debug'>NOTE: Tables listed are in the order of the <code>state_names</code> list you constructed the BN with, and represent \(P(V|e)\) for every variable
+                    \(V\) and evidence \(e\) -- these are *not* the CPTs, but rather, the likelihood of each variable under the evidence.</p>
+                  <p class='toolkit'>As such, it is recommended you make a small helper method in the AdAgent to extract the likelihood of any desired variable \(V\) from this
+                    distribution format.</p>
+                </li>
+              </ul>
+              <br/>
+              
+              <h3>Exercises</h3>
+              <hr/>
+              <p class='problem'></p>
+              <p class='definition'>For the following problems, complete the accompanying part of the skeleton in <code>warmup.py</code> showing how you've derived your answer.
+                Each question is based off of the <code>adbot-data.csv</code> located in the project skeleton's <code>dat</code> directory.</p>
+              <ol class='indent-1'>
+                <li><p>Having successfully constructed a Bayesian Network using the given Adbot data, use the Pomegranate interface to determine the answers to the following queries:</p>
+                  <ol class='indent-1'>
+                    <li><p>\(P(S)\) (i.e., for all values of \(S\))</p></li>
+                    <li><p>\(P(S | G = 1)\)</p></li>
+                    <li><p>\(P(S | T = 1, H = 1)\)</p></li>
+                  </ol>
+                </li>
+              </ol>
+            </div>
+            <hr/>
+            <br/>
+              
+              
+            <div id='dec-net' class='scrollspy-element' scrollspy-title='Decision Network Programming'></div>
+            <h1>Decision Network Programming</h1>
+            <div>
+              <p class='definition'>Back to the task at hand: you must design an agent that uses a decision network that, when given *some* of the features specified above, returns the
+                best choices for any specified decision variables.</p>
+              <p class='toolkit'>You will do so by completing the skeleton for the <code>AdEngine</code> class that was included in the skeleton.</p>
+              <br/>
+              
+              <p class='problem'></p>
+              <p>In particular, you must implement the following methods:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Methods</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p><code>__init__(data_file, dec_vars, util_map)</code></p>
+                      <p>Constructor for a new AdEngine constructed atop the given data_file.</p>
+                      <p>Responsible for initializing the Decision Network of the AdEngine.</p>
+                      <p>Parameters are to be specified as follows:</p>
+                      <ul class='indent-1'>
+                        <li><p><code>:param string data_file:</code> path to csv file containing data on which
+                          the network's parameters are to be learned</p></li>
+                        <li><p><code>:param list dec_vars:</code> list of string names of variables to be
+                          considered decision points for the agent. Example:<br/>
+                            <code>["Ad1", "Ad2"]</code> for two nodes / data columns named "Ad1" and "Ad2" that represent decision variables.</p></li>
+                        <li><p><code>:param dict util_map:</code> discrete, tabular, utility map whose keys
+                          are variables in network that are parents of a utility node, and
+                          values are dictionaries mapping that variable's values to a utility
+                          score, e.g.</p>
+<pre class='prettyprint'>
+  {
+    "X": {0: 20, 1: -10}
+  }
+</pre>
+                          <p>...represents a utility node with single parent X whose value of 0 has a utility score of 20, and value 1 has a utility score of -10</p>
+                          
+                          <p class='debug'>For simplicity's sake, we'll scale back our ambition and only require that your decision network works for inputs of a *single* chance
+                            node parent of the utility node.</p>
+                          <p class='debug'>It will be up to you to determine the contributing variables and corresponding utility scores for the Defendotron example!</p>
+                          <br/>
+                          
+                          <p>The constructor should perform the following:</p>
+                          <ol class='indent-1'>
+                            <li><p>Construct a new Pomegranate Bayesian Network from the samples given in the data_file</p></li>
+                            <li><p>Keep track of the decision, chance, and utility variables through some record-keeping mechanism (noting that variables need not be binary, but
+                              that the possible values of any variable can be known in advance through the input dataset -- hint, look up some pandas methods to get all variable 
+                              vals.)</p></li>
+                            <li><p>Initialize any other attributes you may want in the methods that follow</p></li>
+                          </ol>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>meu(self, evidence)</code></p>
+                      <p>Given some observed demographic "evidence" about a potential
+                        consumer, selects the ad content that maximizes expected utility
+                        and returns a dictionary over any decision variables and their
+                        best values plus the MEU from making this selection.</p>
+                      <p><code>:param dict evidence:</code> dict mapping network variables to their
+                        observed values, of the format: <code>{"Obs1": val1, "Obs2": val2, ...}</code></p>
+                      <p>Evidence, for our example, will take the form of observations about a particular user, like their age or political leanings if listed on social media.</p>
+                      <p><code>:return:</code> 2-Tuple of the format (a*, MEU) where:</p>
+                      <ul class='indent-1'>
+                        <li><p><code>a*:</code> a dictionary mapping each decision variable to the value that, given the observed evidence, maximizes the EU:
+                          <code>{"DecVar1": val1, "DecVar2": val2, ...}</code></p></li>
+                        <li><p><code>MEU:</code> float representing the EU(a* | evidence)</p></li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><code>vpi(self, potential_evidence, observed_evidence)</code></p>
+                      <p>Given some observed demographic "evidence" about a potential
+                        consumer, returns the Value of Perfect Information received on the given "potential" evidence being evaluated.</p>
+                      <p><code>:param string potential_evidence:</code> string representing the variable name of the variable being evaluated</p>
+                      <p><code>:param dict observed_evidence:</code> dict mapping network variables to their
+                        observed values, of the format: <code>{"Obs1": val1, "Obs2": val2, ...}</code></p>
+                      <p><code>:return:</code> some float value indicating the VPI</p>
+                      <p>The returned value represents the potential gain in utility from learning about the state of a previously unknown variable, i.e., 
+                        VPI(potential_evidence | observed_evidence).</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              
+              <p class='debug'>Read these important notes about your solution!</p>
+              <ul class='indent-1'>
+                <li><p>Although given a motivating example in the Defendotron setting, your solution should operate correctly for whatever properly formatted data-file,
+                  decision variables, and utility maps are provided to the AdEngine constructor!</p></li>
+                <li><p>Once again, you'll likely find the <code>itertools</code> package very useful in many of the above.</p></li>
+                <li><p>Not confident in your answer? Construct some simple DN's top-down like the ones we've done in class and compare your solution's answers to ours. I've given one
+                  such dataset in the <code>lecture5-2-data.csv</code> that emulates the web-dev interface selector decision network from Lecture 5-2.</p></li>
+                <li><p>Test as a community! Although you shouldn't be sharing code, you can certainly share cases and datasets (which you can generate via Tetrad's <code>simulation</code> 
+                  module if you please).</p></li>
+              </ul>
+              <br/>
+              
+              <p class='problem'></p>
+              <p class='definition'>[Report] Using your AdEngine implementation above, answer the following questions in your Report.</p>
+              <ol class='indent-1'>
+                <li><p>Using your Ad-Engine, decide and explain your answer to the following:</p>
+                  <ul class='indent-1'>
+                    <li><p>If Facebook charges you $2 per-person to learn their stance on Gun control, if available, is the juice worth the squeeze?</p></li>
+                    <li><p>If you *knew* someone to be in support of Gun Control (\(G=1\)), and Google is offering $0.25 per person to tell you their political affiliation,
+                      is the juice worth the squeeze?</p></li>
+                  </ul>
+                </li>
+                <li><p>Finally (scratching some flag requirement for this course, probably): In a small paragraph, argue for whether or not you believe this practice 
+                  should be considered ethical, especially if each individual's characteristics were collected via social media. Compare this practice to targeted 
+                  political advertising wherein ads are curated based on perceived in-group. If your group does not have a concensus on this question, log your discussion for
+                  this problem instead.</p></li>
+              </ol>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='submission' class='scrollspy-element' scrollspy-title='Submission'></div>
+            <h1>Submission</h1>
+            <div>
+              <p class='definition'>You will be submitting your assignments through GitHub Classroom!</p>
+              <h4>What</h4>
+              <p>Complete all classes that accomplishes the specification above, in the project structure given in the skeleton above.</p>
+              <br/>
+              
+              <h4>How</h4>
+              <p>To <strong>clone</strong> this assignment (if you need a refresher), consult the guide here:</p>
+              <p class='assignment'><a href='../../../tutorials/github-classroom.html' target='_blank'>GitHub Classroom Tutorial</a></p>
+              <p>To <strong>submit</strong> this assignment:</p>
+              <ul class='indent-1'>
+                <li><p>Simply push your final, submission copy to the GitHub Classroom repository associated with you or your group.</p></li>
+                <li><p>If you worked in a group (3 individuals maximum), ensure that your GitHub Classroom group includes all members, and place all group members' names at the top of *all* submitted files (in appropriate
+                  commenting fashion).</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <script>
+              $(".problem").each(function (index) {
+                $(this)
+                  .wrapInner("<span class='pull-right'></span>")
+                  .prepend("Problem " + (index + 1))
+                  .addClass("definition")
+                  .wrapInner("<strong></strong>");
+              });
+            </script>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>
