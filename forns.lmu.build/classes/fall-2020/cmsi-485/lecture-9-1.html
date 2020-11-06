@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+        \(\DeclareMathOperator*{\argmax}{argmax}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 9-1</li>
+            </ol>
+            
+            
+            <div id='reason-over-time' class='scrollspy-element' scrollspy-title="Reasoning Over Time"></div>
+            <h1>Reasoning Over Time and Space</h1>
+            <div>
+              <p class='remark'>Thus far, one of our fundamental assumptions about Bayesian Networks and Probabilistic Reasoning has been that <strong>evidence</strong> is collected for a single
+                quantum, or state frozen in time.</p>
+              <p class='question' name='mm-q0'>Why might this be limiting in some capacity? Where might we gain some opportunities to refine our probabilistic inference capabilities?</p>
+              <p class='answer' name='mm-q0'>We should be able to meaningfully combine observations across different time periods or locales in order to increase the accuracy
+                of our inferences.</p>
+              <p class='example'>List some examples of when concerting <strong>sequences of</strong> observations over time / space might be useful.</p>
+              <ul class='indent-1'>
+                <li><p>A player's moves in a board / card game with partial information</p></li>
+                <li><p>Monitoring someone's blood pressure over time / medical applications</p></li>
+                <li><p>Speech recognition (phonemes form words when combined over time)</p></li>
+                <li><p>Meteorological predictions</p></li>
+              </ul>
+              <p>In fact, it's often *very* important to be able to concert information gathered over time.</p>
+              <p>Consider the semi-recent meteorological predictions of Hurricane Sandy's path into the continental US, in which the US weather model predicted it hanging wide out
+                to sea (blue in image below) and the EU model correctly predicted it impacting the mainland (red in image below).</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-9/sandy.png' />
+              </div>
+              <br/>
+              
+              <p>Plainly, this is a skill that humans use often as well, as many aspects of prediction require not only the ability to discern multiple past observations, but to
+                use those to predict future events as well.</p>
+              <p>Today, we'll start that journey by marrying some of our probabilistic models into the ability to reason over time.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='markov-models' class='scrollspy-element' scrollspy-title="Markov Models"></div>
+            <h1>Markov Models</h1>
+            <div>
+              <p>Let's start by thinking about a simple, motivating problem, and finally one that actually makes some measure of sense given the context...</p>
+              <p class='example'>Take a weather forecast system that can use the weather's state on any given day to provide information about the predicted weather on the next.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-9/weather.png' /><br/>
+                <small>Adorable cartoon borrowed from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              
+              <p class='question' name='mm-q1'><strong>Intuition:</strong> why might reasoning over time be useful in forecast generation?</p>
+              <p class='answer' name='mm-q1'>Basic human intuitions that rain is typically followed by more rain (depending on locale, of course), BUT after so many days of rain,
+                we expect it clear up.</p>
+              <p class='question' name='mm-q2'>How can we formalize situations like this, perhaps in terms of some probabilistic reasoning tools recently discussed?</p>
+              <p class='answer' name='mm-q2'>Trace the likelihoods of variables over slices of time in which *state* has some likelihood of *transitioning*</p>
+              <p>From these intuitions, we can develop what are known as (and yes, he's back) Markov Models:</p>
+              <p class='definition'><strong>Markov Models / Markov Chains</strong> model the changes in some <strong>State Variables</strong> over slices of time / space as
+                specified by <strong>Transition Probabilities (AKA Dynamics)</strong>.</p>
+              <p class='toolkit'>The transition probabilities are assumed to be <strong>stationary</strong> such that the likelihoods of state transition are the same at each
+                quantum of time.</p>
+              <p>The stationarity assumption is vital lest our Markov Models have absolutely no predictive power: if the likelihoods that states change are themselves changing
+                over time (at least in some unforeseeable way), then we can't really make any claims as to what the state will be in the future.</p>
+              <p>Graphically, Markov Models will look like a familiar friend:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-9/markov-chain.png' />
+              </div>
+              <br/>
+              <br/>
+              <p>Let's get some binding of our intuitions to some of the formalisms implicit above:</p>
+              <p class='question' name='mm-q3'>Why don't we draw arrows from earlier states to ones that are more than one state away? E.g., why not draw an arrow 
+                from \(X_1 \rightarrow X_3\)?</p>
+              <p class='answer' name='mm-q3'>For two reasons: each node represents the state at some time slice, and since the transitions exhibit <strong>stationarity</strong>,
+                the next state is *only* reliant on knowledge of the previous and the transitions.</p>
+              <p class='remark'>The <strong>Markov Property</strong> in Markov Chains (same as in Bayesian Networks) provides a nice property (and philosophy): The future is
+                independent of the past given the present.</p>
+              <p>Bask in that thought for one second: "It doesn't matter how you got here, it only matters where you go next."</p>
+              <p>And that brief moment of reflection, friends, is why this class is satisfying one of your Core Flags. Whew! On to the good stuff...</p>
+              <p>In particular, the Markov Property allows us factor the joint distribution of these state variables over time very conveniently:</p>
+              <p class='definition'>In a Markov Chain with a time horrizon \(T\) and initial state \(X_1\), the joint distribution over all states at time \(t \in T\) can be
+                expressed:
+                \begin{eqnarray}
+                  P(X_1, X_2, ..., X_T) &=& P(X_1) P(X_2 | X_1) P(X_3 | X_2) ... P(X_T | X_{T-1}) \\
+                                        &=& P(X_1) \prod^{T}_{t=2} P(X_t | X_{t-1})
+                \end{eqnarray}
+              </p>
+              <p class='remark'>Of course, we don't want to recreate the entire joint distribution over multiple time slices, but rather, use our Markov Models
+                to answer questions about specific \(P(X_t)\).</p>
+              <p>However, computing an arbitrary \(X_t\) means knowing the distribution over state values of \(P(X_{t-1})\).</p>
+              <p>As such, we can apply a recursive definition to compute an arbitrary future state that we'll call the <strong>Mini-Forward Algorithm.</strong></p>
+              <p class='toolkit'>The <strong>Mini-Forward Algorithm</strong> provides the ability to simulate the transition propagation such that, for any arbitrary future time
+                slice \(t\) we have:
+                \begin{eqnarray}
+                  P(X_t = x_t) &=& \sum_{\text{Prev state possibilities}} \text{\{Transition probability\}} * \text{\{State likelihood at previous\}} \\
+                               &=& \sum_{x_{t-1} \in X_{t-1}} P(X_t = x_t | X_{t-1} = x_{t-1}) P(X_{t-1} = x_{t-1})
+                \end{eqnarray}
+              </p>
+              <br/>
+              
+              <h4>Numerical Example</h4>
+              <hr/>
+              <p>Using the Markov Property, let's see how this applies to a simple, numerical example.</p>
+              <p class='example'>Suppose that \(X = \{rain, sun\}\) and the weather is sunny today (i.e., \(P(X_1 = sun) = 1\)); what is the likelihood that it will be sunny in 2 days (i.e., 
+                find \(P(X_3 = sun)\))?</p>
+              <p>Assume also we have the following transition probabilities, which can be equivalently stated in either CPT or state-diagram format:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-9/cpt-state.png' /><br/>
+                <small>Example parameters stolen shamelessly from Berkeley's AI materials, with permission.</small>
+              </div>
+              <p>So, to solve for \(P(X_3 = sun)\), we can apply the Mini-Forward algorithm from the initial state to the desired one, starting with solving
+                for \(P(X_2)\):</p>
+              <p class='well'>
+              \begin{eqnarray}
+                P(X_2 = sun) &=& \sum_{x_1} P(X_2 = sun, X_1 = x_1) \\
+                             &=& \sum_{x_1} P(X_2 = sun | X_1 = x_1) P(X_1 = x_1) \\
+                             &=& P(X_2 = sun | X_1 = sun) P(X_1 = sun) + P(X_2 = sun | X_1 = rain) P(X_1 = rain) \\
+                             &=& 0.9 * 1.0 + 0.3 * 0 \\
+                             &=& 0.9 \\
+                \therefore P(X_2 = rain) &=& 0.1
+              \end{eqnarray}</p>
+              <br/>
+              <p>Not a surprising result! When we started with certainty, we would expect the day following that certainty to be equivalent to the transition probability... but if
+                we wanted to peer *farther* into the future, we would need to repeat the process.</p>
+              <p>Now, to find our query, we apply it once more:</p>
+              <p class='well'>
+              \begin{eqnarray}
+                P(X_3 = sun) &=& \sum_{x_2} P(X_3 = sun | X_2 = x_2) P(X_2 = x_2) \\
+                             &=& P(X_3 = sun | X_2 = sun) P(X_2 = sun) + P(X_3 = sun | X_2 = rain) P(X_2 = rain) \\
+                             &=& 0.9 * 0.9 + 0.3 * 0.1 \\
+                             &=& 0.84 \\
+                \therefore P(X_3 = rain) &=& 0.16
+              \end{eqnarray}</p>
+              <p class='definition'>For most Markov Chains, repeated application of the Mini-Forward algorithm yields what is known as the <strong>Stationary Distribution</strong>, which marks
+                  the point at which no future application of the algorithm will change belief about the next state.</p>
+              <p>For example, it turns out the stationary distribution for the example above is denoted \(P(X_\infty)\) and ends up being pretty tidy:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-9/stat-dist.png' /><br/>
+                <small>Example parameters stolen shamelessly from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              
+              <p>There are some interesting theoretical consequences of the stationary distribution, including in application to web-relevance for search engines.</p>
+              <p>We won't be discussing those here, but they're worthy of further inquiry!</p>
+              <p>That's all we have to say about these basic Markov Models -- next time, we add some twists!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 8-2</li>
+            </ol>
+            
+            
+            <div id='app-inference' class='scrollspy-element' scrollspy-title="BN: Approximate Inference"></div>
+            <h1>Bayesian Networks: Approximate Inference</h1>
+            <div>
+              <p>Thus far, we've seen techniques for computing solutions to <strong>exact</strong> queries in Bayesian Networks, including Enumeration Inference (in detail),
+                Variable Elimination / Jointree (mentioned in the course notes / textbook).</p>
+              <p>In all cases, we might step back and ask some very reasonable questions about just how difficult inference is...</p>
+              <p class='question' name='app-q1'><strong>Insight 1:</strong> Since this is fuzzy logic, do we always care about getting precisely the right answer to our queries?</p>
+              <p class='answer' name='app-q1'>Not necessarily! Approximate solutions won't do us any favors for theorem proving, but they might get the job done for back-of-the-napkin
+                computations.</p>
+              <p class='question' name='app-q0'><strong>Insight 2:</strong> Could we consider an alternative means of computing queries that might get us ballpark answers without
+                as much of the computational strain?</p>
+              <p class='answer' name='app-q0'>We could <strong>simulate / sample</strong> data consistent with the network CPTs, and use that data to answer queries of interest.</p>
+              <br/>
+              
+              <h4>Sampling Basics</h4>
+              <hr/>
+              <p class='definition'>The process of <strong>sampling</strong> from some probability distribution is the ability to generate a "fake" data point that is consistent
+                with the underlying distribution / training set / model.</p>
+              <p>In the case of a Bayesian Network, since we are encoding the joint distribution through the network CPTs, we no longer have direct access to the JPT... but
+                we *can* use the CPTs to generate samples from it.</p>
+              <p>Sampling is a common technique used in many computing sub-disciplines as a cost-effective means of generating good, but not perfectly accurate, answers.</p>
+              <p class='example'>Where else have you seen sampling techniques used? (Hint: think about to CMSI 186!)</p>
+              <p>To see why sampling is useful, let's consider a small (perhaps insultingly small, but meh), classic example:</p>
+              <br/>
+              
+              <p class='example'>You have an attache case full of different-colored marbles and want to determine the relative distribution of any given color, with some caveats: (1) you cannot
+                look into the bag to count them (there are too many), but (2) can remove one at a time and count it.</p>
+              <p>I wanted to make an example that was at least somewhat entertaining while remaining cliche; could you imagine a high-priced lawyer going to court with an attache 
+                full of marbles? The insanity defense would never look so good: "As you can see, your honor, my client has lost all of their marbles."</p>
+              <p>Anywho, let's think about this stupid scenario and use it as a springboard into more serious mechanics.</p>
+              <p class='question' name='samp-q0'><strong>Q1:</strong> how would you go about establishing the distribution of colors in this case?</p>
+              <p class='answer' name='samp-q0'>Continuously sample from it! (1) Pull a marble out at random, (2) record its color, (3) put back, repeat!</p>
+              <p>At the end of sampling many times, we get a reasonably accurate picture of the underlying distribution, depicted:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-7/sample.png' />
+              </div>
+              <p class='question' name='samp-q1'>On what is the accuracy of our sample distribution reliant?</p>
+              <div class='answer' name='samp-q1'>
+                <p>A couple of things, namely:</p>
+                <ul class='indent-1'>
+                  <li><p><strong>Sample Size:</strong> we have to make sure we've sampled enough lest we suffer from sampling bias -- fewer samples means less accuracy.</p></li>
+                  <li><p><strong>"Correct" Sampling Strategy:</strong> we have to make sure that we've not modified the underlying distribution significantly through our sampling;
+                    in other words, if you sample *with* replacement, your samples are independent from one another... but if you sample *without* replacement, they are dependent (since
+                    you change the total remaining).</p></li>
+                </ul>
+              </div>
+              <br/>
+              
+              <p>These ideas are summarized under a couple of formal ideas with which you should be familiar:</p>
+              <div class='definition'>
+                <p>The <strong>Law of Large Numbers</strong> (briefly summarized) states that as the sample size trends towards infinity, the likelihood of some event converges
+                  to its true likelihood. Namely, for the number of samples of some event \(N_{S}(x_1, x_2, ..., x_i)\), we have:</p>
+                $$lim_{N \rightarrow \infty} \frac{N_{S}(x_1, x_2, ..., x_i)}{N} = P(x_1, x_2, ..., x_i)$$
+              </div>
+              <p class='definition'>A sampling strategy that guarantees the above result is said to be <strong>consistent</strong>.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='bnsamp' class='scrollspy-element' scrollspy-title="Sampling in a BN"></div>
+            <h1>Sampling in a BN</h1>
+            <div>
+              <p>Unlike in the previous example wherein we had a single variable (Color) and did not know the underlying distribution, sampling in a BN is a bit more complex
+                for a couple of reasons.</p>
+              <p class='example'>Reflect: what are some challenges associated with sampling in Bayesian Networks?</p>
+              <ul class='indent-1'>
+                <li><p>There are multiple variables.</p></li>
+                <li><p>Some of those variables may be independent / conditionally independent.</p></li>
+                <li><p>We may want to assess samples on queries that are consistent with some evidence / observed value of certain variables.</p></li>
+              </ul>
+              <p>However, with greater challenge comes greater expressiveness... let's start by considering the value / merit of sampling and how it applies to inference.</p>
+              <br/>
+              
+              <h4>Answering Queries from Samples</h4>
+              <hr/>
+              <p>Before we look at the means of sampling from a BN, let's consider the merit of doing so.</p>
+              <p>As is a tradition in all Bayesian Network classes, it's time for you to meet the most cliche of all reasoning systems: The Sprinkler Sidewalk Example.</p>
+              <p class='example'>Consider a BN constructed on 4 binary variables: \(C\) = whether or not it's cloudy; \(S\) = whether or not there are sprinklers on; \(R\) =
+                whether or not it's raining; \(W\) = whether or not the sidewalk is wet.</p>
+              <p>God that example is boring... but does it ever get results!</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-7/weather-bn.png' /><br/>
+                <small>Example parameters stolen shamelessly from Berkeley's CS 188 materials (with permission).</small>
+              </div>
+              <br/>
+              <p>Suppose we then generate the following samples, i.e., simulated outcomes for each variable knowing the network parameters, ignoring for the moment how we 
+                *got* them:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Sample</p></th>
+                    <th><p>C</p></th>
+                    <th><p>S</p></th>
+                    <th><p>R</p></th>
+                    <th><p>W</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>0</p></td>
+                    <td><p>1</p></td>
+                    <td><p>0</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>2</p></td>
+                    <td><p>0</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                    <td><p>0</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>3</p></td>
+                    <td><p>1</p></td>
+                    <td><p>0</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>4</p></td>
+                    <td><p>0</p></td>
+                    <td><p>0</p></td>
+                    <td><p>0</p></td>
+                    <td><p>1</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              
+              <p class='question' name='sampex-q0'>Q1: Examining the table above, how would we estimate \(P(W=1)\)?</p>
+              <p class='answer' name='sampex-q0'>Simply count the number of samples in which that's true and divide by the total number of samples!</p>
+              <p>So, since we have 5 samples, and in 4 of them \(W = 1\), we would estimate the value of this query to be:
+                $$\hat{P}(W=1) = 4/5 = 0.80$$
+              </p>
+              <p class='remark'>Note the cute hat over the \(P\) above; this notation is generally used to distinguish the "real" distribution \(P\) from a sampled estimate \(\hat{P}\)</p>
+              <p>Simple! But, how about some conditional queries?</p>
+              <p class='question' name='sampex-q1'>Q2: How about estimating \(P(C = 1 | W = 1)\)?</p>
+              <p class='answer' name='sampex-q1'>Since the evidence is \(W=1\), we ignore any sample in which that is not the case, and then look at the proportion of times 
+                \(C=1\) in those that remain!</p>
+              <p>Above, since sample 2 has \(W = 0\), we would ignore it in pursuit of computing this query, and would find that, in the remaining 4 samples, \(C=1\) 3 times,
+                meaning we'd estimate.
+                $$\hat{P}(C = 1 | W = 1) = 3/4 = 0.75$$
+              </p>
+              <p>Neat!</p>
+              <p class='toolkit'>Note: there's an inherent tradeoff between the speed of generating just a few samples, and the accuracy of generating many.</p>
+              <p>To get a gist for just what kind of computational effort has to be invested in sampling, let's think about means of actually using a BN and then generating a
+                sample like the one above.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='prior' class='scrollspy-element' scrollspy-title="Prior Sampling"></div>
+            <h1>Prior Sampling</h1>
+            <div>
+              <p class='example'><strong>Brainstorm:</strong> given the BN structure and semantics (viz., CPTs in form of each node given its parents), what would be a reasonable
+                way to <strong>generate samples</strong> from a BN?</p>
+              <p>You likely were able to brainstorm a couple of key insights:</p>
+              <ol class='indent-1'>
+                <li><p>Each variable's likelihood depends on the value of its parent(s)</p></li>
+                <li><p>For any given sample, we can generate values for the parents first, and then roll biased dice for the value of the children based on their conditional
+                  likelihood.</p></li>
+              </ol>
+              <p class='definition'>This technique is called <strong>Prior Sampling</strong>, which relies on sampling network variables by order of a topological sort.</p>
+              <p class='toolkit'>A <strong>topological sort</strong> of a directed graph is an ordering of nodes in which a node never appears before all of its 
+                parents already have in the sequence.</p>
+              <p>Using a topological sort ensures that we never sample a child node before we know the value of its parents in the sample.</p>
+              <p>In our example Rainy Sidewalk network, there are a couple of viable topological sorts:</p>
+              <ul class='indent-1'>
+                <li><p>\(C, S, R, W\)</p></li>
+                <li><p>\(C, R, S, W\)</p></li>
+              </ul>
+              <p>Although not unique, either one of these will suffice. Without loss of generality, let's see how we might create a sample using the first:</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <th><p>Variable, \(V\)</p></th>
+                    <th><p>\(P(V = 0 | Pa(V))\)</p></th>
+                    <th><p>\(P(V = 1 | Pa(V))\)</p></th>
+                    <th><p>Example Sample of \(V\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(C\)</p></td>
+                    <td><p>\(0.5\)</p></td>
+                    <td><p>\(0.5\)</p></td>
+                    <td><p>\(C = 0\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(S\)</p></td>
+                    <td><p>\(0.5\)</p></td>
+                    <td><p>\(0.5\)</p></td>
+                    <td><p>\(S = 1\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(R\)</p></td>
+                    <td><p>\(0.6\)</p></td>
+                    <td><p>\(0.4\)</p></td>
+                    <td><p>\(R = 0\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(W\)</p></td>
+                    <td><p>\(0.1\)</p></td>
+                    <td><p>\(0.9\)</p></td>
+                    <td><p>\(W = 1\)</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Depicted, the process above would look like:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-7/prior-samp.png' />
+              </div>
+              <br/>
+              
+              <p>Simple, intuitive, and generates a <strong>consistent</strong> sample... but in simplicity, there is some opportunity for improvement.</p>
+              <p class='question' name='prior-q0'>What are some problems with Prior Sampling for estimating posterior queries like \(P(C | S = 0)\)?</p>
+              <div class='answer' name='prior-q0'>
+                <p><strong>Irrelevant Samples:</strong> if the desired query is a posterior like \(P(C | S = 0)\), we may generate many samples for which \(S=1\) due
+                  to the topological ordering, which need not have been generated to begin with.</p>
+              </div>
+              <p>Idea: how about we short-circuit any sample that is inconsistent with the query's evidence?</p>
+              <p class='definition'>An enhancement to Prior Sampling is known as <strong>Rejection Sampling</strong> by which any sample inconsistent with evidence is immediately
+                ignored / thrown out.</p>
+              <p>Although this improves our efficiency a bit, and is consistent in the limit for conditional probabilities, we can imagine that there's a better way to go about it.</p>
+              <p class='question' name='prior-q1'>Suggestion: Suppose, in order to answer \(P(C | S = 0)\), we simply fix \(S = 0\) and then perform Prior Sampling on the other
+                variables -- would this technique be consistent?</p>
+              <p class='answer' name='prior-q1'>Not in general! Why? Because knowledge about \(S\) provides "upstream" evidence about \(C\) that would not be captured by the
+                topological nature of Prior Sampling!</p>
+              <p>So, it would seem, we need some stronger tools to think about how to efficiently answer conditional queries.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='gibbs' class='scrollspy-element' scrollspy-title="Gibbs Sampling"></div>
+            <h1>Gibbs Sampling</h1>
+            <div>
+              <p>To recap:</p>
+              <ul class='indent-1'>
+                <li><p>Prior sampling is fine if our queries are on joint or marginal quantities, but can be innefficient for posterior / conditional queries.</p></li>
+                <li><p>We can't simply fix any evidence in a conditional query and then perform Prior Sampling because fixing a variable as evidence may make upstream variables
+                  dependent on that information.</p></li>
+              </ul>
+              <p>To formulate a new approach to address the above, let's make one crucial insight:</p>
+              <p class='toolkit'><strong>Insight 1:</strong> Sampling from some variable \(V\) given *all other* variables in the network is much easier than sampling from the
+                JPT itself!</p>
+              <p>Suppose, for example, we wanted to sample \(S\) given all other variables, viz., \(P(S|C,R,W)\). We have:</p>
+              <p>\begin{eqnarray}
+                P(S|C,R,W) &=& \frac{P(S, C, R, W)}{P(C, R, W)} \\
+                           &=& \frac{P(S, C, R, W)}{\sum_s P(s, C, R, W)} \\
+                           &=& \frac{P(C) P(S|C) P(R|C) P(W|S,R)}{\sum_s P(C) P(s|C) P(R|C) P(W|s,R)} \\
+                           &=& \frac{P(C) P(S|C) P(R|C) P(W|S,R)}{P(C) P(R|C) \sum_s P(s|C) P(W|s,R)} \\
+                           &=& \frac{P(S|C) P(W|S,R)}{\sum_s P(s|C) P(W|s,R)} \\
+              \end{eqnarray}</p>
+              <p>Notice: many factors from the Markovian Factorization cancel out!</p>
+              <p class='toolkit'><strong>Insight 2:</strong> To sample from a variable given all other variables, we need only the CPTs that mention the one being sampled!</p>
+              <p class='remark'><strong>Consolidation:</strong> if we fix all variables in the network except for one being sampled, the computation is easy and still takes
+                any observed evidence into consideration.</p>
+              <p>The procedure for taking advantage of these insights is a simple one known as Gibb's Sampling:</p>
+              <div class='definition'>
+                <p><strong>Gibbs Sampling</strong> is a method for efficiently sampling posterior queries \(P(Q | e)\) consisting of the following steps:</p>
+                <ol class='indent-1'>
+                  <li><p>Initialize all variables to some random assignment, except for the evidence \(e\) which remains fixed to its value.</p></li>
+                  <li><p>Sample a single variable at a time conditioned on the rest (again keeping \(e\) fixed).</p></li>
+                  <li><p>Repeat Step 2 many times.</p></li>
+                </ol>
+              </div>
+              <p>Intuitively, this process both takes observed evidence into consideration, and allows it to provide information about other variables being sampled while still
+                allowing the sampling to be computed efficiently.</p>
+              <p>Let's look at an example!</p>
+              <br/>
+              
+              <p class='example'>Consider sampling \(P(S | R = 1)\) (depicted as \(P(S | +r)\) in the graphic below):</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-7/gibbs-samp.png' /><br/>
+                <small>Graphic stolen shamelessly from Berkeley's CS 188 materials (with permission).</small>
+              </div>
+              <br/>
+              
+              <p>Neat! Some notes on the above:</p>
+              <ul class='indent-1'>
+                <li><p>When we resample a variable \(X\) in in step 3.2 above, we will do so for each variable \(X_i\) in the BN exactly once to generate a *single*
+                  sample of the format \(\langle X_0, X_1, X_2, ... \rangle\).</p></li>
+                <li><p>The next sample at iteration \((t+1)\) will use the initial state of the variable values sampled at iteration \((t)\).</p></li>
+                <li><p>Because the first samples begin from the random assignment in Step 2, they are often innacurate and discarded up to some defined
+                  "burn-in period" number of samples.</p></li>
+              </ul>
+              <br/>
+              
+              <p>Just to concrete what we mean when we say to "sample from" the distribution of a single variable in the sequence above:</p>
+              <p class='example'>What is the likelihood that we sample \(S=0\) given that \(C=1, R=1, W=0\) in the first step shown above?</p>
+              <p>$$\begin{eqnarray}
+                P(S=0|C=1,R=1,W=0) &=& \frac{P(S=0|C=1) P(W=0|S=0,R=1)}{\sum_s P(S=s|C=1) P(W=0|S=s,R=1)} \\
+                           &=& \frac{0.9 * 0.1}{0.9 * 0.1 + 0.1 * 0.01} \\
+                           &\approx& 0.99
+              \end{eqnarray}$$</p>
+              <p>Pretty dang certain we sample \(S=0\) for that first step!</p>
+              <p>So there you have it! Approximate inference in all of its glory -- we'll make use of these tools in another context soon!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

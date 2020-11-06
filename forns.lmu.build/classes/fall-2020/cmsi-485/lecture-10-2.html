@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 10-2</li>
+            </ol>
+            
+            
+            <div id='learning' class='scrollspy-element' scrollspy-title="Learning"></div>
+            <h1>Learning</h1>
+            <div>
+              <p>Thus far, we've been investing a lot of energy discussing *what we do* once we have some model of an environment,
+                how we use it to perform inference, etc...</p>
+              <p class='remark'>What we haven't yet seen in-depth is where that model comes from, or ways of <strong>learning</strong> key pieces of the model rather than
+                constructing them in a top-down fashion.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/ai-pipeline.png' width="80%" height="80%" />
+              </div>
+              <br/>
+              <p>However, that is not to say that we may not wish to adopt a bottom-up approach to AI, wherein we do not outfit an agent with all of its necessary intelligence
+                at the onset, but instead, give it the tools to acquire those skills.</p>
+              <br/>
+              
+              <h3>Motivation</h3>
+              <hr/>
+              <p>More generally, we refer to the bottom-up approach as <strong>machine learning</strong>.</p>
+              <p class='definition'><strong>Learning</strong> is the process of an intelligent agent improving performance on some task after making observations about the world.</p>
+              <p class='toolkit'>More concretely, <strong>machine learning</strong> is the process of discovering / constructing a model from data or experience.</p>
+              <p class='remark'><strong>Intuition:</strong> humans don't necessarily store all of our waking memories / experiences -- we distill the important parts down into a
+                simplified model of the world that helps us reason, respond, and adapt to it.</p>
+              <p>These models thus define an input-output module through which the agent can intelligently respond to any given situation.</p>
+              <p>Inputs can be anything from images to binary variables, and outputs can be any action conceivable for an intelligent agent.</p>
+              <p>Reasonably, you might ask:</p>
+              <p class='question' name='le-q0'>Why do we need to learn some model? Can't we just start with one for our agent?</p>
+              <div class='answer' name='le-q0'>
+                <p>The answer is largely twofold:</p>
+                <ol class='indent-1'>
+                  <li><p><strong>Unanticipated exceptions</strong> to a programmer's top-down approach can be adapted-to through learning.</p></li>
+                  <li><p><strong>Programmatic difficulty</strong> may impede a top-down solution, or it's possible that a programmer simply does not know how to create a top-down
+                    approach to a particular problem.</p></li>
+                </ol>
+              </div>
+              <p>Just as we have done with other problems before this, the set-up of a learning problem is paramount to its success.</p>
+              <p>Our assumptions about the environment, agent, and a variety of other factors will shape not only the approach to learning that we adopt, but likely the efficacy
+                of that approach as well.</p>
+              <br/>
+              
+              <h3>Types of Learning</h3>
+              <hr/>
+              <p>Virtually every component of an agent can be improved by learning, but depends on the form of learning required for a specific task.</p>
+              <p class='definition'><strong>Feedback</strong> is integral to the learning process, and determines a metric of success for when an agent has learned something
+                correctly or not. In Machine Learning, feedback is typically categorized into three different types:</p>
+              <br/>
+              
+              <h4>I. Unsupervised Learning</h4>
+              <p>Let's start with cases wherein there is an <i>absence</i> of feedback.</p>
+              <p class='definition'><strong>Unsupervised learning</strong> is that in which no explicit feedback is given, and the agent is left to its own devices to determine
+                potentially useful associations between data points.</p>
+              <p class='toolkit'>Commonly, unsupervised learning involves intelligent <strong>clustering,</strong> wherein agents are meant to find commonalities between inputs, 
+                even though they may not know what commonalities they have detected.</p>
+              <p class='example'>In image clustering, some techniques may group pictures of sunsets together because these images have many orange-red hues arranged in a particular
+                fashion, even though the agent has no concept of "sunsetness"</p>
+              <p class='example'>Spotify learns what songs are commonly grouped together, even though it may not necessarily know all of the traits that unite them in a playlist.
+                Same with Amazon and "commonly bought together" queries.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/k-means.png' width="70%" height="70%" /><br/>
+                <small>Image credit to <a href='http://faculty.marshall.usc.edu/gareth-james/' target='_blank'>An Introduction to Statistical Learning</a>.</small>
+              </div>
+              <p class='debug'>Although an important and vast field, we will not have time to discuss Unsupervised Learning in this course.</p>
+              <br/>
+              
+              <h4>II. Reinforcement Learning</h4>
+              <p class='question' name='le-q1'>When you are training a dog to perform a trick, what technique do you use to capture its attention and attempt to solidify your
+                training?</p>
+              <p class='answer' name='le-q1'>You give it a treat when it succeeds at the trick!</p>
+              <p>This same technique applies to many machine learning applications as well.</p>
+              <p class='definition'><strong>Reinforcement learning</strong> teaches an agent by providing rewards and punishments to respectively encourage and discourage the
+                actions that the agent took leading to that reinforcement.</p>
+              <p>Returning to our analogy, a dog that receives a treat when it performs a trick on command will be more likely to repeat that action in the future.</p>
+              <p>Similarly, if it pees on the floor and you scold it, it will be <i>less</i> likely to repee-t that action in the future.</p>
+              <p class='toolkit'>Want to learn more about Reinforcement Learning? Take Cognitive Systems Design in the coming semester!</p>
+              <div class="text-center fit-pres">
+                <a href="http://incompleteideas.net/book/RLbook2018.pdf" target="_blank">
+                  <img src="../../../assets/images/spring-2019/cmsi-498/week-9/rl-environment.png" />
+                </a>
+              </div>
+              <br/>
+              
+              <h4>III. Supervised Learning</h4>
+              <p>This is the most "traditional" form of learning wherein an agent's behavior is given specific feedback corresponding to what they should do under what
+                circumstances.</p>
+              <p>For example, a driving instructor will explicitly tell a student to brake when appropriate, and the student will learn what circumstances demand braking as a
+                result.</p>
+              <p class='definition'><strong>Supervised learning</strong> agents observe example inputs paired with intended outputs, and attempts to learn the functional mapping
+                from input to output.</p>
+              <p>This is a category of ML techniques known as "classification" and will be at the center of our discussion for the following weeks!</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/super-learn.png' width="70%" height="70%" /><br/>
+                <small>Image credit to me, just so you know I'm not a completely lazy slob.</small>
+              </div>
+              <br/>
+              
+              <p class='debug'>Note: Although typically referred to in these discrete categories, much machine learning consists of some <strong>composite</strong> of the above.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='learningex' class='scrollspy-element' scrollspy-title="Learning from Examples"></div>
+            <h1>Learning from Examples</h1>
+            <div>
+              <p>One of the most fundamental types of learning is that in which we, the programmers, provide our agent with a wide variety of data in
+                some target domain, and expect the learning algorithm to figure out how to act from those examples.</p>
+              <p class='definition'>The paradigm of <strong>learning from examples</strong> stipulates that a learning agent adopts its behavior from
+                some dataset over relevant environmental <strong>features</strong>.</p>
+              <p class='definition'><strong>Features</strong> are variables a learning agent attends to as deciding factors for how it should act.</p>
+              <div class='definition'>
+                <p>In <strong>supervised learning from examples</strong>, datasets the agent learn from are called <strong>training sets</strong>,
+                wherein each data point includes:</p>
+                <ul class='indent-1'>
+                  <li><p><strong>Features \(X\)</strong>, a vector of some number of "inputs" to an agent.</p></li>
+                  <li><p><strong>Output \(Y\)</strong>, corresponding to the intended response to that input.</p></li>
+                </ul>
+              </div>
+              <p class='definition'>When the intended output \(Y\) is a discrete quantity (like a set of labels or actions), this learning task is called
+                <strong>classification</strong> and the output \(Y\) is called a <strong>class</strong>.</p>
+              <p class='question' name='sl-q0'>What is it the agent's responsibility to learn from these supervised learning examples?</p>
+              <p class='answer' name='sl-q0'>The assumption is that there is some "true" function \(f\) that maps the input features to their intended
+                outputs, and the agent will be able to approximate this functional relationship:
+                $$f(X) = Y$$
+              </p>
+              <p class='definition'>The agent's approximation of this function \(f\) is typically referred to as its <strong>model</strong>.</p>
+              <div class='toolkit'>
+                <p>Once the agent has approximated \(f\) from the data, it can make autonomous determinations of the output \(Y\) from
+                future presentations of the feature \(X\), typically by way of three steps:</p>
+                <ol class='indent-1'>
+                  <li><p><strong>Training</strong> occurs using typically ~\(70\%\) of the given dataset, upon which the agent attempts to learn the
+                    function mapping features to outputs (like studying for an exam).</p></li>
+                  <li><p><strong>Validation</strong> occurs on ~\(20\%\) of the given dataset that was not trained upon in an effort to judge
+                    <i>how well</i> the agent learned the function, after which it can use its results to retrain (like doing a practice exam).</p></li>
+                  <li><p><strong>Hold-Out / Testing</strong> occurs on ~\(10\%\) of the dataset, and is used as a final score of the model's efficacy (like taking the actual
+                    exam).</p></li>
+                </ol>
+              </div>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/ml-data.png' width="80%" height="80%" />
+              </div>
+              <br/>
+              <p class='question' name='data-q0'>Why is it important to separate supervised learning into these phases?</p>
+              <p class='answer' name='data-q0'>For the same reason we're not allowed to see the exam before we take it: to make sure that what we've learned while training 
+                *generalizes* to examples that we haven't seen before!
+              </p>
+              <br/>
+              
+              <h4>Example Dataset</h4>
+              <hr/>
+              <p class='example'>Here is what such a training set might look like on a dataset with 3 binary features and one binary class:</p>
+              <table class='table'>
+                <thead>
+                  <tr>
+                    <th><p>Data Point</p></th>
+                    <th colspan='3'><p>Features</p></th>
+                    <th><p>Outcome</p></th>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th><p>\(X_1\)</p></th>
+                    <th><p>\(X_2\)</p></th>
+                    <th><p>\(X_3\)</p></th>
+                    <th><p>\(Y\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(d_1\)</p></td>
+                    <td><p>0</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(d_2\)</p></td>
+                    <td><p>1</p></td>
+                    <td><p>0</p></td>
+                    <td><p>1</p></td>
+                    <td><p>0</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(d_3\)</p></td>
+                    <td><p>0</p></td>
+                    <td><p>1</p></td>
+                    <td><p>1</p></td>
+                    <td><p>0</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>...</p></td>
+                    <td><p>...</p></td>
+                    <td><p>...</p></td>
+                    <td><p>...</p></td>
+                    <td><p>...</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>To translate, data point \(d_1\) says that when the agent sees \(X_1 = 0, X_2 = 1, X_3 = 1\), the result should be \(Y = 1\).</p>
+              <p>However, for the same features, \(d_3\) says the result should be \(Y = 0\).</p>
+              <p class='question' name='sl-q1'>If a classification dataset has two or more datapoints that, for the same features \(X\), conflict
+                on what the output should be, how should the agent act if it encounters that feature configuration in production?</p>
+              <p class='answer' name='sl-q1'>It should simply choose the output that maximizes the likelihood of being correct (i.e., for the same features,
+                find the plurality of class labels). tldr: try to be right more often than wrong.</p>
+              <p>There are many subtleties to this discussion that we'll see in the coming days, but the above gives us a good start!</p>
+              <p>As such, our agent must be able to learn to act from a dataset in a manner that maximizes the likelihood of it being correct.</p>
+              <p class='example'>List some other examples of supervised classification tasks!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

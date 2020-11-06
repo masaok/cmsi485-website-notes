@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../../../assets/images/favicon.ico'>
+    <script src="../../../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../../../js/lib/expanding.js"></script>
+    <script src="../../../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../../../classes.html">Classes</a></li>
+              <li><a href="../../cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Homework 3</li>
+            </ol>
+            
+            <div id='hw3' class='scrollspy-element' scrollspy-title='Homework 3'></div>
+            <h1>Homework 3 - Ghostbusted</h1>
+            <div>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>Title</p></th>
+                    <th><p>Date Posted</p></th>
+                    <th><p>Date Due</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>Homework 3 - Ghostbusted</p></td>
+                    <td><p>11 / 3 / 20</p></td>
+                    <td><p>11 / 19 / 20</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <p class='definition'>This is a *group* assignment! Feel free to work in groups of up to 3 individuals.</p>
+              <p class='definition'>This assignment is the fruit of a cool Berkeley grant to develop fun AI projects, so is not mine, but was taken with permission! See Berkeley's
+                AI Materials Pacman Projects for more info.</p>
+              <p class='debug'>Sadly, I haven't had time to update the project to Python 3, so you'll need to use Python 2.X for it. If you want some bonus points in the class,
+                come talk to me about upgrading the skeleton to Python 3!</p>
+              <div class='definition'>
+                <p>In this assignment, you'll be:</p>
+                <ul class='indent-1'>
+                  <li><p>Hunting invisible (but noisy) ghosts with Pacman!</p></li>
+                  <li><p>Designing some simple Hidden Markov Model (HMM) of the ghost's states (position on a grid), movements (transition dynamics), and how their movements
+                    map to some noisy (literally) observed evidence (emission dynamics).</p></li>
+                  <li><p>You are only required to complete the *exact* inference part of this assignment, but there are also bonus opportunities for completing the *approximate*
+                    inference / Particle Filtering component.</p></li>
+                </ul>
+              </div>
+              <p>Here are some more details to wrap your head around things.</p>
+              <p>Pacman spends his life running from ghosts, but things were not always so. Legend has it that many years ago, Pacman's great grandfather Grandpac learned to 
+                hunt ghosts for sport. However, he was blinded by his power and could only track ghosts by their banging and clanging.</p>
+              <br/>
+              
+              <h3>Ghostbusters and HMMs</h3>
+              <hr/>
+              <p>In this project, the goal is to hunt down scared but invisible ghosts. Pacman, ever resourceful, is equipped with sonar (ears) that provides 
+                noisy readings of the Manhattan distance to each ghost. The game ends when Pacman has eaten all the ghosts. To start, try playing a game yourself using 
+                the keyboard.</p>
+              <p><pre>python busters.py</pre></p>
+              <p>The blocks of color indicate where the each ghost could possibly be, given the noisy distance readings provided to Pacman. The noisy distances at the bottom of the 
+                display are always non-negative, and always within 7 of the true distance. The probability of a distance reading decreases exponentially with its difference from 
+                the true distance.</p>
+              <p>Eventually, after correctly implementing the methods described in the spec, your agent's beliefs should be more localized around the true locations of ghosts,
+                namely:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../../../assets/images/fall-2019/cmsi-485/hw3/busters.png' />
+              </div>
+              <br/>
+              <p>Your primary task in this project is to implement inference to track the ghosts. For the keyboard based game above, a crude form of inference was implemented 
+                for you by default: all squares in which a ghost could possibly be are shaded by the color of the ghost. Naturally, we want a better estimate of the ghost's 
+                position. Fortunately, Bayes' Nets provide us with powerful tools for making the most of the information we have. Throughout the rest of this project, you will 
+                implement algorithms for performing exact inference using HMMs.</p>
+              <p>While watching and debugging your code with the autograder, it will be helpful to have some understanding of what the autograder is doing. 
+                There are 2 types of tests in this project, as differentiated by their <code>*.test</code> files found in the subdirectories of the <code>test_cases</code> 
+                folder. For tests of class <code>DoubleInferenceAgentTest</code>, your will see visualizations of the inference distributions generated by your code, but all 
+                Pacman actions will be preselected according to the actions of the staff implementation. This is necessary in order to allow comparision of your distributions 
+                with the staff's distributions. The second type of test is <code>GameScoreTest</code>, in which your <code>BustersAgent</code> will actually select actions for 
+                Pacman and you will watch your Pacman play and win games.</p>
+              <p>As you implement and debug your code, you may find it useful to run a single test at a time. In order to do this you will need to use the -t flag with the 
+                autograder. For example if you only want to run the first test of question 1, use:</p>
+              <pre>python autograder.py -t test_cases/q1/1-ExactObserve</pre>
+              <p>In general, all test cases can be found inside test_cases/q*.</p>
+              <br/>
+              
+              <h3>Solution Skeleton</h3>
+              <hr/>
+              <p>Start with the solution skeleton for this part in-hand!</p>
+              <p class='text-center'><a class='assignment' href='https://classroom.github.com/g/VUxeUZAP' target='_blank'>GitHub Classroom</a></p>
+            </div>
+            <hr/>
+            <br/>
+              
+              
+            <div id='specs' class='scrollspy-element' scrollspy-title='Specifications'></div>
+            <h1>Specifications</h1>
+            <div>
+              <p class='debug'>WARNING: Unfortunately, we'll be using Python 2.7 for this assignment (the skeleton's a bit dated even if its ideas aren't).</p>
+              <p>You will be completing 3 parts to get your Pacman to hunt effectively:</p>
+              <ul class='indent-1'>
+                <li><p><strong>Exact HMM Inference - Observations:</strong> implement the updates from Observations on the Belief state using the exact inference procedures
+                  discussed in class.</p></li>
+                <li><p><strong>Exact HMM Inference - Passage of Time:</strong> implement the updates from Transition Dynamics on the Belief state using the exact inference
+                  procedures discussed in class.</p></li>
+                <li><p><strong>Combined Pacman Hunter:</strong> combining both of the above, design a simple, greedy Pacman agent that will hunt ghosts at what it believes are
+                  the most likely locations given their past evidence.</p></li>
+              </ul>
+              <br/>
+              
+              <h3>Problem 1: Exact Inference - Updates from Observation</h3>
+              <hr/>
+              <p>In this question, you will update the <code>observe</code> method in <code>ExactInference</code> class of <code>inference.py</code> to correctly update the 
+                agent's belief distribution over ghost positions given an observation from Pacman's sensors. A correct implementation should also handle one special case: when 
+                a ghost is eaten, you should place that ghost in its prison cell, as described in the comments of <code>observe</code>.</p>
+              <p>To run the autograder for this question and visualize the output:</p>
+              <pre>python autograder.py -q q1</pre>
+              <p>As you watch the test cases, be sure that you understand how the squares converge to their final coloring. In test cases where is Pacman boxed in 
+                (which is to say, he is unable to change his observation point), why does Pacman sometimes have trouble finding the exact location of the ghost?</p>
+              <p><em>Note:</em> your busters agents have a separate inference module for each ghost they are tracking. That's why if you print an observation inside the 
+                <code>observe</code> function, you'll only see a single number even though there may be multiple ghosts on the board.</p>
+              <p>Hints:</p>
+              <ul class='indent-1'>
+                <li>You are implementing the online belief update for observing new evidence. Before any readings, Pacman believes the ghost could be anywhere: a uniform prior 
+                  (see <code>initializeUniformly</code>). After receiving a reading, the <code>observe</code> function is called, which must update the belief at every position.</li>
+                <li>Try printing <code>noisyDistance</code>, <code>emissionModel</code>, and <code>PacmanPosition</code> (in the <code>observe</code> function) to get started.</li>
+                <li>After that, and before typing any more code, write down the equation of the inference problem you are trying to solve.</li>
+                <li>In the Pacman display, high posterior beliefs are represented by bright colors, while low beliefs are represented by dim colors. You should start with a 
+                  large cloud of belief that shrinks over time as more evidence accumulates.</li>
+                <li>Beliefs are stored as <code>util.Counter</code> objects (like dictionaries, but for which requests for keys that are not stored within return 0) in a field 
+                  called <code> self.beliefs</code>, which you should update.</li>
+                <li>You should not need to store any evidence. The only thing you need to store in <code>ExactInference</code> is <code>self.beliefs</code> (since the belief
+                  state is being "pushed" forward in time, your updates will already account for past evidence).</li>
+              </ul>
+              <br/>
+              
+              <h3>Problem 2: Exact Inference - Updates from Passage of Time</h3>
+              <hr/>
+              <p>In the previous question you implemented belief updates for Pacman based on his observations. Fortunately, Pacman's observations are not his only source of 
+                knowledge about where a ghost may be. Pacman also has knowledge about the ways that a ghost may move; namely that the ghost can not move through a wall or more 
+                than one space in one timestep.</p>
+              <p>To understand why this is useful to Pacman, consider the following scenario in which there is Pacman and one Ghost. Pacman receives many observations which 
+                indicate the ghost is very near, but then one which indicates the ghost is very far. The reading indicating the ghost is very far is likely to be the result 
+                of a buggy sensor. Pacman's prior knowledge of how the ghost may move will decrease the impact of this reading since Pacman knows the ghost could not move so 
+                far in only one move.</p>
+              <p>In this question, you will implement the <code>elapseTime</code> method in <code>ExactInference</code>. Your agent has access to the action distribution for 
+                any <code>GhostAgent</code>. In order to test your <code>elapseTime</code> implementation separately from your <code>observe</code> implementation in the previous 
+                question, this question will not make use of your <code>observe</code> implementation.</p>
+              <p>Since Pacman is not utilizing any observations about the ghost, this means that Pacman will start with a uniform distribution over all spaces, and then update 
+                his beliefs according to how he knows the Ghost is able to move. Since Pacman is not observing the ghost, this means the ghost's actions will not impact Pacman's 
+                beliefs. Over time, Pacman's beliefs will come to reflect places on the board where he believes ghosts are most likely to be given the geometry of the board and 
+                what Pacman already knows about their valid movements.</p>
+              <p>For the tests in this question we will sometimes use a ghost with random movements and other times we will use the GoSouthGhost. This ghost tends to move south 
+                so over time, and without any observations, Pacman's belief distribution should begin to focus around the bottom of the board. To see which ghost is used for 
+                each test case you can look in the .test files.</p>
+              <p>To run the autograder for this question and visualize the output:</p>
+              <pre>python autograder.py -q q2</pre>
+              <p>As an example of the GoSouthGhostAgent, you can run</p>
+              <pre>python autograder.py -t test_cases/q2/2-ExactElapse</pre>
+              <p>and observe that the distribution becomes concentrated at the bottom of the board.</p>
+              <p>As you watch the autograder output, remember that lighter squares indicate that pacman believes a ghost is more likely to occupy that location, and darker 
+                squares indicate a ghost is less likely to occupy that location. For which of the test cases do you notice differences emerging in the shading of the squares? 
+                Can you explain why some squares get lighter and some squares get darker?</p>
+              <p>Hints:</p>
+              <ul class='indent-1'>
+                <li>Instructions for obtaining a distribution over where a ghost will go next, given its current position and the <code>gameState</code>, appears in the 
+                  comments of <code>ExactInference.elapseTime</code> in <code>inference.py</code>.</li>
+                <li>We assume that ghosts still move independently of one another, so while you can develop all of your code for one ghost at a time, adding multiple ghosts 
+                  should still work correctly.</li>
+              </ul>
+              <br/>
+              
+              <h3>Problem 3: Pacman Hunter</h3>
+              <hr/>
+              <p>Now that Pacman knows how to use both his prior knowledge and his observations when figuring out where a ghost is, he is ready to hunt down ghosts on his own. 
+                This question will use your <code>observe</code> and <code>elapseTime</code> implementations together, along with a simple greedy hunting strategy which you will 
+                implement for this question. In the simple greedy strategy, Pacman assumes that each ghost is in its most likely position according to its beliefs, then moves 
+                toward the closest ghost. Up to this point, Pacman has moved by randomly selecting a valid action.</p>
+              <p>Implement the <code>chooseAction</code> method in <code>GreedyBustersAgent</code> in <code>bustersAgents.py</code>. Your agent should first find the most 
+                likely position of each remaining (uncaptured) ghost, then choose an action that minimizes the distance to the closest ghost. If correctly implemented, your 
+                agent should win the game in <code>q3/3-gameScoreTest</code> with a score greater than 700 at least 8 out of 10 times. <em>Note:</em> the autograder will also 
+                check the correctness of your inference directly, but the outcome of games is a reasonable sanity check.</p>
+              <p>To run the autograder for this question and visualize the output:</p>
+              <pre>python autograder.py -q q3</pre>
+              <p><i>Note:</i> If you want to run this test (or any of the other tests) without graphics you can add the following flag:</p>
+              <pre>python autograder.py -q q3 --no-graphics</pre>
+              <p>Hints:</p>
+              <ul class='indent-1'>
+                <li>When correctly implemented, your agent will thrash around a bit in order to capture a ghost.</li>
+                <li>The comments of <code>chooseAction</code> provide you with useful method calls for computing maze distance and successor positions.</li>
+                <li>Make sure to only consider the living ghosts, as described in the comments.</li>
+              </ul>
+              <br/>
+              
+              <h3>[Bonus +8 HW] Problem 4: Particle Filtering - Updates from Observation</h3>
+              <hr/>
+              <p>Next, you will implement a particle filtering algorithm for tracking a single ghost.</p>
+              <p>Implement the functions <code>initializeUniformly</code>, <code>getBeliefDistribution</code>, and <code>observe</code> for the <code>ParticleFilter</code> class 
+                in <code>inference.py</code>. A correct 
+                implementation should also handle two special cases. (1) When all your particles receive zero weight based on the evidence, you should resample 
+                all particles from the prior to recover. (2) When a ghost is eaten, you should update all particles to place that ghost in its prison cell, 
+                as described in the comments of observe. When complete, you should be able to track ghosts nearly as effectively as with exact inference.</p>
+              <p>To run the autograder for this question and visualize the output:</p>
+<pre>
+  python autograder.py -q q4
+</pre>
+              <p>Hints:</p>
+              <ul class='indent-1'>
+                <li><p>A particle (sample) is a ghost position in this inference problem.</p></li>
+                <li><p>The belief cloud generated by a particle filter will look noisy compared to the one for exact inference.</p></li>
+                <li><p><code>util.sample</code> or <code>util.nSample</code> will help you obtain samples from a distribution. If you use <code>util.sample</code> and your 
+                  implementation is timing out, try using <code>util.nSample</code>.</p></li>
+              </ul>
+              <br/>
+              
+              <h3>[Bonus +8 HW] Problem 5: Particle Filtering - Updates from Passage of Time</h3>
+              <hr/>
+              <p>Implement the <code>elapseTime</code> function for the <code>ParticleFilter</code> class in <code>inference.py</code>. When complete, you should be able to 
+                track ghosts nearly as effectively as with exact inference.</p>
+              <p>Note that in this question, we will test both the <code>elapseTime</code> function in isolation, as well as the full implementation of the particle filter combining 
+                <code>elapseTime</code> and <code>observe</code>.</p>
+              <p>To run the autograder for this question and visualize the output:</p>
+<pre>
+  python autograder.py -q q5
+</pre>
+              <p>For the tests in this question we will sometimes use a ghost with random movements and other times we will use the <code>GoSouthGhost</code>. This ghost 
+                tends to move south so over time, and without any observations, Pacman's belief distribution should begin to focus around the bottom of the board. To 
+                see which ghost is used for each test case you can look in the .test files. As an example, you can run</p>
+<pre>
+  python autograder.py -t test_cases/q5/2-ParticleElapse
+</pre>
+              <p>...and observe that the distribution becomes concentrated at the bottom of the board.</p>
+              <p class='debug'>Note: you do NOT have to complete the JointParticleFilter for these last bonus methods.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='submission' class='scrollspy-element' scrollspy-title='Submission'></div>
+            <h1>Submission</h1>
+            <div>
+              <p class='definition'>You will be submitting your assignments through GitHub Classroom!</p>
+              <h4>What</h4>
+              <p>Complete all classes that accomplishes the specification above, in the project structure given in the skeleton above. You will fill in the relevant portions of the
+                <code>bustersAgents.py</code> and <code>inference.py</code> files.</p>
+              <br/>
+              
+              <h4>How</h4>
+              <p>To <strong>clone</strong> this assignment (if you need a refresher), consult the guide here:</p>
+              <p class='assignment'><a href='../../../tutorials/github-classroom.html' target='_blank'>GitHub Classroom Tutorial</a></p>
+              <p>To <strong>submit</strong> this assignment:</p>
+              <ul class='indent-1'>
+                <li><p>Simply push your final, submission copy to the GitHub Classroom repository associated with you or your group.</p></li>
+                <li><p>If you worked in a group, ensure that your GitHub Classroom group includes all members, and place all group members' names at the top of *all* submitted files (in appropriate
+                  commenting fashion).</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <script>
+              $(".problem").each(function (index) {
+                $(this)
+                  .wrapInner("<span class='pull-right'></span>")
+                  .prepend("Problem " + (index + 1))
+                  .addClass("definition")
+                  .wrapInner("<strong></strong>");
+              });
+            </script>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

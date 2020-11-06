@@ -1,0 +1,560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+        \(\DeclareMathOperator*{\argmax}{argmax}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 9-2</li>
+            </ol>
+            
+            
+            <div id='reason-over-time' class='scrollspy-element' scrollspy-title="Reasoning Over Time"></div>
+            <h1>Reasoning over Time (Continued)</h1>
+            <div>
+              <p>Last time we discussed Markov Models (MMs) as useful tools for modeling an agent's ability for reasoning-over-time.</p>
+              <p>However, whereas MMs represent *ideal* scenarios wherein the State Variables (X) we care about are observed, we should take a step back and consider a more
+                realistic setting:</p>
+              <p class='debug'>More often than not, rather than observing the State Variables (X), we observe <strong>noisy sensors</strong> of X known as 
+                <strong>emissions.</strong></p>
+              <p class='example'>Consider some scenarios wherein the state, which may change over time, can only be witnessed through noisy proxies.</p>
+              <ul class='indent-1'>
+                <li><p>[Robotics] Where a robot is in a room (state) as it moves may be indicated by noisy range sensors (emissions).</p></li>
+                <li><p>[Health] Progress of a stroke (state) may be indicated by worsening symptoms (emissions) like slurred speach.</p></li>
+                <li><p>[Nature] Impending earthquakes (state) may be indicated by changes in underground electromagnetic activity or animal movements (emissions).</p></li>
+              </ul>
+              <p>As such, a shortcoming of basic Markov Models is that it is difficult to separate state from emission... so let's do that now!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='hmm' class='scrollspy-element' scrollspy-title="Hidden Markov Models"></div>
+            <h1>Hidden Markov Models (HMMs)</h1>
+            <div>
+              <p>We have some assumptions about what we'll want to model in a more general format of MMs:</p>
+              <ul class='indent-1'>
+                <li><p>State is still changing over time / space, but its direct observation is not possible for the agent.</p></li>
+                <li><p>Emissions are observations that emanate *from* the current state.</p></li>
+                <li><p>We want to use all observed emissions up until the current time \(t\) to make assessments about the next state.</p></li>
+              </ul>
+              <br/>
+              
+              <h4>Defining HMMs</h4>
+              <hr/>
+              <p>To accomplish the above, we'll tweak our definition of Markov Models in a simple, but powerful way.</p>
+              <p class='definition'>A <strong>Hidden Markov Model (HMM)</strong> assumes an underlying Markov Model that is not observed, but in which emissions, or output evidence
+                *from* the underlying Markov Model, is observed.</p>
+              <p>Graphically, an HMM looks like:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-10/hmm.png' />
+              </div>
+              <br/>
+              <p>Notably highlighted above are the three key components that we define in an HMM:</p>
+              <ul class='indent-1'>
+                <li><p><strong>\(P(X_1)\)</strong>, the likelihood of each value in the initial state.</p></li>
+                <li><p><strong>\(P(X_t|X_{t-1})\)</strong>, the transition likehoods for the hidden state between time steps.</p></li>
+                <li><p><strong>\(P(E_t|X_t)\)</strong>, the likelihoods of each observed emission given the state.</p></li>
+              </ul>
+              <p>Where would we typically get all of these?</p>
+              <ul class='indent-1'>
+                <li><p>The initial state distribution usually begins as the uniform distribution (i.e., equal chance of being in any state).</p></li>
+                <li><p>The transition likelihoods might be gathered from past, longitudinal data on the state.</p></li>
+                <li><p>The emission likelihoods might be based on known sensor innaccuracies, or again, past data.</p></li>
+              </ul>
+              <p>With the foundation set, let's examine some new and exciting properties of HMMs.</p>
+              <br/>
+              
+              <h4>Properties of HMMs</h4>
+              <hr/>
+              <p>Let's begin with how the joint distribution can be factored using our HMM template above, assuming we have only states and emissions up until time \(t=3\):</p>
+              <p>$$P(X_1, E_1, X_2, E_2, X_3, E_3) = P(X_1) P(E_1 | X_1) P(X_2 | X_1) P(E_2 | X_2) P(X_3 | X_2) P(E_3 | X_3)$$</p>
+              <p>This gives us a general formula for factoring an HMM joint:</p>
+              <p class='toolkit'><strong>Generalized HMM Joint Factoring</strong>
+                $$P(X_1, E_1, ..., X_T, E_T) = P(X_1) P(E_1|X_1) \prod^T_{t=2} P(X_t|X_{t-1}) P(E_t|X_t)$$
+              </p>
+              <p>From this generalized factoring, we can make some more important insights. Let's go with my signature Socratic method to expose those:</p>
+              <p class='question' name='hmm-q0'>In an HMM, does the Markov Property still hold? Namely, are future states \(X_{t+i}\) independent of past states \(X_{t-j}\) given
+                the present \(X_t\)?</p>
+              <p class='answer' name='hmm-q0'>Yes! A simple examination of the network structure reveals this through the rules of d-separation.</p>
+              <p class='question' name='hmm-q1'>What's the practical challenge with the Markov Property in an HMM?</p>
+              <p class='answer' name='hmm-q1'>We never observe the state! It's what's hiding from us... sneaky sneaky state!</p>
+              <p class='toolkit'>As a consequence of never directly observing the state, <strong>all past evidence / emissions</strong> becomes relevant for predicting 
+                the hidden state at any given time.</p>
+              <p>This is simple to verify if, for example, we're trying to assess the state \(X_3\): is \(X_3 \stackrel{?}{\indep} E_1\)? \(X_3 \stackrel{?}{\indep} E_2\)?</p>
+              <p>As such, we need some approach that, given all collected evidence, can concert their information about the state we want to predict.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='filtering' class='scrollspy-element' scrollspy-title="Filtering"></div>
+            <h1>Filtering</h1>
+            <div>
+              <p>Though helpful to think about the decomposition of the joint distribution theoretically, difficult to use it practically, especially as inferences about our
+                desired state \(X_T\) with many observed \(e_1, e_2, ..., e_T\) trend farther into the future.</p>
+              <p>We can think instead about tracking the distribution as it evolves over time through a process called filtering:</p>
+              <p class='definition'><strong>Filtering</strong> (AKA monitoring) describes the process of tracking and updating a <strong>belief state</strong> \(B(X_t)\) over
+                time where:
+                $$B(X_t) = \text{Belief of state of X_t given all past evidence} = P(X_t | e_1, e_2, ..., e_t) = P(X_t | e_{1:t})$$
+              </p>
+              <p>This is, after all, our chief goal: we want to estimate the likelihood of the state at time \(t\) given all past evidence!</p>
+              <p>Let's see why this might be useful before examining *how* to accomplish its estimation:</p>
+              <br/>
+              
+              <h4>Illustrative Example</h4>
+              <hr/>
+              <p>Let's look at a neat example that depicts, at a high-level, where we're headed with these tools.</p>
+              <div class='example'>
+                <p><strong>Robotic Navigation:</strong> in this "Roomba-like" problem, a robot is navigating a room according to some directional sensors and is attempting to localize
+                  its position on some map, with the following:</p>
+                <ul class='indent-1'>
+                  <li><p><strong>State:</strong> location of the robot in some room / hallway.</p></li>
+                  <li><p><strong>Sensor / Emission Model:</strong> short range proximity detector that can determine if there's a wall on any of 4 sides, but is a noisy reason;
+                    will never make more than 1 mistake.</p></li>
+                  <li><p><strong>Motion Model:</strong> can move in any of 4 cardinal directions, but might get stuck (on carpet or something) with some small chance.</p></li>
+                </ul>
+              </div>
+              <p>Some notes on each step below:</p>
+              <ul class='indent-1'>
+                <li><p>Depicted in each time step as the red dot is the *actual* location of the bot in the room (the hidden state).</p></li>
+                <li><p>The shades of gray in each cell depict the bot's belief that it is in a given state with what confidence; this begins as the uniform distribution (it could
+                  be anywhere!) but is updated as we gather observations and elapse time.</p></li>
+              </ul>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-10/bot-ex-0.png' /><br/>
+              </div>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-10/bot-ex-1.png' /><br/>
+              </div>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-10/bot-ex-4.png' /><br/>
+              </div>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-10/bot-ex-5.png' /><br/>
+                <small>Example credit to Berkeley's AI Materials, displayed with permission.</small>
+              </div>
+              <br/>
+              <p>With this motivation in place, let's actually see how we go about performing these time-evidence updates on beliefs.</p>
+              <br/>
+              
+              <h4>HMM Inference</h4>
+              <hr/>
+              <p class='definition'>Recap: Inference in HMMs is akin to determining the belief of the state at some time:
+                $$B(X_t) = P(X_t | e_{1:t})$$
+              </p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-10/hmm-roadmap.png' /><br/>
+              </div>
+              <p class='question' name='bel-q0'>What are the challenges associated with computing some arbitrary belief state \(B(X_t)\)?</p>
+              <div class='answer' name='bel-q0'>
+                <p>Primarily, we need to find an efficient means of:</p>
+                <ul class='indent-1'>
+                  <li><p>Accounting for what all previous transitions and evidence up until time \(t\) tell us about \(X_t\)</p></li>
+                  <li><p>Marginalizing / Summing over all possible values of the hidden states.</p></li>
+                </ul>
+              </div>
+              <p>Let's see how we might go about doing this...</p>
+              <p class='well'>
+                \begin{eqnarray}
+                  B(x_t) &=& P(x_t | e_{1:t}) \\
+                         &\rightarrow& \text{using conditioning, we can normalize later, let's focus on the numerator} \\
+                         &\propto& P(e_{1:t}, x_t) \\
+                         &\rightarrow& \text{using law of total prob., sum over previous state \(x_{t-1}\)} \\
+                         &=& \sum_{x_{t-1}} P(e_{1:t}, x_t, x_{t-1}) \\
+                         &\rightarrow& \text{break the \(e_{1:t}\) term apart at the previous state's evidence} \\
+                         &=& \sum_{x_{t-1}} P(e_t, x_t, x_{t-1}, e_{1:t-1}) \\
+                         &\rightarrow& \text{repeated use of conditioning (aka, chain rule)} \\
+                         &=& \sum_{x_{t-1}} P(e_t | x_t, x_{t-1}, e_{1:t-1}) P(x_t | x_{t-1}, e_{1:t-1}) P(x_{t-1}, e_{1:t-1}) \\
+                         &\rightarrow& \text{simplifying via HMM structural independence} \\
+                         &=& \sum_{x_{t-1}} P(e_t | x_t) P(x_t | x_{t-1}) P(x_{t-1}, e_{1:t-1}) \\
+                         &\rightarrow& \text{rearranging and noting that \(P(x_{t-1}, e_{1:t-1}) = \alpha B(x_{t-1})\) for normalizing \(\alpha\)} \\
+                         &=& P(e_t | x_t) \sum_{x_{t-1}} P(x_t | x_{t-1}) * \alpha B(x_{t-1}) \\
+                         &\rightarrow& \text{intuitively:} \\
+                         &=& \text{{emission dynamics}} * \sum_{\text{all possible last states}} \text{{transition dynamics}} * \text{{belief of being in last state}}
+                \end{eqnarray}
+              </p>
+              <p class='definition'>This final result, viz.:
+                \begin{eqnarray}
+                  B(x_t) &=& P(e_t | x_t) \sum_{x_{t-1}} P(x_t | x_{t-1}) P(x_{t-1}, e_{1:t-1}) \\
+                         &=& P(e_t | x_t) \sum_{x_{t-1}} P(x_t | x_{t-1})~\alpha~B(X_{t-1})
+                \end{eqnarray}
+                ...for normalizing constant \(\alpha\) provides the roadmap for our solution in what is known as the <strong>Forward Algorithm.</strong>
+              </p>
+              <p class='remark'><strong>Forward-Algorithm Intuition:</strong> "Push" belief states from earlier time states forward such that if we knew \(B(X_{t-1})\), we could use
+                that as a "checkpoint" through which to compute \(B(X_t)\).</p>
+              <p>Although the Forward Algorithm gives us a nice roadmap for a solution, it's difficult to imagine implementing it programmatically unless we broke it apart into
+                some pieces more amenable to traditional programming practices...</p>
+              <p class='question' name='for-q0'>Given the above recursion for finding \(B(x_t)\) based on \(B(x_{t-1})\), what kind of an algorithm might we deploy here?</p>
+              <p class='answer' name='for-q0'>Dynamic programming! Solve the big problem from earlier recurrences / applications of the forward algorithm.</p>
+              <p>To make this dynamic programming component simple, we can think of decomposing the Forward Algorithm down into two repeated update steps:</p>
+              <div class='toolkit'>
+                <p>Computing \(B(X_t)\) follows repeated application of two steps at all previous time steps:</p>
+                <ol class='indent-1'>
+                  <li><p><strong>Passage of Time:</strong> Update the belief for the transition / time between \(X_{t-1} \rightarrow X_{t}\). Namely, define:
+                    $$\color{green}{B'(x_t)} = P(x_t | e_{1:t-1}) = \sum_{x_{t-1}} P(x_t | x_{t-1}) \color{red}{B(x_{t-1})}$$
+                  </p></li>
+                  <li><p><strong>Observation:</strong> Update for observed emission for time \(t\): \(X_{t} \rightarrow E_{t}\). Namely, define:
+                    $$\color{red}{B(x_{t})} = P(x_t | e_{1:t}) \propto P(e_t | x_t) \color{green}{B'(x_t)}$$
+                  </p></li>
+                </ol>
+              </div>
+              <p>Note: the derivations of the above update rules are a bit handwavy, though you can see where they come from in the Forward Algorithm.</p>
+              <p class='question' name='proof'>Interested in a fuller proof? Click here!</p>
+                <div class='answer' name='proof'>
+                  <h4>Deriving the Update Rules</h4>
+                <hr/>
+                <p class='debug'>Note: lots of subscripts and proofiness awaits you here -- read on if you want to see the nitty-gritty of how we get the above!</p>
+                <p class='toolkit'><strong>Rule 1 - Updating for Time:</strong> intuitively, computes the likelihood of being in the next state \(X_{t+1}\) given
+                  all evidence \(e_{1:t}\) by weighting our belief that we were in the previous state \(B(x_t)\) by the likelihood of each transition \(P(X_{t+1}|x_t)\)
+                  $$P(X_{t+1} | e_{1:t}) = \sum_{x_t} P(X_{t+1}|x_t) P(x_t|e_{1:t}) = \sum_{x_t} P(X_{t+1}|x_t) B(x_t)$$
+                </p>
+                <p class='toolkit'>Compactly, we represent this quantity as \(B'(X_{t+1})\):
+                  $$B'(X_{t+1}') = \sum_{x_t} P(X_{t+1}'|x_t) B(x_t)$$
+                  ...where the parameter \(X_{t+1}'\) is the same in the weighting \(P(X_{t+1}'|x_t)\)
+                </p>
+                <p class='remark'>In the Update for Time, we computed:
+                  $$B'(X_{t+1}') = P(X_{t+1} | e_{1:t})$$
+                  If we now acquire a new emission evidence for time \(t+1\) we must estimate:
+                  $$P(X_{t+1}|e_{1:t+1})$$
+                </p>
+                <p>Since that's not something we have immediately available, let's see if we can factor it:</p>
+                <div class='well'>
+                  <p>
+                  \begin{eqnarray}
+                    P(X_{t+1}|e_{1:t+1}) &=& \frac{P(X_{t+1}, e_{1:t+1})}{P(e_{1:t+1})} \\
+                                         &=& \frac{P(X_{t+1}, e_{t+1}, e_{1:t})}{P(e_{t+1}, e_{1:t})} \\
+                                         &=& \frac{P(X_{t+1}, e_{t+1} | e_{1:t}) P(e_{1:t})}{P(e_{t+1} | e_{1:t}) P(e_{1:t})} \\
+                                         &=& \frac{P(X_{t+1}, e_{t+1} | e_{1:t})}{P(e_{t+1} | e_{1:t})} \\
+                  \end{eqnarray}
+                  </p>
+                  <p>Now, here's some magic... since the only purpose of that denominator is to normalize the result, and does not depend on our query \(X_{t+1}\), let's just
+                  "proportion" it away:</p>
+                  \begin{eqnarray}
+                    P(X_{t+1}|e_{1:t+1}) &\propto& P(X_{t+1}, e_{t+1} | e_{1:t}) \\
+                                         &=& P(e_{t+1} | X_{t+1}, e_{1:t}) P(X_{t+1}|e_{1:t}) \\
+                                         &=& P(e_{t+1} | X_{t+1}) P(X_{t+1}|e_{1:t}) \\
+                                         &=& P(e_{t+1} | X_{t+1}) B'(x_{t+1})
+                  \end{eqnarray}
+                  <p>Note that since \(B(X_t) = P(X_{t}|e_{1:t}) \Rightarrow B(X_{t+1}) = P(X_{t+1}|e_{1:t+1})\), so, finally, we get:</p>
+                  <p>$$B(X_{t+1}) \propto P(e_{t+1} | X_{t+1}) B'(x_{t+1})$$</p>
+                </div>
+                <p>WHEW! All that just to get our query into a format we could compute from the model's transitions and emission dynamics!</p>
+                <p>We now have our second rule:</p>
+                <p class='toolkit'><strong>Rule - Updating New Observation:</strong> intuitively, computes the likelihood of being in the next state \(X_{t+1}\) given some NEW
+                  evidence \(e_{t+1}\) on top of all existing evidence \(e_{1:t}\), and after accounting for passage of time \(B'(X_{t+1})\):
+                  $$B(X_{t+1}) \propto P(e_{t+1} | X_{t+1}) B'(x_{t+1})$$
+                </p>
+                <p class='debug'>Note! The above states only a proportional-to operation, so we must renormalize after every cycle of updating for observation!</p>
+              </div>
+              <div class='remark'>
+                <p>We can think of these two general steps as implementing the human <strong>feedback loop:</strong> try closing your eyes and walking forward...</p>
+                <ul class='indent-1'>
+                  <li><p>With Passage of Time, certainty about your environment <strong>diminishes</strong> (you'll lose track of where you are if you keep walking blind!).</p></li>
+                  <li><p>With Updates for Observation (if you were to open your eyes briefly), certainty about your environment <strong>spikes / sharpens.</strong></p></li>
+                </ul>
+              </div>
+              <p>These are precisely the types of processes that HMMs are meant to model; uncertainty from passage of time, and certainty from evidence in a constant loop!</p>
+              <br/>
+              
+              <h4>Numerical Example</h4>
+              <hr/>
+              <p>The part you've all been waiting for!</p>
+              <p class='example'>You've been stuck in Keck with the blinds drawn for close to 3 days now, blithe to the weather outside. Still, you decide to use some inference
+                to determine the likelihood of whether or not it's raining outside, <strong>given that you've seen people come in with umbrellas the past 2 days</strong>. In
+                other words, find \(P(R_2 = 1 | U_1 = 1, U_2 = 1)\)
+              </p>
+              <p>We'll use the HMM specified below to answer this question:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-10/weather-ex.png' /><br/>
+              </div>
+              <br/>
+              <p class='toolkit'><strong>Step 1 - Setup and Priors:</strong> we'll be completing the following table in classic dynamic-programming fashion, with the base-case 
+                of our belief over the initial state, sans evidence:</p>
+              <table class='table table-bordered'>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th><p>\(t = 0\)</p></th>
+                    <th><p>\(t = 1\)</p></th>
+                    <th><p>\(t = 2\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th><p>Time Update: \(B'(R_t)\)</p></th>
+                    <td><p>-</p></td>
+                    <td><p></p></td>
+                    <td><p></p></td>
+                  </tr>
+                  <tr>
+                    <th><p>Observation Update: \(B(R_t)\)</p></th>
+                    <td><p>\begin{eqnarray}B(R_0 = 0) &=& 0.5 \\ B(R_0 = 1) &=& 0.5 \end{eqnarray}</p></td>
+                    <td><p></p></td>
+                    <td><p></p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>As stated earlier, it's typical to initialize our prior belief with a uniform distribution over the starting state -- we don't know anything at the start!</p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 2 - Update for Time:</strong> compute:
+                $$\color{green}{B'(x_t)} = P(x_t | e_{1:t-1}) = \sum_{x_{t-1}} P(x_t | x_{t-1}) \color{red}{B(x_{t-1})}$$
+                ...in time-ascending order from what we know (bottom-up dynamic programming).
+              </p>
+              <p class='well'>
+                \begin{eqnarray}
+                  B'(R_1 = 0) &=& \sum_r P(R_1 = 0 | R_0 = r) B(R_0 = r) \\
+                              &=& P(R_1 = 0 | R_0 = 0) B(R_0 = 0) + P(R_1 = 0 | R_0 = 1) B(R_0 = 1) \\
+                              &=& 0.7 * 0.5 + 0.3 * 0.5 \\
+                              &=& 0.5
+                \end{eqnarray}
+              </p>
+              <p>In general, we'd have to do this for all values of the state, but since it's binary here, we can also assume that \(B(R_1 = 1) = 1 - B(R_1 = 0) = 0.5\)</p>
+              <p>Using this update for time, we now account for the evidence at the first time slice, namely, that we saw people with umbrellas:</p>
+              <p>We thus update our table:</p>
+              <table class='table table-bordered'>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th><p>\(t = 0\)</p></th>
+                    <th><p>\(t = 1\)</p></th>
+                    <th><p>\(t = 2\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th><p>Time Update: \(B'(R_t)\)</p></th>
+                    <td><p>-</p></td>
+                    <td><p>\begin{eqnarray}B'(R_1 = 0) &=& 0.5 \\ B'(R_1 = 1) &=& 0.5 \end{eqnarray}</p></td>
+                    <td><p></p></td>
+                  </tr>
+                  <tr>
+                    <th><p>Observation Update: \(B(R_t)\)</p></th>
+                    <td><p>\begin{eqnarray}B(R_0 = 0) &=& 0.5 \\ B(R_0 = 1) &=& 0.5 \end{eqnarray}</p></td>
+                    <td><p></p></td>
+                    <td><p></p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 3 - Update for Observation:</strong> compute:
+                $$\color{red}{B(x_{t})} = P(x_t | e_{1:t}) \propto P(e_t | x_t) \color{green}{B'(x_t)}$$
+                ...in time-ascending order from what we know (given the added evidence at each time step).
+              </p>
+              <p class='well'>
+                \begin{eqnarray}
+                  B(R_1 = 0) &\propto& P(U_1 = 1 | R_1 = 0) * B'(R_1 = 0) = 0.2 * 0.5 = 0.1 \\
+                  B(R_1 = 1) &\propto& P(U_1 = 1 | R_1 = 1) * B'(R_1 = 1) = 0.9 * 0.5 = 0.45
+                \end{eqnarray}
+              </p>
+              <p class='debug'>Note: the above values are not normalized; if we wanted to report the intermediary steps as actual probability values, we could do so here, but it
+                doesn't matter if we normalize now or at the end.</p>
+              <p>Still, let's normalize to make things super clear:</p>
+              <p class='well'>
+                \begin{eqnarray}
+                  B(R_1 = 0) &=& 0.1 / (0.1 + 0.45) = 0.182 \\
+                  B(R_1 = 1) &=& 0.45 / (0.1 + 0.45) = 0.818
+                \end{eqnarray}
+              </p>
+              <p>Updating our table again:</p>
+              <table class='table table-bordered'>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th><p>\(t = 0\)</p></th>
+                    <th><p>\(t = 1\)</p></th>
+                    <th><p>\(t = 2\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th><p>Time Update: \(B'(R_t)\)</p></th>
+                    <td><p>-</p></td>
+                    <td><p>\begin{eqnarray}B'(R_1 = 0) &=& 0.5 \\ B'(R_1 = 1) &=& 0.5 \end{eqnarray}</p></td>
+                    <td><p></p></td>
+                  </tr>
+                  <tr>
+                    <th><p>Observation Update: \(B(R_t)\)</p></th>
+                    <td><p>\begin{eqnarray}B(R_0 = 0) &=& 0.5 \\ B(R_0 = 1) &=& 0.5 \end{eqnarray}</p></td>
+                    <td><p>\begin{eqnarray}B(R_1 = 0) &=& 0.182 \\ B(R_1 = 1) &=& 0.818 \end{eqnarray}</p></td>
+                    <td><p></p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 4 - Repeat!</strong> We'll keep doing steps (2) and (3), building our solution up, until we have our final answer.</p>
+              <p class='example'>Left as an exercise: find out how the table is completed in this way:</p>
+              <table class='table table-bordered'>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th><p>\(t = 0\)</p></th>
+                    <th><p>\(t = 1\)</p></th>
+                    <th><p>\(t = 2\)</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th><p>Time Update: \(B'(R_t)\)</p></th>
+                    <td><p>-</p></td>
+                    <td><p>\begin{eqnarray}B'(R_1 = 0) &=& 0.5 \\ B'(R_1 = 1) &=& 0.5 \end{eqnarray}</p></td>
+                    <td><p>\begin{eqnarray}B'(R_2 = 0) &=& 0.373 \\ B'(R_2 = 1) &=& 0.627 \end{eqnarray}</p></td>
+                  </tr>
+                  <tr>
+                    <th><p>Observation Update: \(B(R_t)\)</p></th>
+                    <td><p>\begin{eqnarray}B(R_0 = 0) &=& 0.5 \\ B(R_0 = 1) &=& 0.5 \end{eqnarray}</p></td>
+                    <td><p>\begin{eqnarray}B(R_1 = 0) &=& 0.182 \\ B(R_1 = 1) &=& 0.818 \end{eqnarray}</p></td>
+                    <td><p>\begin{eqnarray}B(R_2 = 0) &=& 0.117 \\ B(R_2 = 1) &=& 0.883 \end{eqnarray}</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Thus, our final answer is in the lower-right-hand cell. Some things to note about the above:</p>
+              <ul class='indent-1'>
+                <li><p>Notice how we construct our solution from previously computed sub-solutions -- bread and butter dynamic programming!</p></li>
+                <li><p>Notice also how the Passage of Time Update from \(t = 1 \rightarrow t = 2\) made us less certain about the rain status...</p></li>
+                <li><p>...but the Observation of the Umbrella at \(t = 2\) sharpened that certainty </p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

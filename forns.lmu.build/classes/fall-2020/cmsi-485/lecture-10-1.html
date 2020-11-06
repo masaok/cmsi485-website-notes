@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+        \(\DeclareMathOperator*{\argmax}{argmax}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 10-1</li>
+            </ol>
+            
+            
+            <div id='partfiltering' class='scrollspy-element' scrollspy-title="Particle Filtering"></div>
+            <h1>Particle Filtering</h1>
+            <div>
+              <p>That's some cool math meets computer science we got up in that previous lecture on HMMs! But...</p>
+              <p>Let's address the elephant in the room...</p>
+              <p class='example'>Consider the Pacman Ghostbusters example wherein the state is a grid containing the possible locations of the invisible ghost. In a small, 3x3
+                grid, we might have the following belief state:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2020/cmsi-485/week-10/ghost-ex.png' />
+              </div>
+              <p class='question' name='pf-q0'>What are some, perhaps, impractical aspects with Filtering for some realistic states \(X\)?</p>
+              <p class='answer' name='pf-q0'>As the state becomes large (or is continuous, rather than discrete), it can become (1) untennable to store all the different beliefs
+                \(B(X)\), and even if so, (2) the likelihoods can become too small for floating point estimates.</p>
+              <p class='question' name='pf-q1'>In the past, we faced a similar problem with computing exact inference queries on huge Bayesian Networks. What was our solution
+                in that scenario, and how might we generalize that to our current one?</p>
+              <p class='answer' name='pf-q1'>Previously, we used <strong>sampling</strong> to estimate some probabilistic query -- and we'll adapt that idea to our Hidden Markov
+                Models by developing a new type of sample!</p>
+              <br/>
+              
+              <h4>Particles</h4>
+              <hr/>
+              <p class='definition'><strong>Approximate Inference</strong> in HMMs can be accomplished by representing the belief state \(B(X)\) as a list of \(N\) <strong>particles,</strong>
+                which are samples of \(B(X)\) that aggregate around the most likely states.
+              </p>
+              <p class='remark'>You can consider particles as Votes for the "true" state -- the more votes a state gets, the more likely it is to be the true one!</p>
+              <p class='example'>Suppose we represented our Pacman Ghosthunter belief state from before now with \(N=10\) particles.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/particles.png' /><br/>
+                <small>Image ammended from Berkeley's AI Materials, with permission.</small>
+              </div>
+              <br/>
+              <p>So, reasonably, you might ask: how do we actually *use* these particles now that we've defined them as approximate representations of the belief state?</p>
+              <p class='question' name='pf-q2'>How do we use particles to reason over time in HMMs?</p>
+              <p class='answer' name='pf-q2'>Update their position through the Time Elapse and Observation mechanics just like before!</p>
+              <p>Now, however, as opposed to simpling reweighting all possible values of the belief state through passage of time and observation, we sample the possible positions
+                of each particle over time!</p>
+              <p>This describes the new process of Filtering strictly in terms of particles, giving us, unimaginatively...</p>
+              <br/>
+              
+              <h4>Particle Filtering Steps</h4>
+              <hr/>
+              <p class='definition'><strong>Particle Filtering</strong> approximates the Filtering process in 3 steps: Elapsing Time, Observing Evidence, and Resampling, described
+                in detail below.</p>
+              <p class='toolkit'><strong>Step 1 - Elapse Time:</strong> Sample the next state of each particle from the transition model \(P(X_{t+1} | x_{t})\) such that for particle 
+                \(x\) we have:
+                $$x_{t+1} = sample(P(X_{t+1} | x_{t}))$$
+                <strong>Note:</strong> this means that each particle may move / change its state / vote due to the transition dynamics!
+              </p>
+              <p class='remark'>Think of particles as motes of dust floating in the wind (more from my creative writing seminar); most will go in the direction of the wind, but some may spiral
+                and veer off -- the majority that went in the wind's direction give you a good indication for the actual state of the wind.</p>
+              <p>This step is akin to prior sampling wherein, given the "parent" of the next state in the transition model (the current state), we compute the likelihood of the
+                particle transitioning to some other state.</p>
+              <p class='example'>Let's track the fate of one particle in our Ghostbusters example, as time elapses and it transitions from location (3,3) to (3,2) (highlighted in
+                green below).</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/part-trans.png' /><br/>
+                <small>Image ammended from Berkeley's AI Materials, with permission.</small>
+              </div>
+              <br/>
+              <p class='toolkit'>Note: the above represents our estimate of \(B'(X)\) from the exact inference material -- the pre-observation update for passage of time!</p>
+              <p>After these transitions have taken place on a per-particle basis, we now have the slightly trickier task of updating our approximated belief state once we observe
+                some evidence.</p>
+              <p class='question' name='pf-q3'>Once we have transitioned each particle through passage of time, and now receive some evidence \(e\) that may make some of the particle
+                states *less likely* than others, how shall we update our estimate?</p>
+              <p class='answer' name='pf-q3'><strong>Weight</strong> the likelihoods of each particle by their posterior likelihood from the emission dynamics!</p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 2 - Observing Evidence:</strong> After observing evidence \(e\), <strong>downweight</strong> each sample based on the emission dynamics such that,
+                for each particle \(x\), we assign some weight \(w\):
+                $$w(x) = P(e|x)$$
+                ...due to the result from before that:
+                $$B(X) = P(e|x)*B'(X)$$
+              </p>
+              <p>What this leaves us with is the same set of samples but with relative likelihoods of each of them given the most recent evidence.</p>
+              <p class='example'>Back to Ghostbustin', consider that we observe evidence that the ghost is close to (3,2) (highlighted in red), which should reweight the likelihoods
+                of each particle based on the emission dynamics (visually, by the relative size of each dot representing each particle).</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/part-obs.png' /><br/>
+                <small>Image ammended from Berkeley's AI Materials, with permission.</small>
+              </div>
+              <br/>
+              <p>Some notes on what we're left with above:</p>
+              <ul class='indent-1'>
+                <li><p>The weights do not sum to 1, plainly, because we never renormalized.</p></li>
+                <li><p>We don't necessarily want to track each particle moving forward because some become very unlikely given their transition and update for observations.</p></li>
+                <li><p>We also don't want to just delete the unlikely particles since then we start slowly chipping away at our value of \(N\), losing accuracy as the process
+                  continues.</p></li>
+              </ul>
+              <p class='question' name='pf-q4'>Is there some happy-compromise that solves all of the above?</p>
+              <p class='answer' name='pf-q4'>Simply resample each particle from the weighted particle distribution! This generates a new set of particles that are consistent with
+                the approximate distribution from the previous set.</p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 3 - Resample:</strong> For all \(N\) particles in the filter, sample a new particle (with replacement) drawn from the weighted 
+                distribution found in Step 2.</p>
+              <p>When we say "with replacement," we mean that we're not necessarily picking up a particle in the pre-resampling phase and moving it into another spot in the
+                post-resampling phase, but rather, using the static distribution in the pre-resampling phase through which we generate new particles in the post.</p>
+              <p class='example'>Once more, in our Ghostbusters example, this appears like:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/part-resample.png' /><br/>
+                <small>Image ammended from Berkeley's AI Materials, with permission.</small>
+              </div>
+              <br/>
+              <p>The effects of resampling:</p>
+              <ul class='indent-1'>
+                <li><p>The distribution is effectively renormalized without having to compute any gory normalizing constants!</p></li>
+                <li><p>Unlikely particles from the Observation update step are converted into more likely ones while preserving our sample size.</p></li>
+              </ul>
+              <p class='definition'>With repetition, the idea is that the majority of particles collapse onto or near a single state, thus performing our inference for us!</p>
+              <p class='toolkit'><strong>Step 4 - Repeat!</strong> At this point we're basically back at Step 1 but for time \(t+1\) -- we can repeat as long as our agent is
+                online collecting evidence!</p>
+              <br/>
+              
+              <h4>Numerical Example</h4>
+              <hr/>
+              <p>Ghostbusting?! What an impractical example, we should get some practice with something far more realistic!</p>
+              <p class='example'>Reconsider the whether prediction HMM in which the state \(R \in \{0, 1\}\) (the weather, rain or sun, respectively) is unknown, but for which
+                we observe the emission \(U \in \{0, 1\}\) of whether or not people are using umbrellas.</p>
+              <div class="text-center fit-pres">
+                <img src="../../../assets/images/fall-2019/cmsi-485/week-10/weather-ex.png"><br>
+              </div>
+              <p class='example'>Suppose we wish to use \(N=5\) particles to estimate \(B(X_1)\), and observe that \(U_1 = 1\) (people have umbrellas) and start with the 
+                following configuration:</p>
+              <div class="text-center fit-pres">
+                <img src="../../../assets/images/fall-2020/cmsi-485/week-10/weather-particles.png"><br>
+              </div>
+              <p class='toolkit'><strong>Step 1 - Elapsing for Time:</strong> $$x_{t+1} = sample(P(X_{t+1} | x_{t}))$$</p>
+              <p class='question' name='pf-weather-q0'>What's the likelihood that particle 1 stays in state \(R=0\)?</p>
+              <p class='answer' name='pf-weather-q0'>\(P(R_{t+1} = 0|R_t = 0) = 0.7\), so very likely that it stays where it does!</p>
+              <p class='question' name='pf-weather-q1'>What's the likelihood that particle 3 moves to state \(R=0\)?</p>
+              <p class='answer' name='pf-weather-q1'>\(P(R_{t+1} = 0|R_t = 1) = 0.3\), so unlikely to change.</p>
+              <p class='remark'>Here is an example of how each particle might have moved at this step (remember, when we sample, we are the mercy of the random number generator,
+                so this is just one of other likely configurations):</p>
+              <div class="text-center fit-pres">
+                <img src="../../../assets/images/fall-2020/cmsi-485/week-10/weather-particles-1.png"><br>
+              </div>
+              <p>Note: Each of the particles had a chance to move in the above, but the RNG decided that only #2 did.</p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 2 - Observing Evidence:</strong> Observing umbrellas: \(U_1 = 1 \Rightarrow w(x) = P(U_1 = 1|x)~\forall~x \in X\)</p>
+              <p class='remark'>Observing that people are using Umbrellas means that we should more heavily weight the samples that are consistent with rain, per the
+                emission dynamics \(P(E_t|X_t)\).</p>
+              <div class="text-center fit-pres">
+                <img src="../../../assets/images/fall-2020/cmsi-485/week-10/weather-particles-2.png"><br>
+              </div>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 3 - Resample:</strong> For all \(N\) particles in the filter, sample a new particle (with replacement) drawn from the weighted 
+                distribution found in Step 2.</p>
+              <div class="text-center fit-pres">
+                <img src="../../../assets/images/fall-2020/cmsi-485/week-10/weather-particles-3.png"><br>
+              </div>
+              <br/>
+              <p class='alert alert-success'>As such, in the above, \(B(R_1 = 0) = 1/5 = 0.2, B(R_1 = 1) = 4/5 = 0.8\) -- not a bad estimate from our exact inference, and with only
+                5 particles!</p>
+              <br/>
+              
+              <h4>Real-World Example</h4>
+              <hr/>
+              <p>It turns out that Particle Filters are used in actual robotic navigation and localization.</p>
+              <p>Here's an example of particle filtering used in a robotic exploration task -- observe how the particles collapse as the robot moves and its sensor accrue
+                evidence:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/slam.gif' /><br/>
+                <small>Gif credit to Dieter Fox.</small>
+              </div>
+              <br/>
+              
+              <p>Interested in other examples? Check out SLAM: Simultaneous Localization and Mapping used in more advanced robotic exploration systems, which still use some particle
+                filtering!</p>
+              <p>For now, however, that's all we've got to say about HMMs!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>
