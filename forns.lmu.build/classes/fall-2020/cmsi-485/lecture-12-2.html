@@ -1,0 +1,444 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 12-2</li>
+            </ol>
+            
+            
+            <div id='nbc-shortcomings' class='scrollspy-element' scrollspy-title="NBC Shortcomings"></div>
+            <h1>NBC Shortcomings</h1>
+            <div>
+              <p>Last time, we finished looking at Naive Bayes Classifiers for Bag of Words approaches to spam email classification, but then identified some avenues for
+                improvement:</p>
+              <ul class='indent-1'>
+                <li><p>We might want to include additional features that *aren't* just words (e.g., the sender of the email, if they use your name, the number of capitalized
+                  words, etc.), but NBCs are best when features are homogeneous (mingling CPTs on heterogeneous features tricky).</p></li>
+                <li><p>Moreover, some features might be *more* predictive of Spam v. Ham than others, so we should be able to weight their influence accordingly, but NBCs
+                  weight all of their features equally (since the CPT values are just probabilities).</p></li>
+              </ul>
+              <p>In order to address these issues, we'll need some heavier tools, as inspired by some aspects of human neurology.</p>
+              <br/>
+              
+              <h4>The Neuron</h4>
+              <hr/>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-14/neuron-anat.png' />
+              </div>
+              <div class='definition'>
+                <p>The (rough) components of a neuron are:</p>
+                <ul class='indent-1'>
+                  <li><p><strong>Dendrites</strong> serve as the neuron's chief inputs, and are also where most other neurons connect across <strong>synapses</strong>. Neuronal
+                    connections vary in strength, with some being more strongly connected than others.</p></li>
+                  <li><p><strong>Axon Terminal</strong> serves as the neuron's chief output, and can propagate either <strong>excitatory</strong> or <strong>inhibitory</strong>
+                    signals to any other neurons it is connected to (either increasing or decreasing, respectively, the propensity of a post-synaptic neuron to fire).
+                  </p></li>
+                  <li><p><strong>Axon Hillock</strong> is the part of the neuron that determines if the neuron will "fire" (i.e., send an output signal) to neurons connected to
+                    its axon terminals based on its received inputs.</p></li>
+                </ul>
+              </div>
+              <p class='debug'>Disclaimer: This is a very brisk over-generalization of the neural structure, and there are many nuances to its behavior that we are still learning about (in fact, new evidence
+                has suggested that it is not so cleanly the basic I/O unit described above).</p>
+              <p>In brief, neurons are connected to one another, and propagate electrical signals based on some configuration of their inputs.</p>
+              <p class='example'>Take, for example, the famous case of a Jennifer Aniston neuron: a neuron that was measured in some patient's brain to only "fire" when the
+                individual was shown a picture of Jennifer Aniston, but not for other images.</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-14/jan.png' />
+              </div>
+              <p class='question' name='an-q3'>How do we explain the behavior of this Jennifer Aniston neuron? Is it more likely that it is the one neuron in the brain (amongst
+                billions) that happens to be mapped to Jennifer Aniston, or is there a better explanation?</p>
+              <p class='answer' name='an-q3'>This particular neuron is more of a single gear in a very complex machine -- it is part of the <strong>pathway</strong> that would be
+                able to discern images of Jennifer Aniston based on its inputs, but it is almost certainly not the only neuron involved in that classification.</p>
+              <p>Indeed, the true beauty of our brains are not that neurons operate in isolation, but that there is some benefit to their structural organization as a network.</p>
+              <p>Before we consider this model, however, let's ponder: how can we capture a single element in this complex network? How do we model a single neuron?</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='perceptron' class='scrollspy-element' scrollspy-title="Perceptrons"></div>
+            <h1>Perceptrons</h1>
+            <div>
+              <p>No, that's not the name of the latest protagonist in the endless Transformer's franchise, but instead, has roots to an early approach to machine vision that we'll
+                mimic programmatically today.</p>
+              <p>Since neurons (or the artificial ones we'll discuss) are functions of their inputs, we need to first think about how to feed input into them and then consider how that input
+                is transformed and then used for classification.</p>
+              <br/>
+              
+              <h4>Feature Extraction</h4>
+              <hr/>
+              <p class='definition'><strong>Feature Vectors</strong> are values corresponding to some selected features that are distilled by a <strong>Feature Extractor</strong> \(f\) from the 
+                raw input \(x\). We'll use the notation \(f_i(x)\) to denote the feature at index \(i\) in the vector returned by the extractor \(f\) that takes a single data point \(x\).</p>
+              <p class='example'>Consider our Spam v. Ham example with a single email input \(x\) that a feature extractor has distilled into whatever quantifiable features \(f(x)\) that we
+                specify.</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-13/feature-extract.png' /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              <p>Notably from the above, we haven't described *how* the feature extractor gets its vector of features from the raw data, but in the case of text it can be as simple as counting
+                some words that strongly correlate with a class, or binary (0, 1) values for boolean features (e.g., isKnownEmail).</p>
+              <br/>
+              
+              <h4>Perceptron Activation</h4>
+              <hr/>
+              <p>Similar to how a nerve will "fire," sending some action potential down the cell body to its axon terminals (and thus, produce an "output") we can consider how a perceptron
+                produces an output from its input features.</p>
+              <div class='definition'>
+                <p>A perceptron's <strong>parameters</strong> are defined by the following:</p>
+	              <ul class='indent-1'>
+	                <li><p><strong>Weight Vector \(w\):</strong> each input feature \(f_i(x)\) is <strong>weighted</strong> based on how much they contribute to the overall classification. Less
+	                  important features will have weights smaller in magnitude, and can be signed (positive or negative).</p></li>
+	                <li><p><strong>Activation Function \(a\):</strong> takes the sum of weighted inputs and produces some output, or activation.</p></li>
+	                <li><p><strong>Decision Rule \(y\):</strong> takes the activation for a given weighted input, and decides what class label that should be assigned.</p></li>
+	              </ul>
+              </div>
+              <p>Pictorially:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-13/activation.png' /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              
+              <p>Some notes on the above:</p>
+              <ul class='indent-1'>
+                <li><p>When the activation is simply a linear sum of the weighted inputs (which works well for a large swath of problems), we call this a <strong>linear classifier</strong>.</p></li>
+                <li><p>In the case of a binary class (i.e., \(|Y| = 2\), like for us with Spam v. Not Spam), we have a <strong>binary classifier.</strong></p></li>
+                <li><p>We can imagine both feature vectors and weight vectors in some n-dimensional plane, and then examine the degree to which they "agree" in direction.</p></li>
+              </ul>
+              <p class='remark'><strong>Intuition:</strong> Consider that the weight vector is on some n-dimensional plane (for however many features), and can examine whether or not any sample
+                is "in the same direction" via the dot product \(w \cdot f(x)\).</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-13/dot-prod.png' /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              <p class='toolkit'>In the case of Binary Classification, the decision rule thus amounts to determining whether or not the activation \(a(f(x), w)\) from the weighted-sum of inputs 
+                is positive (\(Y = spam\)) or negative (\(Y = ham\)).</p>
+              <br/>
+              
+              <h4>Example</h4>
+              <hr/>
+              <p class='example'>For the example above, we have \(w = \langle -4, -1, 1, -3 \rangle\) and some extracted features \( f(x_2) = \langle 0, 1, 1, 1 \rangle \), what class should
+                we assign if our decision rule is: \(Y > 0 \Rightarrow Spam\) else, \(Y = Ham\))?</p>
+              <div class='well'>
+                <p><strong>Step 1:</strong> Compute activation \(a(f(x), w) = \sum_i f_i(x) * w_i\)</p>
+                <p>$$f_0(x)*w_0 + f_1(x)*w_1 + ... = -4 * 0 + -1 * 1 + 1 * 1 + (-3) * 1 = -3$$</p>
+                <br/>
+                
+                <p><strong>Step 2:</strong> Compare activation output to decision rule:</p>
+                <p>$$a(f(x), w) = -3 &lt 0 \Rightarrow Y = Ham$$</p>
+              </div>
+              <br/>
+              
+              <h4>Generalization</h4>
+              <hr/>
+              <div class='definition'>
+                <p>For <strong>Multi-class Perceptrons</strong> (i.e., for trinary class / labels and above) generalize the binary case such that:</p>
+                <ul class='indent-1'>
+                  <li><p>Each class \(y\) has its own weight vector \(w_y\) that must be record-kept separately.</p></li>
+                  <li><p>Each activation for a given sample \(f(x)\) is scored on *all* class weight vectors such that we have \(a(f(x), w_y)\)</p></li>
+                  <li><p>The decision rule / label assigned is corresponds to the class' weight vector most like the sample's features such that:
+                    $$y = argmax_y~a(f(x), w_y) = argmax_y~f(x) \cdot w_y$$
+                  </p></li>
+                </ul>
+              </div>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-13/multi-class.png' /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <div class='example'>
+                <p>Consider the following example scenario with:</p>
+                <ul class='indent-1'>
+                  <li><p>3 features, and 3 classes</p></li>
+                  <li><p>Class weights: \(w_0 = \langle 0, 1, 2 \rangle, w_1 = \langle -1, -2, 0 \rangle, w_2 = \langle 2, 0, 2 \rangle \)</p></li>
+                  <li><p>New sample: \(f(x) = \langle 1, 3, 2 \rangle \)</p></li>
+                </ul>
+                <p>Which class would the perceptron assign to the sample \(x\) above?</p>
+              </div>
+              <p class='well'>
+                \begin{eqnarray}
+                  a(f(x), w_0) &=& 1 * 0 + 3 * 1 + 2 * 2 = 7 \\
+                  a(f(x), w_1) &=& 1 * -1 + 3 * -2 + 2 * 0 = -7 \\
+                  a(f(x), w_2) &=& 1 * 2 + 3 * 0 + 2 * 2 = 6\\
+                  \therefore y = 0
+                \end{eqnarray}
+              </p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='perceptron-learn' class='scrollspy-element' scrollspy-title="Learning Perceptrons"></div>
+            <h1>Learning Perceptrons</h1>
+            <div>
+              <p>What we haven't yet seen is how these weights, and their attachments to the various classes, can be learned, so let's think about that now!</p>
+              <p class='remark'>With Perceptrons, much like life, we learn from our mistakes! The gist of learning here is that we attempt to classify each example in the training set,
+                and when wrong, adjust the weights to make us less-wrong.</p>
+              <p>By assumption, we start with our known features and classes, and now, have a training set to train the weights... this may be the only weight training that is conducted
+                in computer science (/s).</p>
+              <br/>
+              
+              <h4>Weight Training</h4>
+              <hr/>
+              <p class='toolkit'>The Basic Linear Perceptron Update algorithm is stated as follows:</p>
+<pre class='prettyprint'>
+  # Initialize all class' weight vectors to all 0s
+  w_y = &lt;0, 0, ..., 0&gt;
+  
+  # Go through each example in training set
+  for each x in training_set:
+      # Make prediction with current weights
+      y = argmax_y w_y &bull; f(x)
+      
+      # Let's call y* the "right" answer from training
+      # If our prediction is right, yay! Do nothing... else:
+      if y != y*:
+          # Reduce weights of false positive
+          w_y = w_y - f(x)
+          # Increase weights of correct answer
+          w_y* = w_y* + f(x)
+</pre>
+              <br/>
+              
+              <div class='example'>
+                <p>Consider the following example scenario wherein we are midway through some training with:</p>
+                <ul class='indent-1'>
+                  <li><p>3 features, and 3 classes</p></li>
+                  <li><p>Current class weights: \(w_0 = \langle 1, 0, 2 \rangle, w_1 = \langle -1, 2, 0 \rangle, w_2 = \langle 0, -2, 2 \rangle \)</p></li>
+                  <li><p>New sample: \(f(x) = \langle 1, 2, 3 \rangle \), \(y* = 1\)</p></li>
+                </ul>
+                <p>Compute the update that would occur to weights here.</p>
+              </div>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 1:</strong> Compute the activation for each class:</p>
+              <p class='well'>
+                \begin{eqnarray}
+                  a(f(x), w_0) &=& 1 * 1 + 0 * 2 + 2 * 3 = 7 \\
+                  a(f(x), w_1) &=& -1 * 1 + 2 * 2 + 0 * 3 = 3 \\
+                  a(f(x), w_2) &=& 0 * 1 + (-2) * 2 + 2 * 3 = 2
+                \end{eqnarray}
+              </p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 2:</strong> Select class by decision rule.</p>
+              <p class='well'>
+                $$y = argmax_y~a(f(x), w_y) = argmax_y~w_y \cdot f(x) = 0$$
+              </p>
+              <br/>
+              
+              <p class='toolkit'><strong>Step 3:</strong> Update weights if wrong, or keep them if right!</p>
+              <p>Here, our perceptron said that this sample was \(y = 0\) but our correct answer was \(y* = 1\). So we were WRONG and must update (oh the sweet pain of regret):</p>
+              <div class='well'>
+                <p>Penalize the weight of the one that was too high:
+                  $$w_y = w_y - f(x) = w_0 - f(x) = \langle 1, 0, 2 \rangle - \langle 1, 2, 3 \rangle = \langle 0, -2, -1 \rangle$$
+                </p>
+                <p>Accentuate the weight of the one that was too low:
+                  $$w_{y*} = w_{y*} - f(x) = w_1 + f(x) = \langle -1, 2, 0 \rangle + \langle 1, 2, 3 \rangle = \langle 0, 4, 3 \rangle$$
+                </p>
+              </div>
+              <br/>
+              
+              <p>Some things to note from that example:</p>
+              <ul class='indent-1'>
+                <li><p>That update was pretty extreme! Subtler score adjustments will be a mechanic we discuss in our next toolset.</p></li>
+                <li><p>Try recomputing the example with the new weights -- what do you notice?</p></li>
+                <li><p>The reason we repeat this procedure over the entire training set is to be right on average... even though sometimes we won't be. What might look like an extreme
+                  update above might be "mellowed out" as the full training set is sampled</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='perceptron-props' class='scrollspy-element' scrollspy-title="Perceptrons Properties"></div>
+            <h1>Perceptron Properties</h1>
+            <div>
+              <p>Let's think about some properties of what we've been doing:</p>
+              <p class='definition'><strong>Separability:</strong> is a property of the training set if there exists some parameters (i.e., choices of weights) that will perfectly classify each
+                sample within it.</p>
+              <p class='toolkit'>If a training set is separable, the perceptron update rule <strong>converges</strong> to one such choice for optimal weights.</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-13/separable.png' /><br/>
+                <p>Above, the black line indicates the <strong>decision-boundary</strong> formed by a weight vector that would be perpendicular to it and point toward the +
+                  direction datapoints.</p><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              
+              <p>That's a nice property! ...and believe it or not, for many problems, happens more than you might expect, especially because many feature vectors are large, and so there's a lot of
+                space in those dimensions to find a separating set of parameters.</p>
+              <p>But... there are some problems with perceprons...</p>
+              <br/>
+              
+              <h4>Perceptron Problems</h4>
+              <hr/>
+              <p>As aliterative and whimsical as that sounds, there are a few Perceptron Pitfalls (dammit, did it again) of which we should be aware.</p>
+              <div class='debug'>
+                <p>Several issues with perceptrons:</p>
+                <ul class='indent-1'>
+                  <li><p><strong>Overtraining:</strong> iterating over the training set and updating weights too much will introduce overfitting. Even though accuracy on the
+                    training set grows, we start to lose generalizability in the held-out and test sets.</p></li>
+                  <li><p><strong>Weight-thrashing:</strong> if a training set isn't linearly separable, weights may thrash back and forth without ever finding a good
+                    middle-ground that maximizes accuracy.</p></li>
+                  <li><p><strong>Mediocre Generalization:</strong> if the dataset *is* linearly separable, some decision boundaries will better generalize than others, and the
+                    perceptron isn't guaranteed to find the best.</p></li>
+                </ul>
+              </div>
+              <p>Depicted:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/perc-probs.png' /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              
+              <p>It turns out that solving our first problem isn't too bad, but the other two require some finesse...</p>
+              <p class='question' name='pp-q0'>How might we solve the issue of overtraining?</p>
+              <p class='answer' name='pp-q0'>Just stop training / updating weights as soon as we recognize that accuracy is falling on the held-out set!</p>
+              <br/>
+              
+              <p>Next lecture, let's think about how to tackle thrashing and mediocre generalization!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

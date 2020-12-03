@@ -1,0 +1,562 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../../../assets/images/favicon.ico'>
+    <script src="../../../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../../../js/lib/expanding.js"></script>
+    <script src="../../../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../../../classes.html">Classes</a></li>
+              <li><a href="../../cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Homework 4</li>
+            </ol>
+            
+            <div id='hw4' class='scrollspy-element' scrollspy-title='Homework 4'></div>
+            <h1>Homework 4 - Ridiculously Good Looking Models</h1>
+            <div>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>Title</p></th>
+                    <th><p>Date Posted</p></th>
+                    <th><p>Date Due</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>Homework 4 - Ridiculously Good Looking Models</p></td>
+                    <td><p>11 / 25 / 20</p></td>
+                    <td><p>12 / 11 / 20</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <p class='definition'>This is a *group* assignment! Feel free to work in groups of up to 3 individuals. Use Python 3.X on this assignment!</p>
+              <p class='definition'>This assignment demos some Kaggle (the data science competition site) classics, and explores some applied approaches to our
+                supervised learning problems!</p>
+              <div class='definition'>
+                <p>In this assignment, you'll:</p>
+                <ul class='indent-1'>
+                  <li><p>Work with real world (and therefore: messy!) data in two classifyication tasks.</p></li>
+                  <li><p>Use some of the most popular Python libraries for Machine Learning (Pandas, Scikit)</p></li>
+                  <li><p>Address some real-world issues in the data sciences, like sanitizing data and dealing with imbalanced classes.</p></li>
+                </ul>
+              </div>
+              <br/>
+              <div class='toolkit'>
+                <p>Before getting started, you'll also need the following Python packages, which can be installed via <code>pip</code> / <code>pip3</code>:</p>
+                <ul class='indent-1'>
+                  <li><p><code>pandas</code>: used to manage the DataFrames, which we remember from a previous assignment as the way we can manipulate the data columns / rows and feed into
+                    our learning algorithms.</p></li>
+                  <li><p><code>sklearn</code>: a popular library replete with a bunch of different ML models, including all of the ones we learned about in class!</p></li>
+                </ul>
+              </div>
+              
+            </div>
+            <hr/>
+            <br/>
+              
+              
+            <div id='skeleton' class='scrollspy-element' scrollspy-title='Skeleton'></div>
+            <h1>Solution Skeleton</h1>
+            <div>
+              <p>Start with the solution skeleton in-hand!</p>
+              <p class='text-center'><a class='assignment' href='https://classroom.github.com/g/LGYkMsZo' target='_blank'>GitHub Classroom</a></p>
+            </div>
+            <hr/>
+            <br/>
+              
+              
+            <div id='spam-v-ham' class='scrollspy-element' scrollspy-title='Task 1: Spam vs. Ham'></div>
+            <h1>Task 1: Spam vs. Ham</h1>
+            <div>
+              <p class='definition'>This assignment will walk you through the creation of a simple Naive Bayes Classifier for Spam Filtering based on short phone text messages.</p>
+              <p>Towards this end, in the following solution skeleton you'll find:</p>
+              <ul class='indent-1'>
+                <li><p>A spam v. ham labeled text-message dataset (the simplest I could find in the time alloted, which is but one of many that exist for this problem); more sophisticated data
+                  has information regarding the senders, headers, etc. That said, we'll just stick with the basics to get your feet wet. (One nice thing for practice: the data
+                  is a little messy too, so we'll have to deal with some of its quirks!). This file's located in the <code>dat</code> directory of the skeleton. Read the actual text messages
+                  at your own risk (you may lose some hope in humanity).</p></li>
+                <li><p>A very basic outline for the typical ML pipeline, included in the <code>spam_filter.py</code> file. This is located in the skeleton's <code>src</code> folder.</p></li>
+              </ul>
+              <br/>
+              
+              <p class='toolkit'>The following will walk you through the process of training your basic NBC! Follow along in your <code>spam_filter.py</code> while you consult the documentation
+                at each step.</p>
+              <br/>
+              
+              <h4>Creating and Preprocessing the DataFrame</h4>
+              <hr/>
+              <p class='definition'>Implement the following in your <code>load_and_sanitize (data_file)</code> method!</p>
+              <div class='toolkit'>
+                <p>Tools you'll need for this section:</p>
+                <p class='assignment'><a href='https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html' target='_blank'>Pandas <code>read_csv</code></a></p>
+              </div>
+              <p>First things first, we'll need to import the data in an easily manipulable format. Pandas DataFrames to the rescue!</p>
+              <p>The data is located as a comma-separated-value (.csv) spreadsheet in the <code>dat</code> directory of the project root, and unfortunately, it uses a weird character encoding such
+                that we'll need to read it in via the extra read_csv parameter: <code>encoding="latin-1"</code></p>
+              <p>Once you've read the data into a variable, say, <code>data = read_csv(csvPath, encoding="latin-1")</code>, get a quick peek at what the data looks like via <code>print(data.head())</code></p>
+              <p class='question' name='tut-q0'>What do we notice about the data when we print out the first few rows?</p>
+              <p class='answer' name='tut-q0'>The first column is the label, the second the text, and... wait... it's got some crap columns with a bunch of null values after!</p>
+              <p>As such, we'll need to perform some data <strong>preprocessing / sanitization</strong> to prepare it for our model training.</p>
+              <div class='toolkit'>
+                <p>Tools you'll need for this section:</p>
+                <p class='assignment'><a href='https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html' target='_blank'>Pandas <code>drop</code></a></p>
+                <p class='assignment'><a href='https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html' target='_blank'>Pandas <code>rename</code></a></p>
+              </div>
+              <p>Using the tools above:</p>
+              <ol class='indent-1'>
+                <li><p>Drop all columns except for the first two, since those are all we'll train our model upon.</p></li>
+                <li><p>Rename the first column "class" and the second "text" so it'll be easier and clear to access / manipulate later.</p></li>
+              </ol>
+              <p>Once you've done the above, give another look at the <code>print(data.head())</code>. Looking better now?</p>
+              <br/>
+              
+              <h4>Train / Test Data Split</h4>
+              <hr/>
+              <p class='definition'>Implement the following in your <code>__main__</code> method!</p>
+              <div class='toolkit'>
+                <p>Tools you'll need for this section:</p>
+                <p class='assignment'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html' target='_blank'>sklearn <code>train_test_split</code></a></p>
+              </div>
+              <p>With the data sanitized, let's split our full dataset into our training and test data.</p>
+              <p class='debug'>Note that in class we looked at the data split into a 3rd piece (the validation set): this is something that is usually carved out of the training
+                data in order to iteratively find the best parameters / hyperparameters and is handled internally to the <code>sklearn</code> methods. The "test" data above is the 
+                "held-out" data that you will never see during training.</p>
+              <p>As such, we'll send our sanitized texts and our training set classes in to be split into a training and test set. See the second example in the link above for how to use, and
+                how we receive 4 items from the method: <code>X_train, X_test, y_train, y_test</code> for texts X and classes y.</p>
+              <br/>
+              
+              <h4>Feature Extraction</h4>
+              <hr/>
+              <p class='definition'>Implement the following in your SpamFilter's <code>__init__</code> method!</p>
+              <div class='toolkit'>
+                <p>Tools you'll need for this section:</p>
+                <p class='assignment'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html' target='_blank'>sklearn <code>CountVectorizer</code></a></p>
+              </div>
+              <p>We're almost ready to train! *cue Rocky soundtrack*... but must do a bit of feature extraction to get things ready for our NBC.</p>
+              <p>So the DataFrame's in order, but our preprocessing work isn't done: the text of each message needs a bit of sanitization as well.</p>
+              <p>In particular, since we're training an NBC, which uses the "Bag of Words" parameterization, we want to make sure we give it the words that are most likely to be related to one
+                class over the other.</p>
+              <div class='debug'>
+                <p></p>
+                <ul class='indent-1'>
+                  <li><p>Words like "am", "is", "the", etc. are called <strong>stopwords</strong>, since they're common to pretty much every class imaginable, and would pollute our model
+                    with many extraneous parameterizations.</p></li>
+                  <li><p>We want to count the number of times the *meaningful* words appear such that the ones that appear more with a certain class are weighted higher in the parameters.</p></li>
+                </ul>
+              </div>
+              <p>As such, examine the API for the <code>sklearn CountVectorizer</code> to first create a CountVectorizer and then <code>fit_transform</code> our <code>data["text"]</code> column 
+                such that our text data contains no more of the English stopwords, has some normalization applied, and is now converted into a set of vectorized counts over words.</p>
+              <p>Call the result of this <code>fit_transform</code> method <code>features</code>, and print it out to see what we're dealing with now: words turned into a numerical vector format
+                with an associated number of times they appear in the corpus.</p>
+              <p>There are, of course, many more sophisticated preproecessing techniques we could do here, like in making a feature extractor to produce additional features on which to train the
+                model, but we'll stick with just the above for our purposes in this assignment.</p>
+              <p class='toolkit'>Save your vectorizer as an attribute of your SpamFilter -- you'll need it later!</p>
+              <br/>
+              
+              <h4>Training the Model</h4>
+              <hr/>
+              <p class='definition'>Implement the following in your SpamFilter's <code>__init__</code> method!</p>
+              <div class='toolkit'>
+                <p>Tools you'll need for this section:</p>
+                <p class='assignment'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html#sklearn.naive_bayes.MultinomialNB' target='_blank'>sklearn <code>Multinomial NBC</code></a></p>
+              </div>
+              <p>We'll now use the scikit Naive Bayes Classifier module to train our model on the training set! To do so:</p>
+              <ol class='indent-1'>
+                <li><p>Create a new MultinomialNB object (there are some tuning parameters you can add to it later if you'd like, see documentation)</p></li>
+                <li><p>Call that object's <code>fit(training_features, training_classes)</code> method to learn the NBC parameters!</p></li>
+              </ol>
+              <p class='toolkit'>Save your learned NBC model as an attribute of your SpamFilter -- you'll need it later!</p>
+              <p class='definition'>Implement the following in your <code>__main__</code> method!</p>
+              <p>Create a SpamFilter instance in your <code>__main__</code> method constructed from the X_train and y_train that you split into previously.</p>
+              <br/>
+              
+              <h4>Classification</h4>
+              <hr/>
+              <p class='definition'>Implement the following in your SpamFilter's <code>classify</code> method!</p>
+              <div class='toolkit'>
+                <p>Tools you'll need for this section:</p>
+                <p class='assignment'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html#sklearn.naive_bayes.MultinomialNB' target='_blank'>sklearn <code>Multinomial NBC</code></a></p>
+              </div>
+              <p>This one's simple!</p>
+              <p>With the now-trained feature-extractor and NBC that we constructed in the __init__ method, let's see how to use them.</p>
+              <p>In your <code>classify</code> method, you'll simply:</p>
+              <ul class='indent-1'>
+                <li><p>Use your vectorizer to transform the input text messages into their numerical format (which your NBC knows how to deal with).</p></li>
+                <li><p>Use the NBC's <code>predict</code> method to retrieve the labels for each input text message.</p></li>
+                <li><p>Return the predicted labels as a list.</p></li>
+              </ul>
+              <p class='definition'>Implement the following in your <code>__main__</code> method!</p>
+              <p>Finally, try calling the <code>classify</code> method on:</p>
+              <ul class='indent-1'>
+                <li><p>2 of your own text messages that you believe should be labeled ham.</p></li>
+                <li><p>2 of your own text messages that you believe should be labeled spam.</p></li>
+              </ul>
+              <p>If your results are *not* what you expect, it could be a problem with the model overfitting, *or* (usually in this case) the data on which you trained it not being
+                representative of the text messages you just tested.</p>
+              <p>So, let's see how we did on the larger test set!</p>
+              <br/>
+              
+              <h4>Testing the Model</h4>
+              <hr/>
+              <p class='definition'>Implement the following in your SpamFilter's <code>test_model</code> method!</p>
+              <div class='toolkit'>
+                <p>Tools you'll need for this section:</p>
+                <p class='assignment'><a href='https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html' target='_blank'>sklearn <code>classification_report</code></a></p>
+              </div>
+              <p>Time to see how we did on the test set! To do so we'll:</p>
+              <ol class='indent-1'>
+                <li><p>Call your SpamFilter's <code>classify</code> method on the <code>X_test</code> to see how it classifies messages it's never seen before.</p></li>
+                <li><p>Print some analytics on how the result of our predictions played out compared to the input <code>y_test</code> by printing the results of the 
+                  <code>classification_report(y_expected, y_actual)</code> (where y_expected are the correct answers we input as parameters, and y_actual are your model's
+                  predictions from the step above)</p></li>
+              </ol>
+              <p>What we'll see from the classification report are some common, but important, metrics of success (quoting the documentation):</p>
+              <ul class='indent-1'>
+                <li><p>The precision is the ratio tp / (tp + fp) where tp is the number of true positives and fp the number of false positives. The precision is intuitively the ability of the classifier not 
+                  to label as positive a sample that is negative.</p></li>
+                <li><p>The recall is the ratio tp / (tp + fn) where tp is the number of true positives and fn the number of false negatives. The recall is intuitively the ability of the classifier to find
+                  all the positive samples.</p></li>
+                <li><p>The F-beta score can be interpreted as a weighted harmonic mean of the precision and recall, where an F-beta score reaches its best value at 1 and worst score at 0.
+                  The F-beta score weights recall more than precision by a factor of beta. beta == 1.0 means recall and precision are equally important.</p></li>
+                <li><p>The support is the number of occurrences of each class in y_expected. This is important to consider for unbalanced datasets (see next section).</p></li>
+              </ul>
+              <p>If all above went well, this model probably does pretty darn well! The power, albeit simplicity, of the NBC bag-of-words approach!</p>
+              <br/>
+              
+              <h4>Tuning the Model</h4>
+              <hr/>
+              <p class='definition'>[Optional] Implement the following in your SpamFilter's <code>__init__</code> method!</p>
+              <div class='toolkit'>
+                <p>Tools you'll need for this section:</p>
+                <p class='assignment'><a href='https://elitedatascience.com/imbalanced-classes' target='_blank'>Good article on Problems of Unbalanced Classes</a></p>
+              </div>
+              <p>Note that in our training data, we had many more instances of ham compared to spam; this can be a problem, since we know our NBC weights by <code>P(Y)</code>.</p>
+              <p>Although in practice there are some auto-tuners that will find the best hyperparameters on which to train your model, you can construct your NBC with different
+                hyperparameters that may change its performance -- try a couple if you're curious!</p>
+              <p>Read the article linked above for this section, which you're not required to do for this assignment, but is academically interesting, and even shows you 
+                how to use scikit's logistic_regression module, which we'll use in the next task!</p>
+              <br/>
+              
+              <h4>Grading</h4>
+              <hr/>
+              <p class='definition'>If your model is performing well on the test set (should be in the high 90s for the classification_report metrics), you're good to 
+                go on this part!</p>
+              <p class='debug'>To get full credit, your <code>spam_filter.py</code>'s main method must: (1) sanitize the data, (2) train/test split, (3) construct and train
+                SpamFilter, and (4) call its <code>test_model(X_test, y_test)</code> at the end to print out the classification report!</p>
+              <p>Now... let's see if you can take the above demo and apply it to another model... or did you overfit to the example above 0_o?</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='salary-class' class='scrollspy-element' scrollspy-title='Task 2: Guessing Salaries'></div>
+            <h1>Task 2: Guessing Salaries</h1>
+            <div>
+              <p class='definition'>In this *class*ic supervised learning task, your job will be to use a dataset on demographic and employment information from several decades ago
+                to see if you can predict whether or not someone made more or less than $50k in salary -- capitalism ho!</p>
+              <p class='debug'>Note: This is merely an exercise that has you deal with real world, messy data in pursuit of a classification task -- you should reflect on whether
+                or not using data like so to predict something sensitive like salary is ethical given its many possible contexts!</p>
+              <p>The dataset (<code>/dat/salary.csv</code>) on which you will be training your classifiers is a classic in the machine learning literature: some census information relating
+                the features of thousands of adults to a discretization of their income: a single, binary class variable of \(Y \in \{\le 50k, \gt 50k\}\).</p>
+              <p>The features are then decomposed as follows:</p>
+              <table class='table table-bordered table-striped'>
+                <thead>
+                  <tr>
+                    <th><p>Feature</p></th>
+                    <th><p>Data Type</p></th>
+                    <th><p>Description / Values</p></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>age</td>
+                    <td>Continuous</td>
+                    <td>Age in years (all > 16)</td>
+                  </tr>
+                  <tr>
+                    <td>work_class</td>
+                    <td>Categorical</td>
+                    <td>Code pertaining to category / nature of work: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.</td>
+                  </tr>
+                  <tr>
+                    <td>education</td>
+                    <td>Categorical</td>
+                    <td>Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.</td>
+                  </tr>
+                  <tr>
+                    <td>education_years</td>
+                    <td>Continuous</td>
+                    <td>Number of years in education.</td>
+                  </tr>
+                  <tr>
+                    <td>marital</td>
+                    <td>Categorical</td>
+                    <td>Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse</td>
+                  </tr>
+                  <tr>
+                    <td>occupation_code</td>
+                    <td>Categorical</td>
+                    <td>Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces. </td>
+                  </tr>
+                  <tr>
+                    <td>relationship</td>
+                    <td>Categorical</td>
+                    <td>Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried</td>
+                  </tr>
+                  <tr>
+                    <td>race</td>
+                    <td>Categorical</td>
+                    <td>White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.</td>
+                  </tr>
+                  <tr>
+                    <td>sex</td>
+                    <td>Categorical</td>
+                    <td>Female, Male (this dataset is not modern, so gender was still only collected as binary)</td>
+                  </tr>
+                  <tr>
+                    <td>capital_gain</td>
+                    <td>Continuous</td>
+                    <td>Amount gained from the sale of property or investment.</td>
+                  </tr>
+                  <tr>
+                    <td>capital_loss</td>
+                    <td>Continuous</td>
+                    <td>Amount lost from the sale of property or investment.</td>
+                  </tr>
+                  <tr>
+                    <td>hours_per_week</td>
+                    <td>Continuous</td>
+                    <td>Hours per week worked in the person's occupation.</td>
+                  </tr>
+                  <tr>
+                    <td>country</td>
+                    <td>Categorical</td>
+                    <td>Tons of different countries of origin.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              
+              <h4>Your Task</h4>
+              <hr/>
+              <p class='definition'>Your task: intelligently sanitize and preprocess the training data to then train a <code>logistic_regression</code> classifier to perform
+                salary prediction!</p>
+              <p>That said, it's not all a copy-paste walk down easy street compared to Task 1; the training wheels are off (or... well... on from your perspective I guess), and
+                you have some new challenges to address:</p>
+              <ul class='indent-1'>
+                <li><p>The data is not perfect nor complete; some data points have missing fields, and you'll need to learn how to deal with them.</p></li>
+                <li><p>The data is messy -- note that many columns have values with leading / training spaces that must be sanitized!</p></li>
+                <li><p>The documentation on the relevant scikit modules is good, but requires several passes to understand, as well as understanding the expected parameters and
+                  opportunities to improve performance via tuning.</p></li>
+                <li><p>Apropos, leaving some time to tune the hyperparameters (i.e., the parameters of the training itself) will let you get the most out of your model's
+                  performance.
+                </p></li>
+              </ul>
+              <br/>
+              
+              <h4>Preprocessing Data</h4>
+              <hr/>
+              <p class='definition'>Training / Test data is sometimes not in the format that we need / want it to be in for processing. So, we will often first pre-process it to be 
+                in a format that is conducive to training or the particular model that we are using.</p>
+              <p>Some things to consider:</p>
+              <ul class='indent-1'>
+                <li><p><strong>[Missing Data]</strong> some fields have missing values, as indicated by <code>?</code> in a given data point. What you do with these records is up to you! (see
+                  suggestions that follow).</p></li>
+                <li><p><strong>[Continuous vs. Categorical Data]</strong> you may wish to change some continuous variables into discrete ones through a transformation; your model 
+                  will lose expressiveness in this way, but will gain power on the training set -- you'll have to toy with this and investigate the documentation to figure out 
+                  what's best!</p>
+                  <p class='toolkit'>Hint: this is a Logistic Regression classifier, so it needs every feature extracted to be a number where a number being higher means something
+                    tangible!</p>
+                  <p class='toolkit'>Hint: want to take an input column that isn't necessarily ordinal (like the occupation codes) but convert them into something numerical? Consider
+                    making each value a separate binary feature that's either 0 or 1 -- a preprocessing method in the link below will be helpful here!</p>
+                </li>
+                <li><p><strong>[Feature Selection / Engineering]</strong> some features may not be particularly useful in determining the class; you may want to investigate this 
+                  ahead of model formation.</p></li>
+              </ul>
+              <p class='toolkit'>To aid you in these endeavors, see the scikit library's preprocessing methods (6.3.4 and onwards are most applicable here, remembering that we are
+                using Logistic Regression as our model!):</p>
+              <div class='text-center'><a class='assignment' href='https://scikit-learn.org/stable/modules/preprocessing.html' target='_blank'>Preprocessing Documentation</a></div>
+              <br/>
+              
+              <h4>Tasks and Grading</h4>
+              <hr/>
+              <p class='definition'>Just as in Task 1, you must complete the <code>load_and_sanitize, __init__, classify, test_model</code> methods in the provided
+                <code>salary_predictor.py</code>, using your main function to test your model (though will not be graded on the main function tests). See each method's comments
+                in the skeleton for further instruction, but the rest is up to you!</p>
+              <p class='definition'>The catch: I've reserved 1000 test samples from the dataset on which you'll be tested! A good solution will have roughly 85% precision and
+                recall; a *great* submission will have closer to 90. You will receive full credit for having 85% or greater accuracy on this held-out data.</p>
+              <p class='remark'>Hint: most of your accuracy will come from intelligenty selecting / engineering features from the raw data!</p>
+              <p>I've included an example of what the grading tests will look like in <code>salary_predictor_grading_demo.py</code>; ensure that your SalaryPredictor operates
+                properly when running this script.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='submission' class='scrollspy-element' scrollspy-title='Submission'></div>
+            <h1>Submission</h1>
+            <div>
+              <p class='definition'>You will be submitting your assignments through GitHub Classroom!</p>
+              <h4>What</h4>
+              <p>Complete all classes that accomplishes the specification above in your <code>spam_filter.py</code> and <code>salary_predictor.py</code> given in the skeleton above.</p>
+              <br/>
+              
+              <h4>How</h4>
+              <p>To <strong>clone</strong> this assignment (if you need a refresher), consult the guide here:</p>
+              <p class='assignment'><a href='../../../tutorials/github-classroom.html' target='_blank'>GitHub Classroom Tutorial</a></p>
+              <p>To <strong>submit</strong> this assignment:</p>
+              <ul class='indent-1'>
+                <li><p>Simply push your final, submission copy to the GitHub Classroom repository associated with you or your group.</p></li>
+                <li><p>If you worked in a group, ensure that your GitHub Classroom group includes all members, and place all group members' names at the top of *all* submitted files (in appropriate
+                  commenting fashion).</p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <script>
+              $(".problem").each(function (index) {
+                $(this)
+                  .wrapInner("<span class='pull-right'></span>")
+                  .prepend("Problem " + (index + 1))
+                  .addClass("definition")
+                  .wrapInner("<strong></strong>");
+              });
+            </script>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

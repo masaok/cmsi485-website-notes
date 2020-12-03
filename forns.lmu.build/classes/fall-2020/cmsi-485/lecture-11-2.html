@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 11-2</li>
+            </ol>
+            
+            
+            <div id='motivation' class='scrollspy-element' scrollspy-title="Motivating Example"></div>
+            <h1>Motivating Example - Spam v. Ham!</h1>
+            <div>
+              <p>No, that's not some classic Supreme Court case against Hormel...</p>
+              <p>Let's start today with one of the oldest and most appreciable supervised learning tasks to date: determining if an email is Spam or Ham (i.e., not Spam lol).</p>
+              <p>...and before you read that and think, "Oh Forney, always with the puns, that's not a real thing," stop. It is. That's the actual, technical distinction in labels
+                of emails that are Fake / Scams / Ads vs. Real ones you actually care about.</p>
+              <p class='example'>Consider the following sample emails that have been paired with their Spam (Red X's) vs. Ham (Green Check) status. The task at hand: determine
+                from a set of such <strong>labeled</strong> emails whether some new email *not* in the training set is Spam or Ham.</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/spam-v-ham.png' />
+              </div>
+              <p class='question' name='spam-q0'>If you were reading an email for the first time, what would be some <strong>features</strong> that might tip you off as to whether
+                or not the note is Spam v. Ham?</p>
+              <div class='answer' name='spam-q0'>
+                <ul class='indent-1'>
+                  <li><p><strong>The email address:</strong> whether or not the address is someone we know, has a bunch of random numbers in it, is from aol (lol sorry, had to),
+                    etc.</p></li>
+                  <li><p><strong>The message title:</strong> does this subject look legit? Is it something I initiated or that someone sent to me first? etc.</p></li>
+                  <li><p><strong>The message text:</strong> typos, grammatical errors, CAPS LOCK, plus the words themselves.</p></li>
+                </ul>
+              </div>
+              <p>All of these are valuable features that could be combined to form a comprehensive machine learning model to predict if any message is Spam or Ham.</p>
+              <p>We'll focus today on one of the most predictive: the email text itself.</p>
+              <br/>
+              
+              <p>Let's think now for a moment about the actual model we can use to take in <strong>words as features</strong> from some email and spit out a classification of
+                Spam or Ham.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='nbc' class='scrollspy-element' scrollspy-title="Naive Bayes Classification"></div>
+            <h1>Naive Bayes Classification</h1>
+            <div>
+              <p class='remark'><strong>Intuition:</strong> let's try to model the probabilistic relationship between the features (the email's words) and the class (Spam v. Ham)
+                using a modified Bayesian Network.</p>
+              <p>We'll start as we typically do by building some intuition and then look at the specific mechanics of our first approach.</p>
+              <p>Let's start with an underhand-pitch:</p>
+              <p class='question' name='sl-q2'>To be effective at predicting some class, what independence relationship should hold between our classifier's
+                features and class variables?</p>
+              <p class='answer' name='sl-q2'>They should be dependent! In other words, knowing about the state of our features should give us information
+                about the state of the class:
+                $$X_i \not \indep Y~\forall~X_i \in X$$
+              </p>
+              <p>Given this observation, we can start to apply our knowledge about Bayesian Network syntax to consider how to model this scenario.</p>
+              <p>We know we want our features to be related to our class, but there are really two approaches we could take for modeling the features
+                for classification:</p>
+              <ol class='indent-1'>
+                <li><p>Try to model the conditional independence relationships between the features (the words)</p></li>
+                <li><p>Ignore the conditional independence relationships between features, focusing only on their relationship with the class</p></li>
+              </ol>
+              <p class='question' name='sl-q3'>What are some problems or challenges with approach #1 when it comes to the task of email classification?</p>
+              <div class='answer' name='sl-q3'>
+                <p><strong>Too many meaningless dependencies!</strong> Words often appear with each other, even given the class of Spam v. Ham; most of these dependences
+                  will be meaningless to the task at hand, so worrying about the relationships *between* the words rather than between the words and the class seems
+                  extraneous.</p>
+              </div>
+              <p>As such, for classification tasks, we'll investigate option 2: to ignore the possible dependence relationships between features, and see
+                how our model performs.</p>
+              <p class='question' name='sl-q4'>Given that we want our class variable to be dependent on our features, what possible network configurations
+                could yield this relationship?</p>
+              <p class='answer' name='sl-q4'>There are two choices: (1) <i>features parents of class</i> \(X_i \rightarrow Y\) or (2) <i>class parent of
+                features</i> \(Y \rightarrow X_i\)</p>
+              <p>Let's consider each of these choices separately.</p>
+              <br/>
+              
+              <h4>Features Parents of Class</h4>
+              <p>This modeling approach would look like the following:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-12/nbc-bad-struc.png' />
+              </div>
+              <p class='question' name='sl-q5'>What is the damning problem with this approach?</p>
+              <p class='answer' name='sl-q5'>The size of the CPT for the class variable is the same as the joint distribution! This would grow out of
+                control and be useless for large feature sets.</p>
+              <p>So, let's consider the alternative:</p>
+              <br/>
+              
+              <h4>Class Parent of Features</h4>
+              <p>This modeling approach would look like the following:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-12/nbc-good-struc.png' />
+              </div>
+              <p class='question' name='sl-q6'>Does this structure suffer the same problem that the last one did? How is it better if not?</p>
+              <p class='answer' name='sl-q6'>No it doesn't! Herein, the largest CPT that needs to be maintained is the feature with the largest number
+                of values, which would (plainly) be less of a memory tax than the alternative.</p>
+              <p>For this reason, and others, this is the type of model we'll consider for our classifier in what is known as a Naive Bayes model.</p>
+              <br/>
+              
+              <h3>Naive Bayes - Structure and Semantics</h3>
+              <hr/>
+              <div class='definition'><p>A <strong>Naive Bayes Classifier</strong> is a simplified Bayesian Network in which the <i>class variable \(Y\)</i> is a
+                parent to all <i>features \(X_1, X_2, ...\)</i>, and can be used to determine which class is most likely given some instantiation of
+                features.</p>
+                <p>It is considered "naive" compared to the more general Bayesian Network because:</p>
+                <ul class='indent-1'>
+                  <li><p>It assumes that all features are independent given the class, i.e., \(X_j \indep X_i|Y~\forall~X_i, X_j \in X\)</p></li>
+                  <li><p>It is not meant to answer general inference queries except those that pertain to classification</p></li>
+                </ul>
+              </div>
+              <p class='question' name='sl-q7'>With this definition, determine: what probabilistic statement would allow us to determine the most likely
+                class \(y \in Y\) given an instantiation of features \(X_1 = x_1, X_2 = x_2, ...\)?</p>
+              <p class='answer' name='sl-q7'>We would attempt to find the class that was most likely given the features, formally:
+                $$argmax_{y \in Y} P(Y = y | X_1 = x_1, X_2 = x_2, ...)$$
+              </p>
+              <p>Great! So we have a probabilistic expression we can attempt to evaluate... the only problem is that this is not a simple expression to
+                evaluate given our network structure (is certainly not an immediately answerable query).</p>
+              <p class='question' name='sl-q8'>Is there some tool from probability theory that could take our target maximization quantity and express it
+                in terms of our NBC's parameters?</p>
+              <p class='answer' name='sl-q8'>Yep, Bayes' Theorem! Observe that:
+                $$\begin{eqnarray}
+                  P(Y | X_1, X_2, ...) &=& \frac{P(X_1, X_2, ... | Y)P(Y)}{P(X_1, X_2, ...)}~\text{Can be simplified further using NBC structure:} \\
+                                       &=& \frac{P(X_1 | Y) P(X_2 | Y) ... P(Y)}{P(X_1, X_2, ...)}~\text{Because features independent given class} \\
+                \end{eqnarray}$$
+              </p>
+              <p>Getting closer! Now, consider that a NBC will attempt to find the class that maximizes this quantity, and will conclude that it's the
+                most likely.</p>
+              <p>As such, consider that we have two classes \(Y = 0, Y = 1\) and are attempting to determine which is more likely for a given instantiation
+                of features. We would be comparing:
+                $$\frac{P(X_1=x_1 | Y=0) P(X_2 = x_2 | Y=0) ... P(Y=0)}{P(X_1=x_1, X_2=x_2, ...)} \stackrel{?}{>} \frac{P(X_1=x_1 | Y=1) P(X_2=x_2 | Y=1) ... P(Y=1)}{P(X_1=x_1, X_2=x_2, ...)}$$
+              </p>
+              <p>If the LHS is greater than the RHS, we would consider the most likely class to be \(Y = 0\), and vice versa to conclude \(Y = 1\).</p>
+              <p class='question' name='sl-q9'>However, notice that we can simplify the compared expressions even further; what parts of the above
+                expressions can be ignored during classification?</p>
+              <p class='answer' name='sl-q9'>The denominators \(P(X_1=x_1, X_2=x_2, ...)\) since these will be "constant" in computing the likelihood
+                of all compared classes.</p>
+              <p>As such, we now have the complete rule for a Naive Bayes Classifier:</p>
+              <p class='toolkit'>A Naive Bayes Classifer will classify (for class variable \(Y\)) some data point corresponding to an instantiation of
+                features \(X_1 = x_1, X_2 = x_2, ...\) by selecting the class that maximizes:
+                $$argmax_{y \in Y} P(X_1 = x_1 | Y = y) P(X_2 = x_2 | Y = y) ... P(Y = y) = argmax_{y \in Y} P(y) \prod_{x_i} P(x_i | y)$$
+              </p>
+              <p>Note that each of the expressions in the maximization quantity above can be answered directly from a NBC's parameters.</p>
+              <p class='question' name='nbc-q0'>What's a practical concern with the above rule when the number of features is large? What can we do to solve this problem?</p>
+              <p class='answer' name='nbc-q0'>Damn computers: floating point issues! Thankfully, we can use basic maths to save the day (story of this class amirite?) Note:
+                $$log(A*B) = log(A) + log(B)$$
+              </p>
+              <p class='toolkit'>As such, NBCs often choose the class that maximizes the <strong>log-likelihood</strong> such that:
+                $$argmax_{y \in Y} P(y) \prod_{x_i} P(x_i | y) = argmax_{y \in Y}~log(P(y)) + \sum_{x_i} log(P(x_i | y))$$
+              </p>
+              <br/>
+              
+              <h4>Bags of Words</h4>
+              <hr/>
+              <p>What we *haven't* yet discussed is precisely how we model the features in the Spam v. Ham setting.</p>
+              <p class='question' name='nbc-q1'>In general, will the order that words appear in a sentence be important for some *classification* task?</p>
+              <p class='answer' name='nbc-q1'>This answer's a bit tricky: in general, it's arguable that "yes" word ordering is important (e.g., in sentiment analysis wherein
+                the order can matter [especially with negations like "not" preceeding some otherwise "good" word]), but in our case, since we're just
+                trying to examine the association between the words and some class, we might be able to get away with the simpler problem of ignoring order.</p>
+              <p>Intuitively, we can (in pursuit of labeling as spam or not) deduce the likely spam content of the following two sentences, even when, in the second, the order
+                of the words are not grammatically correct:</p>
+              <ul class='indent-1'>
+                <li><p>DRUGS FOR SALE HERE BIG DISCOUNTS</p></li>
+                <li><p>DISCOUNTS FOR HERE DRUGS SALE BIG</p></li>
+              </ul>
+              <p>As such, for NBCs, we'll adopt a word-order-independent model known as a "bag of words."</p>
+              <p class='definition'>In <strong>bag-of-words</strong> models, each word position \(W_i\) is identically distributed such that, for class \(Y\):
+                $$P(W_i | Y) = P(W_j | Y)~\forall~i, j$$
+              </p>
+              <br/>
+              
+              <p>Let's try a simple example to concrete the ideas above...</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='practice' class='scrollspy-element' scrollspy-title="Practice"></div>
+            <h1>Practice</h1>
+            <div>
+              <p>Consider the following NBC that has been trained on a dataset from our motivating advertising engine example, producing the CPTs below:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/nbc-ex.png' width="60%" height="60%" />
+              </div>
+              <br/>
+              <p class='example'>What would we classify a message with the text "discount drugs sale"? Spam \(Y=0\) or ham \(Y=1\)?</p>
+              <p class='well'>Comparing our two classes:
+              $$\begin{eqnarray}
+                P(Y = 0) P(W_0 = discount | Y = 0) P(W_1 = drugs | Y = 0) P(W_2 = sale | Y = 0) &\stackrel{?}{>}& \\ 
+                P(Y = 1) P(W_0 = discount | Y = 1) P(W_1 = drugs | Y = 1) P(W_2 = sale | Y = 1) \\
+                0.8 * 0.2 * 0.3 * 0.4 &\stackrel{?}{>}& 0.2 * 0.2 * 0.2 * 0.3 \\
+                0.0192 &>& 0.0024
+              \end{eqnarray}$$
+              Therefore, we conclude that \(Y = 0\) is the more likely class (we assert that this message is spam).
+              </p>
+              <p>Simple as that! (we could've done the log-likelihood above but just keeping it simple for now)</p>
+              <br/>
+              
+              <h4>Other Applications</h4>
+              <hr/>
+              <p>Naive Bayes Classifiers, despite their simplicity, are used in a variety of other applications as well.</p>
+              <ul class='indent-1'>
+                <li><p><a href='https://www.abstractsonline.com/pp8/#!/7883/presentation/71586' target='_blank'>Helping quadripeds write with their brain</a></p></li>
+                <li><p><a href='https://www.quora.com/In-what-real-world-applications-is-Naive-Bayes-classifier-used' target='_blank'>OK I got lazy finding individual links
+                  here's a Quora page that gives some more</a></p></li>
+              </ul>
+              <br/>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

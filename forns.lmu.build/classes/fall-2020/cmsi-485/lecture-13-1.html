@@ -1,0 +1,595 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 13-1</li>
+            </ol>
+            
+            
+            <div id='perc-fix' class='scrollspy-element' scrollspy-title="Fixing Perceptrons"></div>
+            <h1>Fixing Perceptrons</h1>
+            <div>
+              <p>Let's revisit the issue the haunted us with linear Perceptrons: the notion of non-separability (depicted below in the binary class case):</p>
+              <div class="fit-pres text-center">
+                <img src="../../../assets/images/fall-2019/cmsi-485/week-13/separable.png" /><br>
+                <p>Above, the black line indicates the <strong>decision-boundary</strong> formed by a weight vector that would be perpendicular to it and point toward the +
+                  direction datapoints.</p><br>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <p>Reasonably, you might ask...</p>
+              <p class='question' name='lr-q0'>Why not just use... you know... *not* a line for the decision boundary?</p>
+              <p class='answer' name='lr-q0'>Going out of our way to accommodate the few outliers compromises our generalizability and makes us likely to overfit!</p>
+              <p class='remark'>There might be other scenarios where we *want* to overfit given a large enough training set, but with the complexities of the problems we're currently looking
+                at (which hand-made feature extractors), we'll often get in more trouble going out of our way to accommodate outliers.</p>
+              <p>Still, we need some way of avoiding the last two issues we discovered with Perceptrons, viz., thrashing (for non-linearly separable training sets) and
+                mediocre generalization, depicted again below:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/perc-probs.png' /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              
+              <p class='remark'><strong>Intuition:</strong> Notice how the two issues we didn't solve last time (viz., thrashing and mediocre generalization) are a consequence of
+                over-adjusting the weights whenever the perceptron misclassified a sample.</p>
+              <p class='question' name='lr-qextra'>How can we make a tweak to the perceptron's decision boundaries to get around this "either wrong or right class" paradigm?</p>
+              <p class='answer' name='lr-qextra'>Perhaps we can find a way to think of the <strong>likelihood</strong> of a data point belonging to one class or another to once again
+                give us some shades of gray where previously we'd seen absolutes!</p>
+              <p class='example'>Making this tweak for the following example binary classifier might mean each decision boundary now encodes a *likelihood* of samples on each side belonging
+                to one class over the other:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/prob-dec.png' width="70%" height="70%" /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <p>Noting some components from the above:</p>
+              <ul class='indent-1'>
+                <li><p>Here we have different *decision boundaries* that each have some probabilistic confidences that (in red) the positive class lives on this line and (in blue)
+                  the negative class lives on this line.</p></li>
+                <li><p>So, the trick in this situation is answering the question: "How do I position my decision boundary to best reflect my training data, as now informed
+                  by these likelihoods?"</p></li>
+              </ul>
+              <p class='question' name='lr-q1'>To motivate that endeavor, which of the decision boundaries above seems to best fit the data?</p>
+              <p class='answer' name='lr-q1'>The one in the middle with the 50/50 split! This suggests that we've found the decision boundary that most evenly divides our data.</p>
+              <p>So... how do we go about finding this boundary and the weight vector that characterizes it?</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='logistic-regression' class='scrollspy-element' scrollspy-title="Logistic Regression"></div>
+            <h1>Logistic Regression</h1>
+            <div>
+              <p class='definition'><strong>Logistic Regression</strong> is a machine learning tool to assign some likelihood that a sample \(X\) belongs to a given class \(y\), 
+                which operates like a perceptron except that its activation \(z = a(w, f(x))\) is converted to a likelihood by the <strong>sigmoid function</strong> 
+                (the inverse of the logit function, its namesake).</p>
+              <p class='toolkit'>The <strong>sigmoid function, \(\phi\),</strong> takes any value \(z \in (-\infty, \infty)\) and converts it to a likelihood between \((0, 1)\) where the
+                more negative \(z\) is, the more unlikely the probability, and vice versa for highly positive \(z\).</p>
+              <p>Depicted, this looks like the following:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/sigmoid.png' width="70%" height="70%" /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <p class='remark'><strong>Insight 1:</strong> consider that \(z\) is our perceptron's activation (below, as indicated for a binary class, but can be extended to
+                multiple classes later):
+                $$z = w \cdot f(x)$$
+                ...This means that the likelihood, for the sample \(i\), of the positive class \(y^{(i)} = +1\) given the 
+                input \(x^{(i)}\) and choice of weights \(w\) is:
+                $$P(y^{(i)} = +1 | x^{(i)}; w) = \frac{1}{1 + e^{-z}}$$
+              </p>
+              <p>How does this help us? Well, this lets us compute the likelihood of a given class given the features, even in a continuous space!</p>
+              <p class='example'>Consider if \(z = w \cdot f(x) = 3\). This means that the likelihood, for the sample \(i\), of the positive class \(y^{(i)} = +1\) given the 
+                input \(x^{(i)}\) and choice of weights \(w\) is roughly \(0.95\) (i.e., very likely), written:
+                $$P(y^{(i)} = +1 | x^{(i)}; w) = \frac{1}{1 + e^{-z}} = \frac{1}{1 + e^{-3}} \approx 0.95$$
+              </p>
+              <p>Of course, having a probability that a sample \(X\) belongs to a class \(y\) is only useful if it leads to some classification rule, which is simple in the binary
+                case: just see which class is more likely!</p>
+              <p class='toolkit'><strong>Logistic Regression Binary Decision Rule:</strong> since we only have 2 values for \(y\) (think: spam vs. ham), to classify any given input \(x\), we need 
+                only see whether the likelihood above is greater than, or less than 0.5 (i.e., which class is more likely given the sample?). In other words, for assigned class \(\hat{y}\):
+                \begin{eqnarray}
+                  \hat{y} = 
+                \begin{cases}
+                  +1, & \text{if $P(y^{(i)} = +1 | x^{(i)}; w) \gt 0.5$} \\
+                  -1, & \text{otherwise}
+                \end{cases}
+                \end{eqnarray}
+              </p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2020/cmsi-485/week-14/log-reg-ex.png' width="70%" height="70%" />
+              </div>
+              
+              <div class='definition'>
+                <p><strong>Multi-class Extension:</strong> In order to extend the above definitions into multi-class logistic regression, we can perform the following:</p>
+                <ol class='indent-1'>
+                  <li><p>Compute the activations for each class \(y \in Y\):
+                    $$z_y = w_y \cdot f(x)$$
+                  </p></li>
+                  <li><p>Normalize each computed likelihood by what is known as the <strong>softmax</strong> function, defined as:
+                    $$P(y^{(i)} | x^{(i)}; w) = \frac{e^{z_y}}{\sum_{y'} e^{z_{y'}}}$$
+                  </p></li>
+                </ol>
+              </div>
+              <p>Consider the following softmax outputs for 3 original activations \(z_1, z_2, z_3\):</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/softmax.png' width="80%" height="80%" /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <p>Above:</p>
+              <ul class='indent-1'>
+                <li><p>Note that each of the \(\frac{e^{z_y}}{\sum_{y'} e^{z_{y'}}}\) form a vector whose contents sum to 1.</p></li>
+                <li><p>Our decision rule is not much changed from before: instead of just comparing whether or not one class' likelihood is "more likely than not" (above 50 percent), we just
+                  look for the greatest and use that to classify.</p></li>
+              </ul>
+              <p class='toolkit'><strong>Logistic Regression Multiclass Decision Rule:</strong> for input sample \(x^{(i)}\), assign class \(y\) such that:
+                $$\hat{y} = argmax_y~P(Y^{(i)}=y | x^{(i)}; w)$$
+              </p>
+              <p>Having a decision rule is good, but we also need some target to aim for that characterizes what set of weights will be the best one in this new context.</p>
+              <br/>
+              
+              <p class='remark'><strong>Insight 2:</strong> Because of this ability to compute likelihoods from activations, we now also have a goal / characterization for what 
+                choice of weights is the best for the entire training set!</p>
+              <p class='question' name='lr-extra2'>Suppose we have some training set composed of labeled data (i.e., \((X^{(i)}, y^{(i)})\) pairs); how would we *characterize* the best choice
+                of weights, \(w^*\), given the new probabilistic formalization of a classifier above?</p>
+              <p class='answer' name='lr-extra2'>Find the weights that *maximize* the likelihoods of classifying each sample as the *correct* one!</p>
+              <p>Note: we want the set of weights that successfully classifies as much as possible across *all \(i\) samples*, not just weights that get a few samples right on the nose!</p>
+              <p class='toolkit'><strong>Logistic Regression Maximum Likelihood Weight Estimation:</strong> the maximum likelihood choice for weights in logistic regression is characterized
+                as the value for the weight vector \(w\) that <strong>maximizes the log-likelihood of the correct class \(y^{(i)}\)</strong> across all \(i\) samples in the training set, viz:
+                $$w^* = argmax_w~ll(w) = argmax_w \sum_i log~P(y^{(i)} | x^{(i)}; w)$$
+              </p>
+              <p class='question' name='lr-q2'>Remind me: what's the purpose of Log-Likelihoods again?</p>
+              <p class='answer' name='lr-q2'>Avoids numerical underflow from floating-point errors! Without it, we'd be multiplying a bunch of small probability values together.</p>
+              <br/>
+              
+              <p class='example'>Consider the softmax function output for input feature vectors in a training set \(f(x^{(i)})\) and then two competing *sets* of weights over 3 classes: \(w, w'\). 
+                Then, comparing several datapoints from a training set in which we know the correct \(y^{(i)}\), determine which set of weight vectors we would prefer?</p>
+              <table class='table table-striped table-bordered'>
+                <thead>
+                  <tr>
+                    <td><p>Sample</p></td>
+                    <td><p>\(P(Y^{(i)} | x^{(i)}; w)\) for \(w = \{w_1, w_2, w_3\}\)</p></td>
+                    <td><p>\(P(Y^{(i)} | x^{(i)}; w')\) for \(w' = \{w_1', w_2', w_3'\}\)</p></td>
+                    <td><p>\(y^{(i)}\) (Training Set Label / Correct Answer)</p></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><p>\(i = 1\)</p></td>
+                    <td><p>\(\langle 0.3, 0.5, 0.2 \rangle\)</p></td>
+                    <td><p>\(\langle 0.5, 0.4, 0.1 \rangle\)</p></td>
+                    <td><p>\(y^{(1)} = 1\)</p></td>
+                  </tr>
+                  <tr>
+                    <td><p>\(i = 2\)</p></td>
+                    <td><p>\(\langle 0.2, 0.7, 0.1 \rangle\)</p></td>
+                    <td><p>\(\langle 0.1, 0.5, 0.4 \rangle\)</p></td>
+                    <td><p>\(y^{(2)} = 3\)</p></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>Let's see which set of weights we'd prefer: \(w\) or \(w'\):</p>
+              <p class='toolkit'>Note: it's common during implementation to use the natural log (<code>ln = log_e</code>) to compute the log-likelihood.</p>
+              <div class='well'>
+                <p>\begin{eqnarray}
+                  ll(w) &=& \sum_i log~P(y^{(i)} | x^{(i)}; w) \\
+                        &=& log(0.3) + log(0.1) \\
+                        &\approx& -3.50 \\
+                  ll(w') &=& \sum_i log~P(y^{(i)} | x^{(i)}; w') \\
+                        &=& log(0.5) + log(0.4) \\
+                        &\approx& -1.60 \\
+                        &\therefore& \text{Prefer } w'
+                \end{eqnarray}</p>
+              </div>
+              <p>Some things to note on the above:</p>
+              <ul class='indent-1'>
+                <li><p>We consider the likelihood output for the label class by our softmax regression weights, ignoring the likelihoods of classes that did not correspond to the label.</p></li>
+                <li><p>Even though we prefer the second set of weights \(w'\), it still gets the 2nd sample wrong! Still, it is more in-line with what the training set is telling us
+                  to model than the first set of weights, under the assumption that over many such samples, it will learn the happy medium of a decision boundary.</p></li>
+                <li><p>*Neither* of the above sets of weights are *maximal*, which is now the trick for us to find...</p></li>
+              </ul>
+              <br/>
+               
+              <p class='remark'>All of the above has been to merely *describe* what good weights look like; let's now turn our attention to *how* we might find the value of \(w^*\) that satisfies the 
+                maximum likelihood estimation criteria specified above.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='optimization' class='scrollspy-element' scrollspy-title="Optimization"></div>
+            <h1>Optimization</h1>
+            <div>
+              <p>What we have in finding the weights that maximizes the log-likelihood is what's known as an <strong>optimization problem</strong> in which we have some
+                continuous values that must be "tweaked" until the best combination is found.</p>
+              <div class='toolkit'>
+                <p><strong>Hillclimbing</strong> approaches are common solutions to optimization problems, which follow several basic steps:</p>
+                <ol class='indent-1'>
+                  <li><p>Make a random, initial guess for the variables of interest.</p></li>
+                  <li><p>Make a change to that state of variables into one of the "neighboring" states that improves your "score" on the problem.</p></li>
+                  <li><p>Quit when no neighbors are better than your current state.</p></li>
+                </ol>
+              </div>
+              <p class='example'>Recall the Map Coloring Problem (a Constraint Satisfaction Problem) wherein the goal is to "color" the nodes in a graph such that no two adjacent
+                nodes share the same color.</p>
+              <div class="text-center fit-pres">
+                <img src="../../../assets/images/spring-2019/cmsi-282/week-15/map-coloring-local-1.png" width="70%" height="70%" />
+              </div>
+              <br/>
+              
+              <p class='question' name='hc-q0'>Why do Hillclimbing approaches in the Map Coloring problem not precisely scale to our current endeavor of finding the best weights
+                for logistic regression?</p>
+              <p class='answer' name='hc-q0'>Because they're discrete states whereas we now have continuous weight vectors to learn -- neighborhoods are infinite in size!</p>
+              <p>The continuous aspect of the current problem actually ends up being a not-totally-hopeless property for one key reason... let's expose why with a simple
+                hillclimbing example in 1 dimension.</p>
+              <br/>
+              
+              <h4>1-Dimensional Optimization</h4>
+              <hr/>
+              <p>Consider that we have some function \(g(w)\) for which we are trying to find the value of \(w\), a single variable, that maximizes \(g(w)\).</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/func.png' width="70%" height="70%" /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <p class='question' name='opt-q0'>If we randomly start with \(w = w_0\), how would we know which direction to move it in order to get closer to a local maximum?</p>
+              <p class='answer' name='opt-q0'>Take the derivative and move in the direction of positive slope! Calculus saves the day again! Namely, compute:
+                $$\frac{\partial g(w_0)}{\partial w}$$
+              </p>
+              <p class='remark'><strong>Insight 1:</strong> a calculus reminder that derivatives can help us understand "which way is up/downhill" of a function -- that will come in useful later!</p>
+              <p>Note: Here's where continuous optimization is actually quite nice! We wouldn't be able to compute the derivative of a discrete optimization problem -- it's like
+                having a sherpa guide our search for the best \(w\)!</p>
+              <br/>
+              
+              <!-- 
+              <p class='question' name='opt-q1'>What if we only find a local, not a global maximum for \(w\)?</p>
+              <p class='answer' name='opt-q1'>Randomly restart many times and just use the best \(w\) discovered that way!</p>
+              <p class='example'>Suppose we are trying to maximize some function \(g(w_1, w_2)\), now a function of multivariate input.</p>
+              <p>The same strategy that we used above applies, but now, our updates to the input weights are a little trickier since changes to each one individually might give us
+                a different slope of the multi-dimensional hill to climb.</p>
+              <p>As such, we'll compute the slopes of each weight change to the function individually, and then combine to find the best (i.e., the steepest-upward) direction to climb.</p>
+              <p class='definition'>The tool from calculus that allows us to do this is the <strong>partial derivative</strong>:
+                $$\frac{\partial g(W)}{\partial w_i}$$
+                which assesses the rate of change (slope) of some function \(g\) as one of its inputs \(w_i\) changes, treating the other parameters as constants.
+              </p>
+              <p>If you haven't had Calc 3, believe it or not, partials are pretty painless (and that was alliterative so you know it's true).</p>
+              <p class='example'>Suppose we have a multi-variate function \(g(x, z) = 5 x^2 + 4 z\); compute \(\frac{\partial g(W)}{\partial x}\) and \(\frac{\partial g(W)}{\partial z}\)</p>
+              <p class='well'>
+                \begin{eqnarray}
+                  \frac{\partial g}{\partial x} &=& 10x \\
+                  \frac{\partial g}{\partial z} &=& 4
+                \end{eqnarray}
+              </p>
+              <p class='definition'>The combination of these individual partial derivatives is known as the <strong>gradient \(\nabla\)</strong>, a vector that looks like:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/gradient.png' width="70%" height="70%" /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+               -->
+               
+              <p class='remark'><strong>Insight 2:</strong> Now, imagine that the function \(g(w)\) above is our log-likelihood goal \(ll(w)\) -- we'll just try to keep climbing the log-likelihood (multi-dimensional) hill until we find some
+                optimum for the weights!</p>
+              <p>Some notes:</p>
+              <ul class='indent-1'>
+                <li><p>This approach is called <strong>gradient ascent of \(ll(w)\)</strong>, and for Logistic Regression, will *always* find the global maxima because \(ll(w)\) is known as a
+                  <strong>convex function</strong>.</p></li>
+                <li><p>More common, and applicable outside of just logistic regression, is another algorithm we'll see next...</p></li>
+              </ul>
+              <!-- 
+              <p class='question' name='opt-q2'>However, why is the above maximization criteria not practical for hill-climbing?</p>
+              <p class='answer' name='opt-q2'>It suffers 2 main issues: (1) how would we know which weight(s) to tweak and by how much? (2) It requires that we re-evaluate \(ll(w)\) *FOR ALL* training data every 
+                time we change \(w\), which would be computationally infeasible.</p>
+              <p>Still, perhaps we can use the insights above to learn our weights from data.</p>
+              <p class='debug'>But... how do we apply this definition for learning the weights with our dataset? Find out next time!</p>
+              <p>The updates to our individual weights would look like:</p>
+              <p class='well'>
+                \begin{eqnarray}
+                  w_1 &=& w_1 + \alpha * \nabla_{w_1} \\
+                      &=& w_1 + \alpha * \frac{\partial g(w)}{\partial w_1} \\ \\
+                  w_2 &=& w_2 + \alpha * \nabla_{w_2} \\
+                      &=& w_2 + \alpha * \frac{\partial g(w)}{\partial w_2} \\
+                \end{eqnarray}
+              </p>
+              <p class='toolkit'>Above, the value \(\alpha\) is known as the <strong>learning rate</strong>, which controls how large of a step we take up the gradient. This is a hyperparameter
+                set during learning that makes sure we do not miss a maxima because we took too large a step.</p>
+              <p>Depicted, that looks like:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/learning-rate.png' width="70%" height="70%" /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <p class='definition'>The process of traversing this gradient to maximize the log-likelihood is known as <strong>gradient ascent</strong> for the reasons depicted above.</p>
+              <p>Next lecture, we'll see the algorithms that glue all of this together!</p>
+               -->
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='log-reg-learn' class='scrollspy-element' scrollspy-title="Logistic Regression Learning"></div>
+            <h1>Logistic Regression - Learning</h1>
+            <div>
+              <p>Although in the above we have given ourselves a target to aim for, we currently lack a couple of things:</p>
+              <ul class='indent-1'>
+                <li><p>An algorithm for learning the weights for logistic regression that fixes the issues with linear perceptron learning.</p></li>
+                <li><p>A way to connect our optimization criteria to the training data in a way that will be computationally feasible.</p></li>
+              </ul>
+              <p>It turns out there's one idea that helps us do both -- prepare to have your minds blown:</p>
+              <p class='remark'><strong>Insight 1:</strong> Maximizing how much you're correct is equivalent to *minimizing* how much you're wrong.</p>
+              <p>What's nice about the remark above is that it relates a bit to how we approached the mistakes we made in our perceptron update rule... but now with probabilities!</p>
+              <p class='example'>Returning to our ternary email classifier with \(Y \in \{\text{spam = 0, ham = 1, important = 2}\}\) and wherein we have 3 features forming a vector: 
+                \(f(x) = \langle f_1(x), f_2(x), f_3(x) \rangle\), and for a sample \(X^{(i)}\), our classifier's activations are \(P(Y^{(i)}|x^{(i)}; w) = \langle 0.5, 0.3, 0.2 \rangle\).</p>
+              <p class='question' name='reglearn-q0'>If the correct label is \(y^{(i)} = 0\), what, in the best possible scenario, should the \(P(Y^{(i)}|x^{(i)}; w)\) outputs / vector look like?</p>
+              <p class='answer' name='reglearn-q0'>We would like it to be *certain* of the sample being the correct class, and *certain* of the sample *NOT* being the other classes, viz.:
+                $$\langle 1.0, 0.0, 0.0 \rangle$$
+                (note that the 1.0 appears in the 0th index because the correct answer was \(y^{(i)} = 0\))
+              </p>
+              <p class='definition'>A vector like the above wherein all elements are 0.0 except for 1, which has a value of 1.0 is known as a <strong>one-hot vector</strong>.</p>
+              <p class='remark'><strong>Insight 2:</strong> Just like a unit test wherein we compare <code>(expected, actual)</code> outputs of some method, we can now correct for the weights
+                of the correct class if they were too low!</p>
+              <p class='definition'>Combining insights 1 and 2 gives us what is called a <strong>Loss / Cost Function \(Loss(Y^{(i)}, \hat{Y}^{(i)})\)</strong>, which provides a metric for how distant
+                our model's output likelihood for the correct class \(\hat{Y}^{(i)} = y^{(i)}\) is from certainty.</p>
+              <p>The loss function we'll employ for learning our logistic regression model's weights stem from our maximization goal; as a reminder that was:
+                $$ll(w) = \sum_i log~P(y^{(i)} | x^{(i)}; w)$$</p>
+              <br/>
+              
+              <p class='toolkit'>For Logistic Regression (and other models we'll see next time), a common Loss Function is what's known as <strong>Cross Entropy (CE) Loss \(Loss_{CE}\)</strong> and stems from
+                our log-likelihood weight maximization goal \(ll(w)\): it is defined (for a single sample \(i\)) as the negated log-likelihood of the correct class from our model's current
+                choice of weights:
+                $$Loss_{CE}(Y^{(i)}, \hat{Y^{(i)}}) = -~\sum_{y \in Y} 1\{y = y^{(i)}\}~log(P(\hat{Y^{(i)}} = y | x^{(i)}; w)) \}$$
+                ...where \(1\{...\}\) is known as the "indicator function" that is 1 when the condition inside the brackets is true, 0 otherwise.
+              </p>
+              <p class='remark'>Note: because of the indicator function, this means our Loss is really just measuring how far our output likelihood of the correct class is from 100%!</p>
+              <p class='example'>In our example above, for 3 classes, find the \(Loss_{CE}(y^{(i)} = 0, \hat{Y^{(i)}})\) given that \(P(\hat{Y^{(i)}} = y | x^{(i)}; w) = \langle 0.5, 0.3, 0.2 \rangle\) and noting that
+                the correct answer is class 0.</p>
+              <p class='well'>
+                \begin{eqnarray}
+                  Loss_{CE}(y^{(i)} = 0, \hat{Y^{(i)}})
+                  &=& -[1 * log(P(\hat{Y^{(i)}} = 0 | x^{(i)}; w)) + 0 * log(P(\hat{Y^{(i)}} = 1 | x^{(i)}; w)) + 0 * log(P(\hat{Y^{(i)}} = 2 | x^{(i)}; w))] \\
+                  &=& -[log(0.5)]~~~\text{# Usually natural log is used here (i.e., ln = log_e)} \\
+                  &\approx& 0.70
+                \end{eqnarray}
+              </p>
+              <p>Some notes on the above:</p>
+              <ul class='indent-1'>
+                <li><p>What does this 0.7 signify? Well, it's a measure of "entropy", which is a bit out of scope to discuss in this class, but is intuitively a measure of distance that our assigned
+                  likelihood / confidence in the true class was compared to the ideal case wherein we're 100% confident in it. The greater the distance, the more adjustment we'll need to do.</p></li>
+                <li><p>Note how this loss function behaves if we get the answer right on the dot: if our guess for \(P(\hat{Y^{(i)}} = 0 | x^{(i)}; w) = 1.0\) then we would end up taking \(log(1.0) = 0\), or in
+                  other words, our confidence in classifying the sample with the correct class was flawless / had a distance of 0.</p></li>
+                <li><p>It might look odd that we sum over the other class' likelihoods if they just get zero'd out by the indicator function, but it turns out that there's a reason for this in extensions
+                  to Loss functions like CE.</p></li>
+              </ul>
+              <div class='remark'>
+                <p>As such, here's the final roadmap:</p>
+                <ul class='indent-1'>
+                  <li><p>The best weights are those that minimize the Loss across all samples in our training set (i.e., are least wrong).</p></li>
+                  <li><p>Taking the derivative of a function tells us its slope; taking the *partial* derivative of a multivariate function with respect to one of its variables tells us the slope
+                    of just that variable with all others held constant.</p></li>
+                  <li><p>If we take the partial derivative of the Cross Entropy Loss *with respect to the correct class' weights*, we can learn the direction to *increase* those weights to be better!</p></li>
+                </ul>
+              </div>
+              <p class='toolkit'>The derivative of \(L_{CE}\) with respect to the weights of the *correct label* class \(w_{y^{(i)}}\) is actually quite neat, and is represented as:
+                $$\frac{\partial L_{CE}}{\partial w_{y^{(i)}}} = -[1 - P(\hat{Y^{(i)}} = y^{(i)} | x^{(i)}; w)] * x^{(i)}$$
+              </p>
+              <p>Important to note above: we weight by the inputs \(x^{(i)}\) (these would be the sign and magnitudes of the extracted features).</p>
+              <br/>
+              
+              <h4>Stochastic Gradient Descent [SGD] (Nutshell)</h4>
+              <hr/>
+              <p class='definition'>Combining all of the above gives us an algorithm known as Stochastic Gradient Descent whereby we start at some small random / 0 value of weights, and with each sample
+                in the training set, nudge the weights to minimize the Loss (i.e., go down the gradient of the Loss function).</p>
+              <p>The general steps of SGD are:</p>
+<pre>
+  initialize w_y = &lt;0, 0, 0, ...&gt;
+
+  while validation set accuracy still increasing:
+      for each sample (X^(i), y^(i)) (in random order):
+          compute P(y^(i)|x^(i); w)
+          compute Loss_CE
+          compute gradient (derivatives) of Loss for w_{y^(i)}
+          w_{y^(i)} = w_{y^(i)} - learning_rate * gradient
+</pre>
+              <p>...where <code>learning_rate</code> is some small constant that is a hyperparameter used to make sure the weight adjustments aren't too large such that they miss the minimum of the Loss.</p>
+              <p></p>
+              <br/>
+              
+              <h4>Comparisons to Perceptrons</h4>
+              <hr/>
+              <br/>
+              <p>In practice, the only thing we really lose by using Logistic Regression rather than a Linear Perceptron is time!</p>
+              <p>It turns out that training via SGD can take quite a few iterations, and though it avoids the same issues that Perceptron learning suffered, it can be nontrivial for large feature sets.</p>
+              <!-- Mention how log(1) = 0, so that would be no loss -->
+              <!-- Why the indicator function? Well, remember that derivative stuff? ... -->
+              <!-- TODO: Relate to gradients -->
+              <!-- TODO: Show SGD alg -->
+              <!-- TODO: Learning Rates -->
+              <!-- TODO: Numerical example -->
+              <!-- TODO: When we prefer logistic reg to linear perceptron -->
+              
+              <!-- 
+              <p>With the inspiration from gradients we examined last lecture, we can apply the notion of gradient ascent to learning the weights in our logistic / softmax regression!</p>
+              <p class='toolkit'><strong>Batch Gradient Ascent</strong> of the log-likelihood in logistic / softmax regression continually updates weights \(w\) by using the entirety of the
+                training set (all \(i\) samples) to update weights until they've converged at a maxima:
+                $$w = w + \alpha * \sum_i \nabla log P(y^{(i)} | x^{(i)}; w)$$
+              </p>
+              <p class='debug'>One problem with the above: computing the gradient over all \(i\) samples is both computationally and memory intensive, so we'll instead just use
+                some random sample of the training set at each iteration.</p>
+              <p class='toolkit'>This approach is known as <strong>Mini-Batch Gradient Ascent</strong> and is summarized in the following algorithm:</p>
+              <ol class='indent-1'>
+                <li><p>Randomly initialize weights: \(w\)</p></li>
+                <li><p>While those weights have not stopped updating (have not converged):</p>
+                  <ol class='indent-1'>
+                    <li><p>\(J\) = random sample from training set of some size</p></li>
+                    <li><p>\(w = w + \alpha \sum_{j \in J} \nabla log P(y^{(j)} | x^{(j)}; w)\)</p></li>
+                  </ol>
+                </li>
+              </ol>
+              <p>This is really the tip of the iceberg here, and we're leaving out some key implementation details that you can investigate independently.</p>
+              <p>However, that's all we've got time for this semester on gradient ascent -- we'll see more next semester!</p> -->
+              <!-- TODO: Last time, motivated hill climbing with weights using gradient -->
+              <!-- TODO: How do we use this to learn weights for logistic regression? -->
+              <!-- TODO: Turns out the derivative of that sigmoid function is really nice -->
+                <!-- TODO: Show that derivative -->
+                <!-- TODO: Where does this help? -->
+              <!-- TODO: Picture of logistic regression in its neural network annotation -->
+              <!-- TODO: Suppose we had some training set example and our current weights output the following, but the expected class label was another -->
+              <!-- TODO: Could attempt to "nudge" weights up the log-likelihood hill such that they move in direction of best decision boundary, whether or not our 
+                softmax was right (it can still be *more* right!) -->
+              <!-- TODO: To determine notion of "more/less right" we define a Loss / Cost function -->
+              <!-- TODO: Turns out that maximizing our log likelihood is precisely the same operation as minimizing this Loss function -->
+              <!-- TODO: https://www.kdnuggets.com/2016/07/softmax-regression-related-logistic-regression.html -->
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='resources' class='scrollspy-element' scrollspy-title="Resources"></div>
+            <h1>Other Resources</h1>
+            <div>
+              <p class='debug'>Note: the above is only the tip of a very large iceberg in optimization! We've handwaived certain derivations and ignored certain other facets of learning LR classifiers,
+                but for more details see:</p>
+              <ul class='indent-1'>
+                <li><p>Your textbook Chapter 18.5+</p></li>
+                <li><p><a href='https://web.stanford.edu/~jurafsky/slp3/5.pdf' target='_blank'>Another textbook's chapter</a></p></li>
+                <li><p><a href='https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html' target='blank'>Check out the Sklearn Logistic Regression details</a>: look
+                  at all of those knobs you can turn to optimize!</p></li>
+                <li><p><a href='https://gluon.mxnet.io/chapter02_supervised-learning/softmax-regression-scratch.html' target='_blank'>Implementing Logistic Regression From Scratch!</a></p></li>
+              </ul>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>
