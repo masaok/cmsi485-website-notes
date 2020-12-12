@@ -444,9 +444,12 @@
                 ...where \(1\{...\}\) is known as the "indicator function" that is 1 when the condition inside the brackets is true, 0 otherwise.
               </p>
               <p class='remark'>Note: because of the indicator function, this means our Loss is really just measuring how far our output likelihood of the correct class is from 100%!</p>
+<<<<<<< HEAD
               <div class='fit-pres text-center'>
                 <img src='../../../assets/images/fall-2020/cmsi-485/week-15/lr-motive.png' width="70%" height="70%" /><br/>
               </div>
+=======
+>>>>>>> 5ed36a8cfa35c28508e8cefd7582d59d4bff9d13
               <p class='example'>In our example above, for 3 classes, find the \(Loss_{CE}(y^{(i)} = 0, \hat{Y^{(i)}})\) given that \(P(\hat{Y^{(i)}} = y | x^{(i)}; w) = \langle 0.5, 0.3, 0.2 \rangle\) and noting that
                 the correct answer is class 0.</p>
               <p class='well'>
@@ -476,6 +479,7 @@
                 </ul>
               </div>
               <p class='toolkit'>The derivative of \(L_{CE}\) with respect to the weights of the *correct label* class \(w_{y^{(i)}}\) is actually quite neat, and is represented as:
+<<<<<<< HEAD
                 $$\frac{\partial L_{CE}}{\partial w_{y^{(i)}}} = [P(\hat{Y^{(i)}} = y^{(i)} | x^{(i)}; w) - 1] * x^{(i)}$$
               </p>
               <p>Notes on the above:</p>
@@ -501,6 +505,11 @@
               <div class='fit-pres text-center'>
                 <img src='../../../assets/images/fall-2020/cmsi-485/week-15/learning-rate.png' width="70%" height="70%" /><br/>
               </div>
+=======
+                $$\frac{\partial L_{CE}}{\partial w_{y^{(i)}}} = -[1 - P(\hat{Y^{(i)}} = y^{(i)} | x^{(i)}; w)] * x^{(i)}$$
+              </p>
+              <p>Important to note above: we weight by the inputs \(x^{(i)}\) (these would be the sign and magnitudes of the extracted features).</p>
+>>>>>>> 5ed36a8cfa35c28508e8cefd7582d59d4bff9d13
               <br/>
               
               <h4>Stochastic Gradient Descent [SGD] (Nutshell)</h4>
@@ -514,6 +523,7 @@
   while validation set accuracy still increasing:
       for each sample (X^(i), y^(i)) (in random order):
           compute P(y^(i)|x^(i); w)
+<<<<<<< HEAD
           compute gradient (derivatives) of Loss_CE for w_{y^(i)}
           update weight of correct class: w_{y^(i)} = w_{y^(i)} - learning_rate * gradient
 </pre>
@@ -569,13 +579,25 @@
                   for samples looking like the input X.</p></li>
                 <li><p>If we repeat this a bunch of times for the samples in our training set, eventually we'll hit some optimum, being sensitive not to overtrain and lose accuracy in the validation set!</p></li>
               </ul>
+=======
+          compute Loss_CE
+          compute gradient (derivatives) of Loss for w_{y^(i)}
+          w_{y^(i)} = w_{y^(i)} - learning_rate * gradient
+</pre>
+              <p>...where <code>learning_rate</code> is some small constant that is a hyperparameter used to make sure the weight adjustments aren't too large such that they miss the minimum of the Loss.</p>
+              <p></p>
+>>>>>>> 5ed36a8cfa35c28508e8cefd7582d59d4bff9d13
               <br/>
               
               <h4>Comparisons to Perceptrons</h4>
               <hr/>
               <br/>
               <p>In practice, the only thing we really lose by using Logistic Regression rather than a Linear Perceptron is time!</p>
+<<<<<<< HEAD
               <p>It turns out that training via SGD can take quite a few iterations, and though it avoids the issues that Perceptron learning suffered, it can take nontrivial time for large feature sets.</p>
+=======
+              <p>It turns out that training via SGD can take quite a few iterations, and though it avoids the same issues that Perceptron learning suffered, it can be nontrivial for large feature sets.</p>
+>>>>>>> 5ed36a8cfa35c28508e8cefd7582d59d4bff9d13
               <!-- Mention how log(1) = 0, so that would be no loss -->
               <!-- Why the indicator function? Well, remember that derivative stuff? ... -->
               <!-- TODO: Relate to gradients -->
