@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 15-1</li>
+            </ol>
+            
+            
+            <div id='image-class' class='scrollspy-element' scrollspy-title="Image Classification"></div>
+            <h1>Image Classification</h1>
+            <div>
+              <p>In these final couple of weeks, we'll look at our last data structure and associated algorithms for machine learning in the supervised domain, noting that the
+                material in this last sprint is but the tip of an increasingly deeper ice berg (true of pretty much everything we've seen in this class, actually).</p>
+              <p>To begin, let's look at a motivating example problem (the cliche, humble beginnings of this particular topic) and then how we developed the present approach.</p>
+              
+              <h4>Motivation</h4>
+              <hr/>
+              <p class='example'>Consider hand-written digit classification: a human-written number (0-9) must be classified as the number it represents (0-9).</p>
+              <p>We see this very task in a number of real-world applications, e.g., ever deposited a check using your phone?</p>
+              <div class='fit-pres text-center'>
+                <a href='https://en.wikipedia.org/wiki/MNIST_database' target='_blank'>
+                  <img src='https://upload.wikimedia.org/wikipedia/commons/2/27/MnistExamples.png' />
+                </a>
+              </div>
+              <p>This is a totally non-trivial problem! We're expecting a computer to somehow examine human handwriting, with all of its quirks and individualized details, and
+                arrive at a typically human level of recognition!</p>
+              <p>Let's consider what we've learned thus far in this class and brainstorm about an approach to this classification task:
+                $$\text{digit} = f(\text{image})$$
+              </p>
+              <br/>
+              <p class='question' name='an-q0'>What kind of a learning approach sounds reasonable for this type of image classification?</p>
+              <p class='answer' name='an-q0'>A supervised learning one! Give our machine a ton of hand-written digits alongside their correct classification, and use some approach
+                to approximate the "true" function \(f\).</p>
+              <p class='question' name='an-q1'>OK, suppose we formalized this as a supervised learning problem. It's clear that a digit (0-9) would compose 10 values of our class
+                variable, but an image is a tricky thing: what would we use for the features?</p>
+              <p class='answer' name='an-q1'>How about some attributes of the composite pixels?</p>
+              <p class='toolkit'>In image-related machine learning, the <strong>primitive</strong> features of any input image rely on numerical representations of each pixel.</p>
+              <p class='toolkit'>To make things easier on the learning process, it is typical to ignore color when possible, and instead examine <strong>grayscale</strong>
+                representations of each pixel ranging from 0 (white) to 1 (black), and storing these values into a matrix with each pixel corresponding to each cell.
+              </p>
+              <p>Here's a pictorial representation of the above image decomposition from Google's Tensorflow, a popularly used toolkit that we'll hint at again later:</p>
+              <div class='fit-pres text-center'>
+                <a href='https://www.tensorflow.org/versions/r1.1/get_started/mnist/beginners' target='_blank'>
+                  <img src='../../../assets/images/fall-2020/cmsi-485/week-15/MNIST-Matrix.png' />
+                </a>
+              </div>
+              <p>Some classical datasets are publically available for "baselining" different ML approaches, and hand-written digits are no different:</p>
+              <p class='toolkit'>The <strong>MNIST (Modified National Institute of Standards and Technology) Database of Handwritten Digits</strong> containts centered, grayscaled,
+                and otherwise standardized 28 x 28 pixel images of hand-written digits, and can be found <a href='http://yann.lecun.com/exdb/mnist/' target='_blank'>here</a>.</p>
+              <br/>
+              <p>So OK, we have our images in-hand, we can grayscale them to avoid the trouble of having to deal with different colors (which creates an even harder learning
+                problem)... what now?</p>
+              <p>Is there any obvious way to get an algorithm to perform this task?</p>
+              <p class='debug'>Note that even in small images that are 28 x 28 pixels, that's 784 features to consider, each which can hold continuous values between 0 and 1!</p>
+              <p class='question' name='an-q2'>Brainstorm: any thoughts for how to tackle this classification problem?</p>
+              <p class='answer' name='an-q2'>Perhaps we can try to take those primitive features (pixels) and transform them into higher-order features like edges and shapes (e.g., an
+                8 is kind of a composite of two circles)</p>
+              <p>Easier said than done! It's challenging to think of a basis for such a procedure...</p>
+              <p>...except we do it without effort all the time (you're doing it just be reading these notes)!</p>
+              <p>Indeed, the fields of neuro- and cognitive science have long tackled this very problem but from the biological side... perhaps they have some light to shed on
+                the situation!</p>
+              <br/>
+              
+              <h4>Influences from Neuroscience</h4>
+              <hr/>
+              <p>Since we're taking a small detour into neuroscience, we should just be aware of the target for our current classification task: the human visual system!</p>
+              <br/>
+              
+              <h4>The Visual System</h4>
+              <p class='definition'>The visual system is a staggeringly complex <strong>neural pathway</strong> starting at the eye's retina (input) whose signals travel through
+                the optic nerve, and eventually reach the primary visual cortex for processing.</p>
+              <p class='toolkit'>As the signal travels from retina to cortex, different parts of the brain are responsible for extracting <strong>higher-order primitives</strong>
+                from the visual input; for example, two areas in the visual cortex, V1 and V2, are thought to process edge, corner, and motion detection.
+              </p>
+              <p>Here is a depiction of the various stages in human visual processing, and the various higher-order primitives that are output:</p>
+              <div class='fit-pres text-center'>
+                <a href='https://en.wikipedia.org/wiki/Visual_system' target='_blank'>
+                  <img src='https://upload.wikimedia.org/wikipedia/commons/c/cd/Lisa_analysis.png' />
+                </a>
+              </div>
+              <br/>
+              <p>Note the merit of the way it works for us humans: large amounts of primitive input is delivered through the retina, but is then grouped and interpretted the
+                farther down the pathway the signal travels.</p>
+              <p>This seems like a pretty good system to emulate, especially if we have this notion of grouping high-dimensional features into more and more specific (and therefore,
+                lower-dimensional) ones, e.g.:</p>
+              <ol class='indent-1'>
+                <li><p>Rod cells in retina respond to light (or more accurately, absence of light, like pixels in image) to form <strong>primitive visual input</strong>.</p></li>
+                <li><p>Signal is propagated to V1 area of visual cortex to detect <strong>lines and edges</strong> of figures in visual field.</p></li>
+                <li><p>Inferior-temporal cortex detects larger <strong>shapes</strong> from V1's detected lines and edges.</p></li>
+              </ol>
+              <p class='definition'>Steps like the above form a <strong>hierarchical model of object recognition</strong> moving from lower-order primitive inputs to higher-order
+                object recognition.</p>
+              <p class='definition'>In ML, this is a special case of a particular field of study known as <strong>dimensionality reduction</strong>, wherein high-dimensional inputs
+                (like pixels) are reduced to smaller, higher-order processing components (like lines and edges), which are easier to perform learning with.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='nns' class='scrollspy-element' scrollspy-title="Artificial Neural Networks"></div>
+            <h1>Artificial Neural Networks</h1>
+            <div>
+              <p>Given the neuroscientific background above, let's now revisit our image classification problem...</p>
+              <p class='question' name='feat-q0'>What features \(f(x)\) would we want to extract for our image \(x\) in the MNIST dataset above? How would we go about extracting those that?</p>
+              <p class='answer' name='feat-q0'>Hell if I know! Ideally we'd be able to take the individual pixels of the image, \(x\), and then look at the lines and shapes they formed, but
+                the mechanics for doing that seem really messy and hard to code by hand!</p>
+              <p class='toolkit'>This very problem (when it's too hard to design features from the top-down) distinguishes <strong>traditional machine learning</strong> (like we've been doing)
+                from <strong>deep learning</strong>, in which an artificial neural network is used to learn the features for us!</p>
+              <p>The way we visualize this difference is as follows:</p>
+              <p class='toolkit'>Our Multi-class Logistic Regression is a special case of neural network structured as follows:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/log-reg-nn.png' width="70%" height="70%" /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              <div class='definition'>
+               <p>A <strong>Feed-Forward Neural Network</strong> expands this architecture by trying to approximate the feature extractor, \(f(x)\) with the following changes:</p>
+                 <ul class='indent-1'>
+                   <li><p>We have an <strong>input layer (leftmost)</strong> that is the raw-input (pixels of an image, words from an email, etc.)</p></li>
+                   <li><p>We have an <strong>output layer (rightmost)</strong> that consists of one output for each of our softmax classifications we just saw.</p></li>
+                   <li><p>We have 1 or more <strong>hidden layers (between the above)</strong> used to learn the features from the raw input!</p></li>
+                </ul>
+              </div>
+              <p>Depicted:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-15/nn.png' width="70%" height="70%" /><br/>
+                <small>Modified from Berkeley's AI materials, with permission.</small>
+              </div>
+              <br/>
+              <p class='toolkit'>Each Circle above represents a single neuron with its own activation function and set of weighted inputs, just like we've been seeing. Choice of activation
+                function and structure is a heavy focus of ongoing research!</p>
+              <p>The way learning is accomplished in such a neural network is similar to what we've been motivating with logistic regression, and looks like the following:</p>
+              <div class='example'><p>There's a wonderful video series that I can't recommend enough that will tell us all we want to know about learning in neural networks -- at least at a high
+                enough level required for the end of this class! Take a look:</p>
+                <p class='text-center assignment'><a href='https://www.youtube.com/watch?v=aircAruvnKk&t=1s&ab_channel=3Blue1Brown' target='_blank'>Neural Network Primer</a></p>
+                <p class='text-center assignment'><a href='https://www.youtube.com/watch?v=IHZwWFHWa-w' target='_blank'>Neural Network Gradient Descent</a> (Watch up to 11:17)</p>
+                <p class='text-center assignment'><a href='https://www.youtube.com/watch?v=Ilg3gGewQ5U&ab_channel=3Blue1Brown' target='_blank'>Neural Network Back Propagation</a></p>
+              </div>
+              <br/>
+              
+              <p>For completeness, here is the full back-propagation algorithm as detailed by your textbook:</p>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/spring-2018/cmsi-485/week-15/bp-alg.png' />
+              </div>
+              <p class='debug'>This brief introduction to network learning is yet another tip of the iceberg; there have been thousands and thousands of papers written on
+                network tuning, but having these fundamentals will begin your long, rewarding journey!</p>
+              <!-- TODO: Previously, we've been hand-feeding our models the features via some feature-extractor function that we have to write -->
+              <!-- TODO: In the case where the features are really not obvious... maybe we can learn them instead! -->
+              <!-- TODO: Depiction / definition distinguishing traditional ML from Deep Learning -->
+              <!-- TODO: Consider image classification: where the heck would you start trying to hand-craft features in this domain? -->
+              <!-- TODO: Intuitions from Human Vision System (Jennifer Anniston Neuron again) -->
+              <!-- TODO: Definition / Depiction of Neural Network + layers -->
+              <!-- TODO: How feed-forward works + final output still being softmax -->
+              <!-- TODO: How learning works: show video of backprop -->
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='slsum' class='scrollspy-element' scrollspy-title="Supervised Learning Summary"></div>
+            <h1>Supervised Learning Summary</h1>
+            <div>
+              <p>So now that we've seen a variety of different models for supervised learning... let's take a second to look at the big picture.</p>
+              <p>Here's a very brisk summary of the models we've learned about:</p>
+              <ul class='indent-1'>
+                <li><p><strong>Naive Bayes Classifier:</strong> simple, easy to learn, can handle small AND huge amounts of data alike, works well for classification of small problems.</p></li>
+                <li><p><strong>Logistic Regression:</strong> also simple, takes a bit longer to learn and requires a bit more data, but more interpretable since we get likelihood outputs and weights that
+                  correspond to different features -- can also weight different features differently.</p></li>
+                <li><p><strong>Neural Networks:</strong> require huge amounts of data, usually overfit, highly uninterpretable, but very powerful and don't always require programmers to engineer features.</p></li>
+              </ul>
+              <div class='fit-pres text-center'>
+                <img src='../../../assets/images/fall-2020/cmsi-485/week-15/ml-cheat-sheet.png' width="100%" height="100%" /><br/>
+                <small>Source: <a href='https://blogs.sas.com/content/subconsciousmusings/2017/04/12/machine-learning-algorithm-use/' target='_blank'>Here -- You really should read through this page!!!</a></small>
+              </div>
+              <br/>
+              
+              <p>Notes on the above:</p>
+              <ul class='indent-1'>
+                <li><p>We only got to explore the lower left (and really, the lower right as well though we didn't see these types of prediction problems -- we'll see more in 432!), and there are even more
+                  models outside of those listed here to explore!</p></li>
+                <li><p>If you have time, you should really investigate Decision Trees and Random Forests / Ensemble Methods -- they're another very popular method for supervised learning, and there's more info
+                  in our textbook (same with Support Vector Machines [SVMs]).</p></li>
+              </ul>
+              <br/>
+              
+              <p>That, my friends, is all that we have time for in this already bloated semester -- how time flies!</p>
+              <p>I hope you enjoyed the journey and should be proud of how far you've come learning this dense, but wonderous, material. The world is your oyster, go forth and explore what excites you
+                most from the brief exposure we got together this year!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>

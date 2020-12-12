@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <title>Andrew Forney - LMU CS</title>
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/magic-bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/main.css" rel="stylesheet" type="text/css">
+    <link type='image/x-icon' rel='shortcut icon' href='../../../assets/images/favicon.ico'>
+    <script src="../../../js/lib/jquery-2.0.3.min.js"></script>
+    <script src="../../../js/lib/bootstrap.min.js"></script>
+    <script src="../../../js/lib/expanding.js"></script>
+    <script src="../../../js/display/general/general-display.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../../../js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  </head>
+  
+  <body data-spy="scroll" data-target="#scrollspy">
+    
+    <!-- BEGIN WRAP -->
+    <div id="wrap">
+      
+      <!-- BEGIN NAVIGATION -->
+      <nav class='navbar navbar-default' role='navigation'>
+        <div class='nav-accent'></div>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-12'>
+              <div class='navbar-header'>
+                <button class='navbar-toggle' type='button' data-toggle='collapse' data-target='.navbar-main-collapse'>
+                  <span class='sr-only'>Toggle Navigation</span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                  <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='/'>
+                  <span id='brand-text'>
+                    Andrew Forney
+                  </span>
+                </a>
+              </div>
+              
+              <div id='nav-main' class='collapse navbar-collapse navbar-main-collapse'>
+                <ul class='nav navbar-nav navbar-right'>
+                  
+                  <li>
+                    <a href='/about.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-user'></span>
+                      </div>
+                      <p class='text-center'>About</p>
+                    </a>
+                  </li>
+                  
+                  <li class='active'>
+                    <a href='/classes.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-book'></span>
+                      </div>
+                      <p class='text-center'>Classes</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/contact.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-comment'></span>
+                      </div>
+                      <p class='text-center'>Contact</p>
+                    </a>
+                  </li>
+                  
+                  <li>
+                    <a href='/publications.html'>
+                      <div class='text-center'>
+                        <span class='glyphicon glyphicon-file'></span>
+                      </div>
+                      <p class='text-center'>Publications</p>
+                    </a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- END NAVIGATION -->
+      
+      <!-- MathJax CUSTOM DEFS -->
+      <div class='hidden'>
+        \(\def\indep{\perp\!\!\!\perp}\)
+      </div>
+      
+      <!-- BEGIN MAIN CONTENT -->
+      <div id="main-content" class="container">
+        <div class="row">
+          
+          <!-- BEGIN SCROLLSPY -->
+          <div class='col-md-2 hidden-sm hidden-xs'>
+            <div class="bs-sidebar hidden-print affix" role="complementary">
+              <ul id='scrollspy' class="nav bs-sidenav">
+              </ul>
+            </div>
+          </div>
+          <!-- END SCROLLSPY -->
+          
+          <!-- BEGIN PRESENTATION CONTENT -->
+          <div class='col-md-10 presentation-content' role='main'>
+            
+            <ol class="breadcrumb hidden-print">
+              <li><a href="../../../classes.html">Classes</a></li>
+              <li><a href="./cmsi-485.html">CMSI 485</a></li>
+              <li class="active">Lecture 12-1</li>
+            </ol>
+            
+            
+            <div id='nbc-learning' class='scrollspy-element' scrollspy-title="Learning NBCs"></div>
+            <h1>Learning NBCs</h1>
+            <div>
+              <p>Last time, we looked at how to USE NBCs, but not how to construct one from some set of Data.</p>
+              <p>We should, before that endeavor, take a step back and ask just what we have to learn:</p>
+              <p class='question' name='nbc-q0'>Given our assumptions implicit in defining an NBC, what do we have to learn from data?</p>
+              <p class='answer' name='nbc-q0'>The CPT rows / parameters!</p>
+              <p class='debug'>Note: by our "naivety" assumption with NBCs, we do *not* need to learn the network structure like we might in a general
+                Bayesian Network since we're assuming that all features are related to the class variable, but are each piecewise independent given
+                the class.</p>
+              <p>As such, let's consider that we're just at the Training phase in our 3-tiered <strong>Experimentation Cycle:</strong></p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-12/ml-data.png' width="80%" height="80%" />
+              </div>
+              <br/>
+              
+              <h4>Parameter Estimation</h4>
+              <hr/>
+              <p class='definition'><strong>Parameter Estimation</strong> is the process of learning some model's parameters (i.e., the variables that
+                will cause it to respond differently to different inputs), usually labeled as \(\theta\), from some training data.</p>
+              <p class='toolkit'><strong>NBC Parameter Estimation</strong> is to learn all \(P(Y), P(X|Y)~\forall~x, y\).</p>
+              <p class='question' name='nbc-q1'>How, perhaps as a first, intuitive effort, should we estimate these from data?</p>
+              <p class='answer' name='nbc-q1'>Simply count the number of times each co-occur in the training set and then set the parameters to
+                be that ratio!</p>
+              <p>This technique, although a sort of primitive in parameter estimation, makes a lot of sense: use the training data to make empirical estimates of
+                the data for each event, and is known as the <strong>maximum likelihood</strong> estimate defined as:</p>
+              <p class='definition'>The <strong>Maximum Likelihood (ML) Estimate</strong> of some event \(x\) is simply the ratio of counts of \(x\), indicated as \(c(x)\)
+                divided by the total number of samples \(N\) (where \(N\) might be restricted by some conditional), viz:
+                $$P_{ML}(x) = \frac{c(x)}{N}$$
+              </p>
+              <p>We've probably just assumed that we were using ML techniques to populate Bayesian Network / Naive Bayes CPT parameters this whole time -- we were!</p>
+              <p>It really is that simple to implement too.</p>
+              <p class='question' name='ml-q0'>How would we apply the ML parameter estimation technique to an NBC on our Spam v. Ham problem?</p>
+              <p class='answer' name='ml-q0'>For each email labeled Spam, count the number of times each word appears, divide by the total number, and store in the relevant row
+                in each feature's CPT -- repeat for the other label.</p>
+              <p class='example'>Consider the following example estimating the feature row for the "drugs" word given the Spam label (here, just using a single email with
+                \(N = 33\) words total).</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-13/drugs-ml.png' width="80%" height="80%" />
+              </div>
+              <p class='remark'><strong>[Reflect]</strong> Are there some inherent risks / innacuracies possible by using the Maximum Likelihood technique like this?</p>
+              <p>Yes, quite a few very important hurdles to overcome:</p>
+              <ul class='indent-1'>
+                <li><p>If we *never* see "drugs" in a *Ham* email, that doesn't mean we should automatically assume that the email is *Spam* (since it might be the case that
+                  \(P_{ML}(drugs|ham) = 0\) from our training set).</p>
+                  <p class='well'>For example, if the word "drugs" is highly indicative of spam:
+                    $$0.5 = P(Y=\text{spam}) * P(X=\text{drugs}|Y=\text{spam}) \gt P(Y=\text{ham}) * P(X=\text{drugs}|Y=\text{ham}) = 0.1$$
+                    ...then including some word like "food" that we've never seen in the training set can unintentionally 0 out both sides:
+                    \begin{eqnarray}0 &=& P(Y=\text{spam}) * P(X=\text{drugs}|Y=\text{spam}) * P(X=\text{food}|Y=\text{spam}) \\ 
+                                      &=& P(Y=\text{ham}) * P(X=\text{drugs}|Y=\text{ham}) * P(X=\text{food}|Y=\text{ham}) \end{eqnarray}
+                  </p>
+                </li>
+                <li><p>In practice, many words will be found in the test set and beyond that were *never* seen in the training set; these shouldn't have 0 probability as 
+                  well.</p></li>
+              </ul>
+              <br/>
+              
+              <h4>Overfitting</h4>
+              <hr/>
+              <p class='definition'>The danger of <strong>overfitting</strong> in machine learning is in creating a model that too closely represents the training set, and is not
+                likely to <strong>generalize</strong> to samples it hasn't seen before.</p>
+              <p>Overfitting is like...</p>
+              <ul class='indent-1'>
+                <li><p>...studying for an exam and then being disappointed that the material didn't come exactly from the notes.</p></li>
+                <li><p>...taking entire emails as the only feature in the Spam v. Ham problem (would do really well on the training set but nowhere else).</p></li>
+                <li><p>...being asked to fit a line to some scatterplot and coming up with:</p></li>
+              </ul>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-13/overfit.png' width="60%" height="60%" /><br/>
+                <small>Image credit to Berkeley AI Materials, with permission.</small>
+              </div>
+              <br/>
+              
+              <p>Models that are overfit to the training set will appear to do better than they might "in the real world." Thus, one of the greatest struggles in
+                machine learning is producing a model that both approximates the training set and is likely to succeed in classification outside of it as well.</p>
+              <p class='remark'><strong>Insight:</strong> avoiding overfitting means sacrificing some accuracy in the training phase with the expectation of greater accuracy in
+                the test phase!</p>
+              <p class='question' name='ml-q1'>For a NBC using a bag of words parameter estimation, how might we avoid overfitting to the training set?</p>
+              <p class='answer' name='ml-q1'><strong>Smooth</strong> parameter estimates to avoid extremes of 0 (impossible for a word to be found with a label) and 1 (a word
+                certainly indicates a label), even if those extremes are found during training.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='smoothing' class='scrollspy-element' scrollspy-title="Smoothing"></div>
+            <h1>Smoothing</h1>
+            <div>
+              <p class='definition'><strong>Smoothing (AKA Regularization)</strong> describes techniques used to produce more generalizable models in machine learning by artificially
+                inserting some information.</p>
+              <p>Smoothing techniques are vast and varried, and we'll look at only one such smoothing technique for our running example.</p>
+              <p>Note, however, that entire fields of statistics and machine learning have been devoted to finding means of taking some training set, and a learning algorithm
+                prone to overfitting, and perform some sort of smoothing to generalize the model.</p>
+              <p>Here is one such method that is, once again, surprisingly effective:</p>
+              <p class='definition'><strong>Laplace's Estimate:</strong> pretend to have seen every outcome once more than was actually witnessed! Thus, for event \(x\),
+                counts of that event \(c(x)\), total samples \(N\), and number of possible values for the variable \(|X|\), we have:
+                $$P_{LAP}(x) = \frac{c(x) + 1}{\sum_x [c(x) + 1]} = \frac{c(x) + 1}{N + |X|}$$
+              </p>
+              <p class='example'>Suppose we are estimating the likelihood of marble color for some \(X \in \{red, blue\}\) in some distribution and witness 2 Red and 1 Blue.
+                Compute our estimate for \(P_{ML}(X = red)\) vs. \(P_{LAP}(X = red)\).</p>
+              <p class='well'>
+                \begin{eqnarray}
+                  P_{ML}(X = red) &=& \frac{c(x)}{N} = \frac{2}{3} \\
+                  P_{LAP}(X = red) &=& \frac{c(x) + 1}{N + |X|} = \frac{2 + 1}{3 + 2} = \frac{3}{5}
+                \end{eqnarray}
+              </p>
+              <p>Some notes on this:</p>
+              <ul class='indent-1'>
+                <li><p>"Smoothing" is an appropriate name because spikes in a distribution are smoothed over and made more uniform (compare 2/3 in the ML estimate above to the
+                  more uniform 3/5 in the LAP estimate).</p></li>
+                <li><p>This works for values we may not have seen in the training set as well, wherein \(c(x) = 0\) but some probability mass can still be associated with the
+                  event \(x\).</p></li>
+                <li><p>In the case that we have much larger samples, this + 1 is a drop in the ocean, so we may want to smooth even more...</p></li>
+              </ul>
+              <p>As such, to extend Laplace's Estimate, we can generalize it into:</p>
+              <p class='definition'><strong>Laplace's (Generalized) Estimate:</strong> pretend to have seen every outcome \(k\) more times than actually witnessed.
+                $$P_{LAP, k}(x) = \frac{c(x) + k}{N + k*|X|}$$
+                ...and for conditional distributions:
+                $$P_{LAP, k}(x|y) = \frac{c(x, y) + k}{c(y) + k*|X|}$$
+              </p>
+              <p>All well and good BUT... a reasonable question arises:</p>
+              <p class='question' name='ml-q2'>How do we know what's best to use for the value of \(k\)?</p>
+              <p class='answer' name='ml-q2'>Learn it!</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <div id='tuning' class='scrollspy-element' scrollspy-title="Tuning"></div>
+            <h1>Tuning</h1>
+            <div>
+              <p>To think about how to learn the value of \(k\) in Laplace's generalized estimate, we first need to distinguish between two different important parts of the
+                learning process:</p>
+              <p class='definition'><strong>Parameters</strong> are the model's specifications that decide how the function \(f\) maps features \(X\) to classes \(Y\), which are
+                learned from the training data.</p>
+              <p class='toolkit'>In an NBC, the parameters are the network CPTs: \(P(Y), P(X|Y)\).</p>
+              <p class='definition'><strong>Hyperparameters</strong> are specifications for how the learning of parameters are conducted, which are <strong>tuned</strong> from
+                the validation data.</p>
+              <p class='toolkit'>In an NBC with smoothing, hyperparameters might include the value of Laplace's \(k\), which can be tuned through repeated experimentation.</p>
+              <p>This process becomes an <strong>optimization problem</strong> that looks like the following:</p>
+              <ol class='indent-1'>
+                <li><p>Learn NBC CPTs using a set value of \(k\).</p></li>
+                <li><p>Test this NBC's performance on the validation set.</p></li>
+                <li><p>Revise the value of \(k\) and try again from step 1 until convergence.</p></li>
+                <li><p>Remember the best value of \(k\) and finally assess on test data.</p></li>
+              </ol>
+              <p>The curve associated with the choice of \(k\) and the model's classification accuracy might look like the following:</p>
+              <div class='text-center fit-pres'>
+                <img src='../../../assets/images/fall-2019/cmsi-485/week-13/training-curve.png' width="80%" height="80%" /><br/>
+                <small>Image credit to Berkeley AI Materials, with permission.</small>
+              </div>
+              <br/>
+              <p>Of note from the above:</p>
+              <ul class='indent-1'>
+                <li><p>When \(k=0\), we overfit to the training data, so with no surprise, accuracy on the training set is maximal when \(k=0 \Rightarrow P_{LAP, k=0}(x) = P_{ML}(x)\)</p></li>
+                <li><p>At the opposite end of the spectrum, for some \(k >> 0\), the model is what we call <strong>underfit</strong> because we have increased \(k\) so much that
+                  the training data is no longer influential on its learned parameters!</p></li>
+                <li><p>As such, the <strong>tuning process</strong> must find the maximal tradeoff between over and underfitting.</p></li>
+              </ul>
+              <br/>
+              
+              <p>That's a lot of very important ML concepts in a very small nutshell! This is but a tiny introduction to what is an ever widening field, so use this for what it is:
+                a way to get a handle on much of the important vocabulary and techniques that work in a large swath of interesting applications.</p>
+              <p>Your journey as a data scientist can have a jump start knowing even these basic terms -- and what a journey awaits you!</p>
+              <p>Next time, we'll switch gears a bit and look at new models that address some of the shortcomings of NBCs.</p>
+            </div>
+            <hr/>
+            <br/>
+            
+            
+            <a class='btn btn-default pull-right hidden-print' href='javascript:window.print();'>
+              <span class='glyphicon glyphicon-print'></span>
+              &nbsp; PDF / Print
+            </a>
+            
+          </div>
+          <!-- END PRESENTATION CONTENT -->
+          
+          
+        </div>
+      </div>
+      <!-- END MAIN CONTENT -->
+      
+      
+    </div>
+    <!-- END WRAPPER -->
+    
+    <!-- BEGIN FOOTER -->
+    <div id="footer">
+      <div class="container">
+        <div class="col-md-12 text-center">
+          
+        </div>
+      </div>
+    </div>
+    <!-- END FOOTER -->
+    
+  </body>
+</html>
